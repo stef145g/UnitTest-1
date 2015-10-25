@@ -11,4 +11,6 @@ using namespace std;
 using namespace os;
 using namespace test;
 
+string temp_for_compilation;
+
 #endif
