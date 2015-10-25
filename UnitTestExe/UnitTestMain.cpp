@@ -1,4 +1,4 @@
-//Confirmed Working 10/24/2015
+//Confirmed Working 10/25/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_CPP
@@ -17,10 +17,10 @@ using namespace test;
 //Entry Function
 int main(int argc,char** argv)
 {
-	//For testing sanity
-	#ifdef WIN32
-	system("pause");
-	#endif
+	startTests();
+
+	endTestsSuccess();
+	return 0;
 }
 
 #endif

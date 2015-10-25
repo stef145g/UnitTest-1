@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES(${CUR_SRC})
 
 SET( SRC_H
 	${CUR_SRC}/UnitTest.h
+	${CUR_SRC}/UnitTestLog.h
 )
 
 SET( SRC_CPP
