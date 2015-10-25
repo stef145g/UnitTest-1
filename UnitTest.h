@@ -6,14 +6,20 @@
 
 #include "Datastructures.h"
 #include "UnitTestLog.h"
+#include "masterTestHolder.h"
+#include "UnitTestExceptions.h"
+#include "TestSuite.h"
 #include <iostream>
+#include <exception>
 
 namespace test
 {
 	//Global Status Functions
 	void startTests();
-	void endTestsError();
+	void endTestsError(os::smart_ptr<std::exception> except);
 	void endTestsSuccess();
+
+	void testInit();
 }
 
 #endif

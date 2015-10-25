@@ -17,10 +17,10 @@ namespace test
 }
 
 #ifndef testout
-#define testout osout_func()
+#define testout testout_func()
 #endif
 #ifndef testerr
-#define testerr oserr_func()
+#define testerr testerr_func()
 #endif
 
 #endif

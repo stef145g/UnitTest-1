@@ -21,7 +21,7 @@ using namespace test;
 
 //Global Status Functions----------------------------------------------------------
 
-#define DIV_BLOCK "========================================"
+#define DIV_BLOCK "=================================================================="
 	//Starts the tests
 	void test::startTests()
 	{
@@ -38,11 +38,17 @@ using namespace test;
 		#endif
 	}
 	//Ends tests, logging the error
-	void test::endTestsError()
+	void test::endTestsError(os::smart_ptr<std::exception> except)
 	{
 		testout<<endl<<DIV_BLOCK<<endl;
 		testout<<"\tERROR"<<endl;
+		testout<<"\tResults:"<<endl;
+		testout<<"\t\t"<<masterTestHolder::singleton()->getNumRun()<<" libraries"<<endl;
+		testout<<"\t\tof "<<masterTestHolder::singleton()->getNumLibs()<<" tested"<<endl;
+		testout<<"\t\twith "<<masterTestHolder::singleton()->getNumSuccess()<<" successful"<<endl<<endl;
+
 		testout<<"\tFailure in Test Battery!"<<endl;
+		testout<<"\t"<<except->what()<<endl;
 		testout<<DIV_BLOCK<<endl;
 		endTest();
 	}
@@ -51,6 +57,10 @@ using namespace test;
 	{
 		testout<<endl<<DIV_BLOCK<<endl;
 		testout<<"\tTest Battery Completed"<<endl;
+		testout<<"\tResults:"<<endl;
+		testout<<"\t\t"<<masterTestHolder::singleton()->getNumRun()<<" libraries"<<endl;
+		testout<<"\t\tof "<<masterTestHolder::singleton()->getNumLibs()<<" tested"<<endl;
+		testout<<"\t\twith "<<masterTestHolder::singleton()->getNumSuccess()<<" successful"<<endl;
 		testout<<DIV_BLOCK<<endl;
 		endTest();
 	}
