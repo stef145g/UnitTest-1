@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 10/26/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_EXCEPTIONS_H
@@ -10,34 +10,40 @@
 
 namespace test
 {
-	//Unknown exception
-	class unknownException: public std::exception
+	//General exception
+	class generalTestException: public std::exception
 	{
 	private:
 		std::string location;
+		std::string _error;
 		std::string total_error;
 	public:
-		unknownException(std::string loc)
+		generalTestException(std::string err, std::string loc)
 		{
 			location = loc;
-			total_error = "Unregistered exception type occured, "+location;
+			_error = err;
+			total_error = err+", "+loc;
 		}
 		virtual const char* what() const throw(){return total_error.c_str();}
+		const std::string& getLocation() const {return location;}
+		const std::string& getString() const {return _error;}
+	};
+	//Unknown exception
+	class unknownException: public generalTestException
+	{
+	public:
+		unknownException(std::string loc):
+			generalTestException("Unregistered exception type occured",loc)
+		{}
 	};
 
 	//Null Function Pointer Exception
-	class nullFunctionException: public std::exception
+	class nullFunctionException: public generalTestException
 	{
-	private:
-		std::string location;
-		std::string total_error;
 	public:
-		nullFunctionException(std::string loc)
-		{
-			location = loc;
-			total_error = "NULL Function pointer received, "+location;
-		}
-		virtual const char* what() const throw(){return total_error.c_str();}
+		nullFunctionException(std::string loc):
+			generalTestException("NULL Function pointer received",loc)
+		{}
 	};
 }
 

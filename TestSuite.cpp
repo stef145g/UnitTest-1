@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 10/26/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef TEST_SUITE_CPP
@@ -71,19 +71,19 @@ using namespace test;
 		testout<<endl<<SUITE_DIV<<endl;
 
 		//Successful run
-		if(state==0) testout<<"\t\t"<<suiteName<<" Tests success!"<<endl;
-		if(state==1) testout<<"\t\t"<<suiteName<<" Tests completed, with errors"<<endl;
+		if(state==0) testout<<"\t\t\t"<<suiteName<<" Tests success!"<<endl;
+		if(state==1) testout<<"\t\t\t"<<suiteName<<" Tests completed, with errors"<<endl;
 		if(state==2)
 		{
-			testout<<"\t\tERROR in "<<suiteName<<endl;
-			testout<<"\t\t"<<except->what()<<endl;
+			testout<<"\t\t\tERROR in "<<suiteName<<endl;
+			testout<<"\t\t\t"<<except->what()<<endl;
 		}
 
 		//Result
-		testout<<endl<<"\t\tResults:"<<endl;
-		testout<<"\t\t\tRan "<<getNumRun()<<" tests"<<endl;
-		testout<<"\t\t\tof "<<getNumTests()<<" tested"<<endl;
-		testout<<"\t\t\twith "<<getNumSuccess()<<" successful"<<endl;
+		testout<<endl<<"\t\t\tResults:"<<endl;
+		testout<<"\t\t\t\tRan "<<getNumRun()<<" tests"<<endl;
+		testout<<"\t\t\t\tof "<<getNumTests()<<" tested"<<endl;
+		testout<<"\t\t\t\twith "<<getNumSuccess()<<" successful"<<endl;
 		testout<<SUITE_DIV<<endl<<endl;
 
 		//Return case
