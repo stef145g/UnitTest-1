@@ -207,6 +207,139 @@ using namespace test;
 	void copyConstructor_array() throw(os::smart_ptr<std::exception>){copyConstructor(shared_type_array);}
 	void copyConstructor_dyndel() throw(os::smart_ptr<std::exception>){copyConstructor(shared_type_dynamic_delete);}
 
+	void comparisonTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, comparisonTest(smart_pointer_type typ), ";
+		if(typ==raw_type) locString+="raw_type";
+		else if(typ==shared_type) locString+="shared_type";
+		else if(typ==shared_type_array) locString+="shared_type_array";
+		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
+		else locString+="null_type";
+
+		smart_ptr<int> master;
+		int temp_raw = 1;
+		if(typ==raw_type) master = smart_ptr<int>(&temp_raw);
+		else if(typ==shared_type) master = smart_ptr<int>(new int(1),shared_type);
+		else if(typ==shared_type_array) master = smart_ptr<int>(new int[5],shared_type_array);
+		else if(typ==shared_type_dynamic_delete) master = smart_ptr<int>(new int(1),&c_deletion);
+
+		//Test with self first
+		if(master!=master)
+			throw os::smart_ptr<std::exception>(new generalTestException("!= with self returned unexpected value",locString),shared_type);
+		if(!(master==master))
+			throw os::smart_ptr<std::exception>(new generalTestException("== with self returned unexpected value",locString),shared_type);
+
+		srand (time(NULL));
+
+		//Preform 20 iterations to test
+		for(int i=0;i<20;i++)
+		{
+			long cur_comp = rand();
+			void* ptr_comp = (void*) cur_comp;
+
+			//REALLY BAD PRACTICE
+				//This is only to test comparison operators!
+			smart_ptr<int> comp_ptr(cur_comp);
+
+			//General == test
+			bool v = (long)master.get()==cur_comp;
+			bool rv = cur_comp==(long)master.get();
+			if(v!=(master==cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == long failed",locString),shared_type);
+			if(v!=(master==ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed",locString),shared_type);
+			if(v!=(master==comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp==master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long == smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp==master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed",locString),shared_type);
+			
+			//General != test
+			v = (long)master.get()!=cur_comp;
+			rv = cur_comp!=(long)master.get();
+			if(v!=(master!=cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != long failed",locString),shared_type);
+			if(v!=(master!=ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed",locString),shared_type);
+			if(v!=(master!=comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp!=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long != smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp!=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed",locString),shared_type);
+
+			//General < test
+			v = (long)master.get()<cur_comp;
+			rv = cur_comp<(long)master.get();
+			if(v!=(master<cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < long failed",locString),shared_type);
+			if(v!=(master<ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed",locString),shared_type);
+			if(v!=(master<comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp<master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long < smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp<master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed",locString),shared_type);
+
+			//General > test
+			v = (long)master.get()>cur_comp;
+			rv = cur_comp>(long)master.get();
+			if(v!=(master>cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > long failed",locString),shared_type);
+			if(v!=(master>ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed",locString),shared_type);
+			if(v!=(master>comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp>master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long > smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp>master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed",locString),shared_type);
+
+			//General <= test
+			v = (long)master.get()<=cur_comp;
+			rv = cur_comp<=(long)master.get();
+			if(v!=(master<=cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= long failed",locString),shared_type);
+			if(v!=(master<=ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed",locString),shared_type);
+			if(v!=(master<=comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp<=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long <= smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp<=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed",locString),shared_type);
+
+			//General >= test
+			v = (long)master.get()>=cur_comp;
+			rv = cur_comp>=(long)master.get();
+			if(v!=(master>=cur_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= long failed",locString),shared_type);
+			if(v!=(master>=ptr_comp))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed",locString),shared_type);
+			if(v!=(master>=comp_ptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= smart_ptr failed",locString),shared_type);
+			if(rv!=(cur_comp>=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("long >= smart_ptr failed",locString),shared_type);
+			if(rv!=(ptr_comp>=master))
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed",locString),shared_type);
+		}
+	}
+	void comparisonTest_null() throw(os::smart_ptr<std::exception>){comparisonTest(null_type);}
+	void comparisonTest_raw() throw(os::smart_ptr<std::exception>){comparisonTest(raw_type);}
+	void comparisonTest_shared() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type);}
+	void comparisonTest_array() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_array);}
+	void comparisonTest_dyndel() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_dynamic_delete);}
+
+/*================================================================
+	ADS Tests
+================================================================*/
+
+/*================================================================
+	List Tests
+================================================================*/
+
 /*================================================================
 	DatastructuresLibraryTest
 ================================================================*/
@@ -215,6 +348,7 @@ using namespace test;
 	DatastructuresLibraryTest::DatastructuresLibraryTest():
 		libraryTests("Datastructures")
 	{
+		//smart_ptr Test Suite
 		os::smart_ptr<testSuite> trc = smart_ptr<testSuite>(new testSuite("smart_ptr"));
 			trc->pushTest("Ref Count: Shared",&refCountTest_shared);
 			trc->pushTest("Ref Count: Array",&refCountTest_array);
@@ -228,8 +362,14 @@ using namespace test;
 			trc->pushTest("Copy Constructor: Shared",&copyConstructor_shared);
 			trc->pushTest("Copy Constructor: Array",&copyConstructor_array);
 			trc->pushTest("Copy Constructor: Dynamic Delete",&copyConstructor_dyndel);
+			trc->pushTest("Comparison: NULL",&comparisonTest_null);
+			trc->pushTest("Comparison: Raw",&comparisonTest_raw);
+			trc->pushTest("Comparison: Shared",&comparisonTest_shared);
+			trc->pushTest("Comparison: Array",&comparisonTest_array);
+			trc->pushTest("Comparison: Dynamic Delete",&comparisonTest_dyndel);
 		pushSuite(trc);
 
+		//list Test Suite
 		trc = smart_ptr<testSuite>(new testSuite("list"));
 		pushSuite(trc);
 	}
