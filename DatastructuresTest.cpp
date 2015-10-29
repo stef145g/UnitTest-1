@@ -1,4 +1,4 @@
-//Confirmed Working 10/26/2015
+//Confirmed Working 10/28/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -6,6 +6,7 @@
 
 #include "DatastructuresTest.h"
 #include <string>
+#include <list>
 
 using namespace os;
 using namespace std;
@@ -17,10 +18,11 @@ using namespace test;
 
 	//Demonstrate C deletion
 	void c_deletion(void *v){delete (int*)v;}
+	void c_str_deletin(void *v){delete (string*) v;}
 
 	void refCountTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
 	{
-		std::string locString = "DatastructuresTest.cpp, refCountTest(), ";
+		std::string locString = "DatastructuresTest.cpp, refCountTest(smart_pointer_type typ), ";
 		if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
@@ -332,13 +334,203 @@ using namespace test;
 	void comparisonTest_array() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_array);}
 	void comparisonTest_dyndel() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_dynamic_delete);}
 
+	void derefTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, derefTest(smart_pointer_type typ), ";
+		if(typ==raw_type) locString+="raw_type";
+		else if(typ==shared_type) locString+="shared_type";
+		else if(typ==shared_type_array) locString+="shared_type_array";
+		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
+		else throw os::smart_ptr<std::exception>(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+
+		smart_ptr<string> ptr;
+		string obj;
+
+		if(typ == raw_type) ptr = smart_ptr<string>(&obj);
+		else if(typ==shared_type_array) ptr = smart_ptr<string>(new string[5],shared_type_array);
+		else if(typ==shared_type_dynamic_delete) ptr = smart_ptr<string>(new string(""),&c_deletion);
+		else ptr = smart_ptr<string>(new string(""),shared_type);
+
+		if(!ptr)
+			throw os::smart_ptr<std::exception>(new generalTestException("Pointer unexpected NULL",locString),shared_type);
+
+		for(int i = 0;i<3;i++)
+		{
+			string lInfo=", init with ";
+			if(i==1)
+			{
+				*ptr="test";
+				lInfo+="operator";
+			}
+			else if(i==2)
+			{
+				ptr[0]="test";
+				lInfo+="array";
+			}
+			else
+			{
+				*ptr.get()="test";
+				lInfo+="raw";
+			}
+
+			if(*ptr.get()!="test")
+				throw os::smart_ptr<std::exception>(new generalTestException("Error at raw deref"+lInfo,locString),shared_type);
+			if(*ptr!="test")
+				throw os::smart_ptr<std::exception>(new generalTestException("Error at operator deref"+lInfo,locString),shared_type);
+			if(ptr[0]!="test")
+				throw os::smart_ptr<std::exception>(new generalTestException("Error at array deref"+lInfo,locString),shared_type);
+
+			if(ptr->substr(0,2)!="te")
+				throw os::smart_ptr<std::exception>(new generalTestException("Error at -> operator"+lInfo,locString),shared_type);
+		}
+	}
+	void derefTest_raw() throw(os::smart_ptr<std::exception>){derefTest(raw_type);}
+	void derefTest_shared() throw(os::smart_ptr<std::exception>){derefTest(shared_type);}
+	void derefTest_array() throw(os::smart_ptr<std::exception>){derefTest(shared_type_array);}
+	void derefTest_dyndel() throw(os::smart_ptr<std::exception>){derefTest(shared_type_dynamic_delete);}
+
 /*================================================================
 	ADS Tests
 ================================================================*/
 
-/*================================================================
-	List Tests
-================================================================*/
+	#define GETBIT(d,p) ((d) & (1 << (p)))
+	#define SETBIT(d,p,t) (t==0 ? d = (d)&~(1<<(p)):d = (d)|(1<<(p)))
+
+	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	{
+		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
+		string locString = "DatastructuresTest.cpp, singleInsertion(...), "+ads_type;
+
+		if(!dataStruct->insert(intptr))
+			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+		
+		//Attempt to re-insert (two cases)
+		if(GETBIT(id,0))
+		{
+			if(!dataStruct->insert(intptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("ADS re-insertion failed",locString),shared_type);
+			if(!dataStruct->findDelete(intptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("ADS delete after re-insertion failed",locString),shared_type);
+		}
+		else
+		{
+			if(dataStruct->insert(intptr))
+				throw os::smart_ptr<std::exception>(new generalTestException("ADS re-insertion succeeded, it should not have",locString),shared_type);
+		}
+
+		//Check, there should be one element in the ADS
+		if(dataStruct->size()!=1)
+			throw os::smart_ptr<std::exception>(new generalTestException("ADS should have 1 element, it has "+to_string(dataStruct->size()),locString),shared_type);
+
+		//Find
+		if(!dataStruct->find(intptr))
+			throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted element",locString),shared_type);
+		int comp = 5;
+		if(!dataStruct->find(&comp))
+			throw os::smart_ptr<std::exception>(new generalTestException("Could not find alias to inserted element",locString),shared_type);
+
+		//Shouldn't be able to find "bad" elements
+		comp = 7;
+		if(dataStruct->find(&comp))
+			throw os::smart_ptr<std::exception>(new generalTestException("Found item that was not inserted",locString),shared_type);
+	}
+	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	{
+		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
+		string locString = "DatastructuresTest.cpp, singleTestADSDeletion(...), "+ads_type;
+
+		if(intptr.getRefCount()==NULL)
+			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+		if(*intptr.getRefCount()!=1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+		if(!dataStruct->insert(intptr))
+			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+		if(*intptr.getRefCount()!=2)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 2, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+		
+		//Delete ADS (Super bad way to do this!  We are short circuiting smart_ptr)
+		*((unsigned long*)dataStruct.getRefCount()) = 0;
+		delete dataStruct.get();
+		dataStruct = NULL;
+
+		if(*intptr.getRefCount()!=1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
+	}
+	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	{
+		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
+		string locString = "DatastructuresTest.cpp, singleTestDeletion(...), "+ads_type;
+
+		if(intptr.getRefCount()==NULL)
+			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+		if(*intptr.getRefCount()!=1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+		if(!dataStruct->insert(intptr))
+			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+		if(*intptr.getRefCount()!=2)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 2, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+		
+		//Find delete
+		if(!dataStruct->findDelete(intptr))
+			throw os::smart_ptr<std::exception>(new generalTestException("Could not find element to delete",locString),shared_type);
+
+		if(*intptr.getRefCount()!=1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
+	}
+	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) throw(os::smart_ptr<std::exception>)
+	{
+		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
+
+		dataStruct->resetTraverse();
+		auto last = dataStruct->getFirst();
+		for(auto it = dataStruct->getFirst();it;it=it->getNext())
+		{
+			if(*(it->getData())<*(last->getData()))
+				throw smart_ptr<std::exception>(new generalTestException("ADS is out of order",locString),shared_type);
+			last = it;
+		}
+	}
+
+
+	//adsSuite test
+	typedef void (*adsTestFunc)(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>);
+	template <class adsType, class nodeType>
+	class adsTest:public singleTest
+	{
+	private:
+		string ads_name;
+		adsTestFunc adfunc;
+		int _id;
+	public:
+		adsTest(std::string tn,std::string ads_n,adsTestFunc func, int id):
+			singleTest(tn)
+		{
+			ads_name = ads_n;
+			adfunc = func;
+		}
+		//Run the specified test function
+		void test() throw(os::smart_ptr<std::exception>)
+		{
+			if(adfunc!=NULL)
+				adfunc(smart_ptr<ads<int> >(new adsType(),shared_type),ads_name,_id);
+			else
+				throw os::smart_ptr<std::exception>(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
+		}
+	};
+
+	//adsSuite
+	template <class adsType, class nodeType>
+	class adsSuite:public testSuite
+	{
+	public:
+		adsSuite(string adst, int id):
+			testSuite(adst)
+		{
+			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Insertion Test",adst,&singleTestDeletion,id),shared_type));
+			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletetion Test",adst,&singleTestDeletion,id),shared_type));
+			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletetion Test",adst,&singleTestADSDeletion,id),shared_type));
+		}
+	};
 
 /*================================================================
 	DatastructuresLibraryTest
@@ -349,7 +541,7 @@ using namespace test;
 		libraryTests("Datastructures")
 	{
 		//smart_ptr Test Suite
-		os::smart_ptr<testSuite> trc = smart_ptr<testSuite>(new testSuite("smart_ptr"));
+		os::smart_ptr<testSuite> trc = smart_ptr<testSuite>(new testSuite("smart_ptr"),shared_type);
 			trc->pushTest("Ref Count: Shared",&refCountTest_shared);
 			trc->pushTest("Ref Count: Array",&refCountTest_array);
 			trc->pushTest("Ref Count: Dynamic Delete",&refCountTest_shared);
@@ -367,11 +559,19 @@ using namespace test;
 			trc->pushTest("Comparison: Shared",&comparisonTest_shared);
 			trc->pushTest("Comparison: Array",&comparisonTest_array);
 			trc->pushTest("Comparison: Dynamic Delete",&comparisonTest_dyndel);
+			trc->pushTest("Dereference: Raw",&derefTest_raw);
+			trc->pushTest("Dereference: Shared",&derefTest_shared);
+			trc->pushTest("Dereference: Array",&derefTest_array);
+			trc->pushTest("Dereference: Dynamic Delete",&derefTest_dyndel);
 		pushSuite(trc);
 
-		//list Test Suite
-		trc = smart_ptr<testSuite>(new testSuite("list"));
-		pushSuite(trc);
+		//ADS Test Suite
+			//Unique element, unsorted, not set
+		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("zlist",0),shared_type));
+			//Unique element, sorted, not set
+		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("zAVL Tree",2),shared_type));
+			//Unique element, unsorted, set
+		pushSuite(smart_ptr<testSuite>(new adsSuite<smartSet<int>,adnode<int> >("Smart Set",4),shared_type));
 	}
 
 #endif
