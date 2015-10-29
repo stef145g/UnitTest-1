@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 10/28/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef SINGLE_TEST_H
@@ -10,7 +10,7 @@
 
 namespace test
 {
-	typedef void (*testFunction)() throw(os::smart_ptr<std::exception>);
+	typedef void (*testFunction)();
 
 	//Single test
 	class singleTest: public os::ptrComp

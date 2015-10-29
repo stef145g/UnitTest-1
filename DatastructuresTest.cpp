@@ -1,4 +1,4 @@
-//Confirmed Working 10/28/2015
+//Confirmed Working 10/29/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -247,85 +247,85 @@ using namespace test;
 			bool v = (long)master.get()==cur_comp;
 			bool rv = cur_comp==(long)master.get();
 			if(v!=(master==cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master==ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master==comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp==master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long == smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long == smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp==master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed: "+to_string(cur_comp),locString),shared_type);
 			
 			//General != test
 			v = (long)master.get()!=cur_comp;
 			rv = cur_comp!=(long)master.get();
 			if(v!=(master!=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master!=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master!=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp!=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long != smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long != smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp!=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General < test
 			v = (long)master.get()<cur_comp;
 			rv = cur_comp<(long)master.get();
 			if(v!=(master<cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long < smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long < smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General > test
 			v = (long)master.get()>cur_comp;
 			rv = cur_comp>(long)master.get();
 			if(v!=(master>cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long > smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long > smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General <= test
 			v = (long)master.get()<=cur_comp;
 			rv = cur_comp<=(long)master.get();
 			if(v!=(master<=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long <= smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long <= smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General >= test
 			v = (long)master.get()>=cur_comp;
 			rv = cur_comp>=(long)master.get();
 			if(v!=(master>=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= long failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long >= smart_ptr failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("long >= smart_ptr failed: "+to_string(cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed",locString),shared_type);
+				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed: "+to_string(cur_comp),locString),shared_type);
 		}
 	}
 	void comparisonTest_null() throw(os::smart_ptr<std::exception>){comparisonTest(null_type);}
@@ -493,7 +493,7 @@ using namespace test;
 
 
 	//adsSuite test
-	typedef void (*adsTestFunc)(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>);
+	typedef void (*adsTestFunc)(smart_ptr<ads<int> > dataStruct, string ads_type, int id);
 	template <class adsType, class nodeType>
 	class adsTest:public singleTest
 	{
