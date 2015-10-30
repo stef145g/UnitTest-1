@@ -334,7 +334,7 @@ using namespace test;
 	void comparisonTest_raw() throw(os::smart_ptr<std::exception>){comparisonTest(raw_type);}
 	void comparisonTest_shared() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type);}
 	void comparisonTest_array() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_array);}
-	void comparisonTest_dyndel() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_dynamic_delete);}
+    void comparisonTest_dyndel() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_dynamic_delete);}
 
 	void derefTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
 	{
@@ -487,11 +487,42 @@ using namespace test;
 		auto last = dataStruct->getFirst();
 		for(auto it = dataStruct->getFirst();it;it=it->getNext())
 		{
+            
+            
 			if(*(it->getData())<*(last->getData()))
 				throw smart_ptr<std::exception>(new generalTestException("ADS is out of order",locString),shared_type);
 			last = it;
 		}
 	}
+    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    {
+        string locString = "DatastructuresTest.cpp, randomInsertionTest(...), "+ads_type;
+        srand(time(NULL));
+
+        //Insert 100 elements
+        for(int i = 0; i<100;i++)
+        {
+            //Create insertion pointer
+            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
+            if(intptr.getRefCount()==NULL)
+                throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            if(*intptr.getRefCount()!=1)
+                throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+            
+            //Attempt to insert
+            if(!dataStruct->find(intptr))
+            {
+                if(!dataStruct->insert(intptr))
+                    throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                if(!dataStruct->find(intptr))
+                    throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                
+                if(id&2) checkSorted(dataStruct,ads_type);
+            }
+            else
+                i--;
+        }
+    }
 
 
 	//adsSuite test
@@ -503,23 +534,29 @@ using namespace test;
 		string ads_name;
 		adsTestFunc adfunc;
 		int _id;
+        
+    protected:
+        virtual smart_ptr<ads<int> > newADS(){return smart_ptr<ads<int> >(new adsType(),shared_type);}
+        void setID(int id){_id=id;};
 	public:
 		adsTest(std::string tn,std::string ads_n,adsTestFunc func, int id):
 			singleTest(tn)
 		{
 			ads_name = ads_n;
 			adfunc = func;
+            _id = id;
 		}
+        virtual ~adsTest(){}
+        
 		//Run the specified test function
 		void test() throw(os::smart_ptr<std::exception>)
 		{
 			if(adfunc!=NULL)
-				adfunc(smart_ptr<ads<int> >(new adsType(),shared_type),ads_name,_id);
+				adfunc(newADS(),ads_name,_id);
 			else
 				throw os::smart_ptr<std::exception>(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
 		}
 	};
-
 	//adsSuite
 	template <class adsType, class nodeType>
 	class adsSuite:public testSuite
@@ -528,11 +565,53 @@ using namespace test;
 		adsSuite(string adst, int id):
 			testSuite(adst)
 		{
+            //Bind the tests
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Insertion Test",adst,&singleTestDeletion,id),shared_type));
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletetion Test",adst,&singleTestDeletion,id),shared_type));
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletetion Test",adst,&singleTestADSDeletion,id),shared_type));
+            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion Test",adst,&randomInsertionTest,id),shared_type));
 		}
+        virtual ~adsSuite(){}
 	};
+    //Set Test
+    class setTest: public adsTest<smartSet<int>,adnode<int> >
+    {
+        setTypes set_type;
+    protected:
+        virtual smart_ptr<ads<int> > newADS(){return smart_ptr<ads<int> >(new smartSet<int>(set_type),shared_type);}
+    public:
+        setTest(string testName,setTypes st, adsTestFunc func):
+            adsTest(testName,"Smart Set",func, 0)
+        {
+            set_type = st;
+            int temp_id = 0;
+            if(st==sorted_set) temp_id = temp_id | 2;
+            
+            setID(temp_id);
+        }
+        virtual ~setTest(){}
+    };
+    //Set suite
+    class setSuite: public testSuite
+    {
+    public:
+        setSuite():
+            testSuite("Smart Set")
+        {
+            for(int i = 0;i<=sorted_set;i++)
+            {
+                string addition=": ";
+                if(i==small_set) addition+="Small Set";
+                else if(i==sorted_set) addition+="Sorted Set";
+                else addition+="Default Set";
+                pushTest(smart_ptr<singleTest>(new setTest("Insertion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Deletetion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("ADS Deletetion Test"+addition,(setTypes)i,&singleTestADSDeletion),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Random Insertion Test"+addition,(setTypes)i,&randomInsertionTest),shared_type));
+            }
+        }
+        virtual ~setSuite(){}
+    };
 
 /*================================================================
 	DatastructuresLibraryTest
@@ -568,12 +647,12 @@ using namespace test;
 		pushSuite(trc);
 
 		//ADS Test Suite
-			//Unique element, unsorted, not set
-		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("zlist",0),shared_type));
-			//Unique element, sorted, not set
-		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("zAVL Tree",2),shared_type));
+			//Unique element, unsorted
+		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
+			//Unique element, sorted
+		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
 			//Unique element, unsorted, set
-		pushSuite(smart_ptr<testSuite>(new adsSuite<smartSet<int>,adnode<int> >("Smart Set",4),shared_type));
+		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));
 	}
 
 #endif
