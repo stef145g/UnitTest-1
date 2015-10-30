@@ -236,7 +236,7 @@ using namespace test;
 		//Preform 20 iterations to test
 		for(int i=0;i<20;i++)
 		{
-			long cur_comp = rand();
+			unsigned long cur_comp = rand();
 			void* ptr_comp = (void*) cur_comp;
 
 			//REALLY BAD PRACTICE
@@ -244,8 +244,8 @@ using namespace test;
 			smart_ptr<int> comp_ptr(cur_comp);
 
 			//General == test
-			bool v = (long)master.get()==cur_comp;
-			bool rv = cur_comp==(long)master.get();
+			bool v = (unsigned long)master.get()==cur_comp;
+			bool rv = cur_comp==(unsigned long)master.get();
 			if(v!=(master==cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master==ptr_comp))
@@ -258,8 +258,8 @@ using namespace test;
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed: "+to_string(cur_comp),locString),shared_type);
 			
 			//General != test
-			v = (long)master.get()!=cur_comp;
-			rv = cur_comp!=(long)master.get();
+			v = (unsigned long)master.get()!=cur_comp;
+			rv = cur_comp!=(unsigned long)master.get();
 			if(v!=(master!=cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master!=ptr_comp))
@@ -272,8 +272,10 @@ using namespace test;
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General < test
-			v = (long)master.get()<cur_comp;
-			rv = cur_comp<(long)master.get();
+			v = (unsigned long)master.get()<cur_comp;
+			rv = cur_comp<(unsigned long)master.get();
+            //cout<<v<<endl;
+            //cout<<(master<cur_comp)<<endl;
 			if(v!=(master<cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<ptr_comp))
@@ -286,8 +288,8 @@ using namespace test;
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General > test
-			v = (long)master.get()>cur_comp;
-			rv = cur_comp>(long)master.get();
+			v = (unsigned long)master.get()>cur_comp;
+			rv = cur_comp>(unsigned long)master.get();
 			if(v!=(master>cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>ptr_comp))
@@ -300,8 +302,8 @@ using namespace test;
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General <= test
-			v = (long)master.get()<=cur_comp;
-			rv = cur_comp<=(long)master.get();
+			v = (unsigned long)master.get()<=cur_comp;
+			rv = cur_comp<=(unsigned long)master.get();
 			if(v!=(master<=cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master<=ptr_comp))
@@ -314,8 +316,8 @@ using namespace test;
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed: "+to_string(cur_comp),locString),shared_type);
 
 			//General >= test
-			v = (long)master.get()>=cur_comp;
-			rv = cur_comp>=(long)master.get();
+			v = (unsigned long)master.get()>=cur_comp;
+			rv = cur_comp>=(unsigned long)master.get();
 			if(v!=(master>=cur_comp))
 				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= long failed: "+to_string(cur_comp),locString),shared_type);
 			if(v!=(master>=ptr_comp))

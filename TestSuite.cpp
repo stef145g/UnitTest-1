@@ -1,4 +1,4 @@
-//Confirmed Working 10/26/2015
+//Confirmed Working 10/29/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef TEST_SUITE_CPP
@@ -38,8 +38,8 @@ using namespace test;
 				it->getData()->logBegin();
 				try
 				{
+                    testsRun++;
 					it->getData()->test();
-					testsRun++;
 				}
 				catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
 				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
