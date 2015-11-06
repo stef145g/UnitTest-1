@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 11/2/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef MASTER_TEST_HOLDER_H
@@ -53,7 +53,7 @@ namespace test
 
 		masterTestHolder();
 	public:
-		static masterTestHolder* singleton();
+		static os::smart_ptr<masterTestHolder> singleton();
 		bool runTests() throw(os::smart_ptr<std::exception>);
 		int getNumLibs() const {return libraryList.size();}
 		int getNumSuccess() const {return libsCompleted;}

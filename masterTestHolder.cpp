@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 11/2/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef MASTER_TEST_HOLDER_CPP
@@ -99,7 +99,7 @@ using namespace test;
 	masterTestHolder
 ================================================================*/
 
-	static masterTestHolder* self=NULL;
+	static os::smart_ptr<masterTestHolder> self=NULL;
 	//Constructor (private!)
 	masterTestHolder::masterTestHolder():
 		libraryList(sorted_set)
@@ -108,11 +108,11 @@ using namespace test;
 		libsRun = 0;
 	}
 	//Return the singleton instance
-	masterTestHolder* masterTestHolder::singleton()
+	os::smart_ptr<masterTestHolder> masterTestHolder::singleton()
 	{
 		if(self==NULL)
 		{
-			self = new masterTestHolder();
+			self = os::smart_ptr<masterTestHolder>(new masterTestHolder(),shared_type);
 			new DatastructuresLibraryTest();
 		};
 		return self;
