@@ -1,4 +1,4 @@
-//Confirmed Working 10/28/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef SINGLE_TEST_H
@@ -18,6 +18,7 @@ namespace test
 		std::string testName;
 	public:
 		singleTest(std::string tn);
+        virtual ~singleTest(){}
 
 		virtual void test() throw(os::smart_ptr<std::exception>);
 		void logBegin();
@@ -29,6 +30,7 @@ namespace test
 		testFunction func;
 	public:
 		singleFunctionTest(std::string tn, testFunction f);
+        virtual ~singleFunctionTest(){}
 		void test() throw(os::smart_ptr<std::exception>);
 	};
 }

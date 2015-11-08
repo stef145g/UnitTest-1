@@ -1,4 +1,4 @@
-//Confirmed Working 11/2/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef MASTER_TEST_HOLDER_CPP
@@ -25,7 +25,6 @@ using namespace test;
 		libName = ln;
 		suitesCompleted=0;
 		suitesRun=0;
-		masterTestHolder::singleton()->pushLibrary(os::smart_ptr<libraryTests>(this,os::shared_type));
 	}
 	//Run the test battery
 	void libraryTests::runTests() throw(os::smart_ptr<std::exception>)
@@ -113,7 +112,7 @@ using namespace test;
 		if(self==NULL)
 		{
 			self = os::smart_ptr<masterTestHolder>(new masterTestHolder(),shared_type);
-			new DatastructuresLibraryTest();
+			self->pushLibrary(os::smart_ptr<libraryTests>(new DatastructuresLibraryTest(),os::shared_type));
 		};
 		return self;
 	}

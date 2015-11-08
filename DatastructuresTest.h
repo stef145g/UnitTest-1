@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_H
@@ -15,6 +15,7 @@ namespace test
 	{
 	public:
 		DatastructuresLibraryTest();
+        virtual ~DatastructuresLibraryTest(){}
 	};
 }
 

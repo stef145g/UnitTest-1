@@ -1,4 +1,4 @@
-//Confirmed Working 10/29/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -449,14 +449,6 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
 		if(*intptr.getRefCount()!=2)
 			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 2, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
-		
-		//Delete ADS (Super bad way to do this!  We are short circuiting smart_ptr)
-		*((unsigned long*)dataStruct.getRefCount()) = 0;
-		delete dataStruct.get();
-		dataStruct = NULL;
-
-		if(*intptr.getRefCount()!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
 	}
 	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
 	{
@@ -478,6 +470,7 @@ using namespace test;
 
 		if(*intptr.getRefCount()!=1)
 			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
+        dataStruct = NULL;
 	}
 	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) throw(os::smart_ptr<std::exception>)
 	{
@@ -552,7 +545,7 @@ using namespace test;
 		void test() throw(os::smart_ptr<std::exception>)
 		{
 			if(adfunc!=NULL)
-				adfunc(newADS(),ads_name,_id);
+                adfunc(newADS(),ads_name,_id);
 			else
 				throw os::smart_ptr<std::exception>(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
 		}

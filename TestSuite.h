@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef TEST_SUITE_H
@@ -21,6 +21,7 @@ namespace test
 		int testsRun;
 	public:
 		testSuite(std::string sn);
+        virtual ~testSuite(){}
 		void runTests() throw(os::smart_ptr<std::exception>);
 
 		void logBegin();

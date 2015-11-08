@@ -1,4 +1,4 @@
-//Confirmed Working 10/26/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_EXCEPTIONS_H
@@ -24,6 +24,7 @@ namespace test
 			_error = err;
 			total_error = err+", "+loc;
 		}
+        virtual ~generalTestException(){}
 		virtual const char* what() const throw(){return total_error.c_str();}
 		const std::string& getLocation() const {return location;}
 		const std::string& getString() const {return _error;}
@@ -35,6 +36,7 @@ namespace test
 		unknownException(std::string loc):
 			generalTestException("Unregistered exception type occured",loc)
 		{}
+        virtual ~unknownException(){}
 	};
 
 	//Null Function Pointer Exception
@@ -44,6 +46,7 @@ namespace test
 		nullFunctionException(std::string loc):
 			generalTestException("NULL Function pointer received",loc)
 		{}
+        ~nullFunctionException(){}
 	};
 }
 

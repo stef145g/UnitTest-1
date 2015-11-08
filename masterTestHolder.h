@@ -1,4 +1,4 @@
-//Confirmed Working 11/2/2015
+//Confirmed Working 11/7/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef MASTER_TEST_HOLDER_H
@@ -25,6 +25,7 @@ namespace test
 
 	public:
 		libraryTests(std::string ln);
+        virtual ~libraryTests(){}
 		void runTests() throw(os::smart_ptr<std::exception>);
 
 		void logBegin();
@@ -53,6 +54,8 @@ namespace test
 
 		masterTestHolder();
 	public:
+        virtual ~masterTestHolder(){}
+        
 		static os::smart_ptr<masterTestHolder> singleton();
 		bool runTests() throw(os::smart_ptr<std::exception>);
 		int getNumLibs() const {return libraryList.size();}
