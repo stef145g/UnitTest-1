@@ -1,4 +1,4 @@
-//Confirmed Working 11/7/2015
+//Confirmed Working 11/9/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_EXCEPTIONS_H
@@ -46,7 +46,7 @@ namespace test
 		nullFunctionException(std::string loc):
 			generalTestException("NULL Function pointer received",loc)
 		{}
-        ~nullFunctionException(){}
+        virtual ~nullFunctionException(){}
 	};
 }
 
