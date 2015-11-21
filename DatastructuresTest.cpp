@@ -1,4 +1,4 @@
-//Confirmed Working 11/7/2015
+//Confirmed Working 11/21/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -516,6 +516,43 @@ using namespace test;
                 i--;
         }
     }
+    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    {
+        string locString = "DatastructuresTest.cpp, randomInsertionDeletionTest(...), "+ads_type;
+        srand(time(NULL));
+        
+        //Insert 100 elements
+        for(int i = 0; i<100;i++)
+        {
+            //Create insertion pointer
+            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
+            if(intptr.getRefCount()==NULL)
+            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            if(*intptr.getRefCount()!=1)
+            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+            
+            //Attempt to insert
+            if(!dataStruct->find(intptr))
+            {
+                if(!dataStruct->insert(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                if(!dataStruct->find(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                
+                if(id&2) checkSorted(dataStruct,ads_type);
+                
+                //Every so often, delete what we just inserted
+                if(rand()%4)
+                {
+                    if(!dataStruct->findDelete(intptr))
+                    throw os::smart_ptr<std::exception>(new generalTestException("ADS Deletion failed",locString),shared_type);
+                    if(id&2) checkSorted(dataStruct,ads_type);
+                }
+            }
+            else
+                i--;
+        }
+    }
 
 
 	//adsSuite test
@@ -561,8 +598,9 @@ using namespace test;
             //Bind the tests
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Insertion Test",adst,&singleTestDeletion,id),shared_type));
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletetion Test",adst,&singleTestDeletion,id),shared_type));
-			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletetion Test",adst,&singleTestADSDeletion,id),shared_type));
+			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletion Test",adst,&singleTestADSDeletion,id),shared_type));
             pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion Test",adst,&randomInsertionTest,id),shared_type));
+            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion/Deletion Test",adst,&randomInsertionDeletionTest,id),shared_type));
 		}
         virtual ~adsSuite(){}
 	};
@@ -601,6 +639,7 @@ using namespace test;
                 pushTest(smart_ptr<singleTest>(new setTest("Deletetion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("ADS Deletetion Test"+addition,(setTypes)i,&singleTestADSDeletion),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("Random Insertion Test"+addition,(setTypes)i,&randomInsertionTest),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Random Insertion/Deletion Test"+addition,(setTypes)i,&randomInsertionDeletionTest),shared_type));
             }
         }
         virtual ~setSuite(){}
