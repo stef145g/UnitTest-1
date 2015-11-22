@@ -553,7 +553,88 @@ using namespace test;
                 i--;
         }
     }
-
+    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    {
+        string locString = "DatastructuresTest.cpp, randomForwardTraverseTest(...), "+ads_type;
+        srand(time(NULL));
+    
+        //Insert 100 elements
+        for(int i = 0; i<100;i++)
+        {
+            //Create insertion pointer
+            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
+            if(intptr.getRefCount()==NULL)
+            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            if(*intptr.getRefCount()!=1)
+            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+        
+            //Attempt to insert
+            if(!dataStruct->find(intptr))
+            {
+                if(!dataStruct->insert(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                if(!dataStruct->find(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+            
+                if(id&2) checkSorted(dataStruct,ads_type);
+            }
+            else
+            i--;
+        }
+        
+        //Iterate through
+        int trace = 0;
+        dataStruct->resetTraverse();
+        for(auto it = dataStruct->getFirst();it;it=it->getNext())
+        {
+            trace++;
+            if(!it->getData())
+            throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
+        }
+        if(trace!=dataStruct->size())
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+    }
+    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    {
+        string locString = "DatastructuresTest.cpp, randomReverseTraverseTest(...), "+ads_type;
+        srand(time(NULL));
+    
+        //Insert 100 elements
+        for(int i = 0; i<100;i++)
+        {
+            //Create insertion pointer
+            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
+            if(intptr.getRefCount()==NULL)
+            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            if(*intptr.getRefCount()!=1)
+            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string(*intptr.getRefCount()),locString),shared_type);
+        
+            //Attempt to insert
+            if(!dataStruct->find(intptr))
+            {
+                if(!dataStruct->insert(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                if(!dataStruct->find(intptr))
+                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+            
+                if(id&2) checkSorted(dataStruct,ads_type);
+            }
+            else
+            i--;
+        }
+    
+        //Iterate through
+        int trace = 0;
+        dataStruct->resetTraverse();
+        for(auto it = dataStruct->getLast();it;it=it->getPrev())
+        {
+            trace++;
+            if(!it->getData())
+            throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
+        }
+        if(trace!=dataStruct->size())
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+}
 
 	//adsSuite test
 	typedef void (*adsTestFunc)(smart_ptr<ads<int> > dataStruct, string ads_type, int id);
@@ -601,6 +682,8 @@ using namespace test;
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletion Test",adst,&singleTestADSDeletion,id),shared_type));
             pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion Test",adst,&randomInsertionTest,id),shared_type));
             pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion/Deletion Test",adst,&randomInsertionDeletionTest,id),shared_type));
+            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Forward Traverse Test",adst,&randomForwardTraverseTest,id),shared_type));
+            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Reverse Traverse Test",adst,&randomReverseTraverseTest,id),shared_type));
 		}
         virtual ~adsSuite(){}
 	};
@@ -640,10 +723,390 @@ using namespace test;
                 pushTest(smart_ptr<singleTest>(new setTest("ADS Deletetion Test"+addition,(setTypes)i,&singleTestADSDeletion),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("Random Insertion Test"+addition,(setTypes)i,&randomInsertionTest),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("Random Insertion/Deletion Test"+addition,(setTypes)i,&randomInsertionDeletionTest),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Forward Traverse Test"+addition,(setTypes)i,&randomForwardTraverseTest),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Reverse Traverse Test"+addition,(setTypes)i,&randomReverseTraverseTest),shared_type));
             }
         }
         virtual ~setSuite(){}
     };
+
+/*================================================================
+	MatrixTest
+ ================================================================*/
+
+    //Array access test
+    void matrixArrayAccessTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixArrayAccessTest()";
+        
+        matrix<int>mat1(4,4);
+        matrix<int>mat2(4,4);
+        matrix<int>mat3(mat1);
+        int compArray[16];
+        
+        //Check size
+        if(mat1.getWidth()!=4 || mat2.getWidth()!=4 || mat3.getWidth()!=4) throw os::smart_ptr<std::exception>(new generalTestException("Matrix width failure",locString),shared_type);
+        if(mat1.getHeight()!=4 || mat2.getHeight()!=4 || mat3.getHeight()!=4) throw os::smart_ptr<std::exception>(new generalTestException("Matrix height failure",locString),shared_type);
+        
+        //Random init
+        srand(time(NULL));
+        for(int x=0;x<4;x++)
+        {
+            for(int y=0;y<4;y++)
+            {
+                compArray[y*4+x] = rand()%100;
+                mat1(x,y)=compArray[y*4+x];
+                mat2(x,y)=compArray[y*4+x];
+            }
+        }
+        mat3 = mat1;
+        
+        //Compare mat1 with comp array
+        for(int i = 0;i<16;i++)
+        {
+            if(compArray[i] != mat1.getArray()[i])
+                throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed",locString),shared_type);
+        }
+        
+        //Compare mat1 and mat2 (raw array)
+        for(int i = 0;i<16;i++)
+        {
+            if(mat1.getArray()[i] != mat2.getArray()[i])
+            throw os::smart_ptr<std::exception>(new generalTestException("Matrix direct compare failed",locString),shared_type);
+        }
+        
+        //Compare mat1 and mat3 (raw array)
+        for(int i = 0;i<16;i++)
+        {
+            if(mat2.getArray()[i] != mat3.getArray()[i])
+            throw os::smart_ptr<std::exception>(new generalTestException("Matrix copy compare failed",locString),shared_type);
+        }
+    }
+    //Equality test
+    void matrixEqualityTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixEqualityTest()";
+        matrix<int>mat1(4,4);
+        matrix<int>mat2(4,4);
+        matrix<int>mat3(4,4);
+        matrix<int>mat4(mat1);
+        int compArray[16];
+        
+        //Random init
+        srand(time(NULL));
+        for(int x=0;x<4;x++)
+        {
+            for(int y=0;y<4;y++)
+            {
+                compArray[y*4+x] = rand()%100;
+                mat1(x,y)=compArray[y*4+x];
+                mat2(x,y)=compArray[y*4+x];
+                mat3(x,y)=compArray[y*4+x]+1;
+            }
+        }
+        mat4 = mat1;
+        
+        //Compare mat1 and 2
+        if(!(mat1==mat2))
+        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (same init)",locString),shared_type);
+        if(mat1!=mat2)
+        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (same init)",locString),shared_type);
+        
+        //Compare mat2 and 4
+        if(!(mat2==mat4))
+        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (copy constructor)",locString),shared_type);
+        if(mat2!=mat4)
+        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (copy constructor)",locString),shared_type);
+        
+        //Compare mat1 and 3
+        if(mat1==mat3)
+        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (different mats)",locString),shared_type);
+        if(!(mat1!=mat3))
+        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (different mats)",locString),shared_type);
+    }
+    //Addition test
+    void matrixAdditionTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdditionTest()";
+        matrix<int> mat1(2,2);
+        matrix<int> mat2(2,2);
+        matrix<int> out(2,2);
+        matrix<int> ans(2,2);
+        
+        //Init mat1 and mat2
+        mat1(0,0)=1;    mat1(1,0)=2;
+        mat1(0,1)=3;    mat1(1,1)=4;
+        
+        mat2(0,0)=5;    mat2(1,0)=6;
+        mat2(0,1)=7;    mat2(1,1)=8;
+        
+        //Hard-coded answer
+        ans(0,0)=6;    ans(1,0)=8;
+        ans(0,1)=10;    ans(1,1)=12;
+        
+        out = mat1+mat2;
+        if(out!=ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Addition failed!",locString),shared_type);
+        out = mat2+mat1;
+        if(out!=ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Addition transitivity failed!",locString),shared_type);
+    }
+    //Subtraction test
+    void matrixSubtractionTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixSubtractionTest()";
+        matrix<int> mat1(2,2);
+        matrix<int> mat2(2,2);
+        matrix<int> out(2,2);
+        matrix<int> ans(2,2);
+        
+        //Init mat1 and mat2
+        mat1(0,0)=1;    mat1(1,0)=2;
+        mat1(0,1)=3;    mat1(1,1)=4;
+        
+        mat2(0,0)=5;    mat2(1,0)=6;
+        mat2(0,1)=7;    mat2(1,1)=8;
+        
+        //Hard-coded answer
+        ans(0,0)=4;    ans(1,0)=4;
+        ans(0,1)=4;    ans(1,1)=4;
+        
+        out = mat2-mat1;
+        if(out!=ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed!",locString),shared_type);
+        out = mat1-mat2;
+        if(out==ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Subtraction not respecting order!",locString),shared_type);
+    }
+    //Dot product test
+    void matrixDotProductTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixDotProductTest()";
+        matrix<int> mat1(2,2);
+        matrix<int> mat2(2,2);
+        matrix<int> out(2,2);
+        matrix<int> ans(2,2);
+        
+        //Init mat1 and mat2
+        mat1(0,0)=1;    mat1(1,0)=2;
+        mat1(0,1)=3;    mat1(1,1)=4;
+        
+        mat2(0,0)=5;    mat2(1,0)=6;
+        mat2(0,1)=7;    mat2(1,1)=8;
+        
+        //Hard-coded answer
+        ans(0,0)=19;    ans(1,0)=22;
+        ans(0,1)=43;    ans(1,1)=50;
+        
+        out = mat1*mat2;
+        if(out!=ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed!",locString),shared_type);
+        out = mat2*mat1;
+        if(out==ans)
+        throw os::smart_ptr<std::exception>(new generalTestException("Dot Product not respecting order!",locString),shared_type);
+    }
+    //Advanced construction test
+    void matrixAdvancedConstructionTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdvancedConstructionTest()";
+        
+        //Preform this test 10 times
+        srand(time(NULL));
+        for(int i=0;i<10;i++)
+        {
+            matrix<int> mast1(10,10);
+            matrix<int> cop1;
+            matrix<int> bridge1;
+            indirectMatrix<int> mast2(10,10);
+            indirectMatrix<int> cop2;
+            indirectMatrix<int> bridge2;
+            int compsrc[100];
+            
+            for(int i=0;i<100;i++)
+            {
+                compsrc[i]=rand();
+                mast1.getArray()[i]=compsrc[i];
+                mast2.getArray()[i]=&(compsrc[i]);
+            }
+            cop1=mast1;
+            cop2=mast2;
+            bridge1=mast2;
+            bridge2=mast1;
+            
+            //Compare everyone to comp
+            for(int i=0;i<100;i++)
+            {
+                if(mast1.getArray()[i]!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed (direct matrix)",locString),shared_type);
+                if(*(mast2.getArray()[i])!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed (indirect matrix)",locString),shared_type);
+                
+                if(cop1.getArray()[i]!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix standard equals failed (direct matrix)",locString),shared_type);
+                if(*(cop2.getArray()[i])!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix standard equals failed (indirect matrix)",locString),shared_type);
+                
+                if(bridge1.getArray()[i]!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix bridge equals failed (direct matrix)",locString),shared_type);
+                if(*(bridge2.getArray()[i])!=compsrc[i])
+                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix bridge equals failed (indirect matrix)",locString),shared_type);
+            }
+        }
+    }
+    //Advanced equality test
+    void matrixAdvancedEqualityTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdvancedEqualityTest()";
+        
+        //Preform this test 10 times
+        srand(time(NULL));
+        for(int i=0;i<10;i++)
+        {
+            matrix<int> mast1(10,10);
+            matrix<int> wrong1(10,10);
+            matrix<int> cop1;
+            indirectMatrix<int> mast2(10,10);
+            indirectMatrix<int> wrong2(10,10);
+            indirectMatrix<int> cop2;
+            int compsrc[100];
+            
+            for(int i=0;i<100;i++)
+            {
+                compsrc[i]=rand();
+                mast1.getArray()[i]=compsrc[i];
+                mast2.getArray()[i]=&(compsrc[i]);
+                wrong1.getArray()[i]=compsrc[i]+1;
+                wrong2.getArray()[i]=os::smart_ptr<int>(new int(compsrc[i]+1),os::shared_type);
+            }
+            cop1=mast1;
+            cop2=mast2;
+            
+            //Standard to standard
+            if(!(mast1==cop1)) throw os::smart_ptr<std::exception>(new generalTestException("S-S equals failed",locString),shared_type);
+            if(!(cop1==mast1)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-S equals failed",locString),shared_type);
+            if(mast1!=cop1) throw os::smart_ptr<std::exception>(new generalTestException("S-S not equals failed",locString),shared_type);
+            if(cop1!=mast1) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-S not equals failed",locString),shared_type);
+            
+            //Indirect to indirect
+            if(!(mast2==cop2)) throw os::smart_ptr<std::exception>(new generalTestException("I-I equals failed",locString),shared_type);
+            if(!(cop2==mast2)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-I equals failed",locString),shared_type);
+            if(mast2!=cop2) throw os::smart_ptr<std::exception>(new generalTestException("I-I not equals failed",locString),shared_type);
+            if(cop2!=mast2) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-I not equals failed",locString),shared_type);
+            
+            //Standard to indirect
+            if(!(mast1==cop2)) throw os::smart_ptr<std::exception>(new generalTestException("S-I equals failed",locString),shared_type);
+            if(!(cop1==mast2)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-I equals failed",locString),shared_type);
+            if(mast1!=cop2) throw os::smart_ptr<std::exception>(new generalTestException("S-I not equals failed",locString),shared_type);
+            if(cop1!=mast2) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-I not equals failed",locString),shared_type);
+            
+            //Indirect to standard
+            if(!(mast2==cop1)) throw os::smart_ptr<std::exception>(new generalTestException("I-S equals failed",locString),shared_type);
+            if(!(cop2==mast1)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-S equals failed",locString),shared_type);
+            if(mast2!=cop1) throw os::smart_ptr<std::exception>(new generalTestException("I-S not equals failed",locString),shared_type);
+            if(cop2!=mast1) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-S not equals failed",locString),shared_type);
+        }
+    }
+    //Advanced addition test
+    void matrixAdvancedAdditionTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdvancedAdditionTest()";
+        
+        //Preform this test 10 times
+        srand(time(NULL));
+        for(int i=0;i<10;i++)
+        {
+            matrix<int> smat1(10,10);
+            matrix<int> smat2(10,10);
+            for(int x=0;x<10;x++)
+            {
+                for(int y=0;y<10;y++)
+                {
+                    smat1(x,y)=rand()%100;
+                    smat2(x,y)=rand()%100;
+                }
+            }
+            indirectMatrix<int> imat1(smat1);
+            indirectMatrix<int> imat2(smat2);
+            
+            //Compares
+            if(imat1+imat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+i2 != s1+s2",locString),shared_type);
+            if(imat2+imat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+i1 != s2+s1",locString),shared_type);
+            if(imat1+smat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+s2 != s1+s2",locString),shared_type);
+            if(imat2+smat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+s1 != s2+s1",locString),shared_type);
+            if(smat1+imat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s1+i2 != s1+s2",locString),shared_type);
+            if(smat2+imat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s2+i1 != s2+s1",locString),shared_type);
+            
+            //Transitive tests
+            if(imat1+imat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+i2 != s2+s1",locString),shared_type);
+            if(imat2+imat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+i1 != s1+s2",locString),shared_type);
+            if(imat1+smat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+s2 != s2+s1",locString),shared_type);
+            if(imat2+smat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+s1 != s1+s2",locString),shared_type);
+            if(smat1+imat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s1+i2 != s2+s1",locString),shared_type);
+            if(smat2+imat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s2+i1 != s1+s2",locString),shared_type);
+        }
+    }
+    //Advanced subtraction test
+    void matrixAdvancedSubtractionTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdvancedSubtractionTest()";
+        
+        //Preform this test 10 times
+        srand(time(NULL));
+        for(int i=0;i<10;i++)
+        {
+            matrix<int> smat1(10,10);
+            matrix<int> smat2(10,10);
+            for(int x=0;x<10;x++)
+            {
+                for(int y=0;y<10;y++)
+                {
+                    smat1(x,y)=rand()%100;
+                    smat2(x,y)=rand()%100;
+                }
+            }
+            indirectMatrix<int> imat1(smat1);
+            indirectMatrix<int> imat2(smat2);
+            
+            //Compares
+            if(imat1-imat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i1-i2 != s1-s2",locString),shared_type);
+            if(imat2-imat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i2-i1 != s2-s1",locString),shared_type);
+            if(imat1-smat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i1-s2 != s1-s2",locString),shared_type);
+            if(imat2-smat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i2-s1 != s2-s1",locString),shared_type);
+            if(smat1-imat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: s1-i2 != s1-s2",locString),shared_type);
+            if(smat2-imat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: s2-i1 != s2-s1",locString),shared_type);
+        }
+    }
+    //Advanced dot product test
+    void matrixAdvancedDotProductTest()throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, matrixAdvancedDotProductTest()";
+        
+        //Preform this test 10 times
+        srand(time(NULL));
+        for(int i=0;i<10;i++)
+        {
+            matrix<int> smat1(10,10);
+            matrix<int> smat2(10,10);
+            for(int x=0;x<10;x++)
+            {
+                for(int y=0;y<10;y++)
+                {
+                    smat1(x,y)=rand()%100;
+                    smat2(x,y)=rand()%100;
+                }
+            }
+            indirectMatrix<int> imat1(smat1);
+            indirectMatrix<int> imat2(smat2);
+            
+            //Compares
+            if(imat1*imat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i1*i2 != s1*s2",locString),shared_type);
+            if(imat2*imat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i2*i1 != s2*s1",locString),shared_type);
+            if(imat1*smat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i1*s2 != s1*s2",locString),shared_type);
+            if(imat2*smat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i2*s1 != s2*s1",locString),shared_type);
+            if(smat1*imat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: s1*i2 != s1*s2",locString),shared_type);
+            if(smat2*imat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: s2*i1 != s2*s1",locString),shared_type);
+        }
+    }
 
 /*================================================================
 	DatastructuresLibraryTest
@@ -685,6 +1148,20 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
 			//Unique element, unsorted, set
 		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));
+        
+        //Matrix Test Suite
+        trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
+            trc->pushTest("Array Access",&matrixArrayAccessTest);
+            trc->pushTest("Equality",&matrixEqualityTest);
+            trc->pushTest("Addition",&matrixAdditionTest);
+            trc->pushTest("Subtraction",&matrixSubtractionTest);
+            trc->pushTest("Dot Product",&matrixDotProductTest);
+            trc->pushTest("Advanced Construction",&matrixAdvancedConstructionTest);
+            trc->pushTest("Advanced Equality",&matrixAdvancedEqualityTest);
+            trc->pushTest("Advanced Addition",&matrixAdvancedAdditionTest);
+            trc->pushTest("Advanced Subtraction",&matrixAdvancedSubtractionTest);
+            trc->pushTest("Advanced Dot Product",&matrixAdvancedDotProductTest);
+        pushSuite(trc);
 	}
 
 #endif
