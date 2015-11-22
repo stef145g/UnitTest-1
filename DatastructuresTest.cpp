@@ -678,7 +678,7 @@ using namespace test;
 		{
             //Bind the tests
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Insertion Test",adst,&singleTestDeletion,id),shared_type));
-			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletetion Test",adst,&singleTestDeletion,id),shared_type));
+			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletion Test",adst,&singleTestDeletion,id),shared_type));
 			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletion Test",adst,&singleTestADSDeletion,id),shared_type));
             pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion Test",adst,&randomInsertionTest,id),shared_type));
             pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion/Deletion Test",adst,&randomInsertionDeletionTest,id),shared_type));
@@ -719,7 +719,7 @@ using namespace test;
                 else if(i==sorted_set) addition+="Sorted Set";
                 else addition+="Default Set";
                 pushTest(smart_ptr<singleTest>(new setTest("Insertion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Deletetion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
+                pushTest(smart_ptr<singleTest>(new setTest("Deletion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("ADS Deletetion Test"+addition,(setTypes)i,&singleTestADSDeletion),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("Random Insertion Test"+addition,(setTypes)i,&randomInsertionTest),shared_type));
                 pushTest(smart_ptr<singleTest>(new setTest("Random Insertion/Deletion Test"+addition,(setTypes)i,&randomInsertionDeletionTest),shared_type));
