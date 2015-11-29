@@ -9,7 +9,6 @@
 
 namespace test
 {
-
 	//Datastructures Library Test
 	class DatastructuresLibraryTest: public libraryTests
 	{
