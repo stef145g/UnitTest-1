@@ -1,4 +1,4 @@
-//Confirmed Working 10/29/2015
+//Confirmed Working 12/20/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef TEST_SUITE_CPP
@@ -36,21 +36,56 @@ using namespace test;
 			{
 				os::smart_ptr<exception> grabbed_exception;
 				it->getData()->logBegin();
-				try
-				{
-                    testsRun++;
-					it->getData()->test();
-				}
-				catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
-				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
-				catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("TestSuite.cpp, testSuite::runTests()"),shared_type);}
+                testsRun++;
+                
+                //Setup
+                try
+                {
+                    it->getData()->setupTest();
+                }
+                catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
+                catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(new exception(e2),os::shared_type);}
+                catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("TestSuite.cpp, testSuite::runTests() (setup)"),shared_type);}
+                
+                //Only run test and teardown if the test was successful
+                if(!grabbed_exception)
+                {
+                    //Run Test
+                    try
+                    {
+                        it->getData()->test();
+                    }
+                    catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
+                    catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(new exception(e2),os::shared_type);}
+                    catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("TestSuite.cpp, testSuite::runTests() (test)"),shared_type);}
+                
+                    //Teardown
+                    if(grabbed_exception)
+                    {
+                        try
+                        {
+                            it->getData()->teardownTest();
+                        }
+                        catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
+                        catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(new exception(e2),os::shared_type);}
+                        catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("TestSuite.cpp, testSuite::runTests() (teardown)"),shared_type);}
+                    }
+                    else
+                    {
+                        try
+                        {
+                            it->getData()->teardownTest();
+                        }
+                        catch (...){}
+                    }
+                }
 
 				if(it->getData()->logEnd(grabbed_exception))
 					testsCompleted++;
 			}
 		}
 		catch (os::smart_ptr<exception> e1){throw e1;}
-		catch (exception& e2){throw os::smart_ptr<exception>(&e2);}
+        catch (exception& e2){throw os::smart_ptr<exception>(new exception(e2),os::shared_type);}
 		catch (...){throw os::smart_ptr<exception>(new test::unknownException("TestSuite.cpp, testSuite::runTests()"),shared_type);}
 	}
 	#define SUITE_DIV   "\t\t--------------------------------------------------"

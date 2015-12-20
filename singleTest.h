@@ -20,7 +20,10 @@ namespace test
 		singleTest(std::string tn);
         virtual ~singleTest(){}
 
+        virtual void setupTest() throw(os::smart_ptr<std::exception>) {}
 		virtual void test() throw(os::smart_ptr<std::exception>);
+        virtual void teardownTest() throw(os::smart_ptr<std::exception>) {}
+        
 		void logBegin();
 		bool logEnd(os::smart_ptr<std::exception> except = NULL);
 	};
@@ -31,6 +34,7 @@ namespace test
 	public:
 		singleFunctionTest(std::string tn, testFunction f);
         virtual ~singleFunctionTest(){}
+        
 		void test() throw(os::smart_ptr<std::exception>);
 	};
 }

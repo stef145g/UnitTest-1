@@ -1,4 +1,4 @@
-//Confirmed Working 11/7/2015
+//Confirmed Working 12/20/2015
 //Primary Author: Jonathan Bedard
 
 #ifndef TEST_SUITE_H
@@ -34,7 +34,7 @@ namespace test
 		
 		void pushTest(os::smart_ptr<singleTest> tst){testList.insert(tst);}
 		void removeTest(os::smart_ptr<singleTest> tst){testList.findDelete(tst);}
-		void pushTest(std::string str,testFunction tst){pushTest(os::smart_ptr<singleTest>(new singleFunctionTest(str,tst),os::shared_type));}
+		virtual void pushTest(std::string str,testFunction tst){pushTest(os::smart_ptr<singleTest>(new singleFunctionTest(str,tst),os::shared_type));}
 
 		bool operator==(const testSuite& lt) const {return suiteName==lt.suiteName;}
 		bool operator>(const testSuite& lt) const {return suiteName>lt.suiteName;}
