@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 1/4/2016
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_CPP
@@ -33,8 +33,10 @@ using namespace test;
 	static void endTest()
 	{
 		//For testing sanity
-		#ifdef WIN32
+		#ifdef _WIN32
+		#if _DEBUG
 		system("pause");
+		#endif
 		#endif
 	}
 	//Ends tests, logging the error

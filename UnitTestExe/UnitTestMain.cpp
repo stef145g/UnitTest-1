@@ -1,4 +1,4 @@
-//Confirmed Working 10/25/2015
+//Confirmed Working 1/4/2016
 //Primary Author: Jonathan Bedard
 
 #ifndef UNIT_TEST_CPP
@@ -19,11 +19,12 @@ using namespace test;
 int main(int argc,char** argv)
 {
 	testInit();
-
 	startTests();
+
 	try
 	{
 		masterTestHolder::singleton()->runTests();
+
 	}
 	//Exception Catching
 	catch (os::smart_ptr<exception> e1)
@@ -42,6 +43,7 @@ int main(int argc,char** argv)
 		return -1;
 	}
 	endTestsSuccess();
+
 	return 0;
 }
 
