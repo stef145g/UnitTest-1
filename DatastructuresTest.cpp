@@ -1,4 +1,4 @@
-//Confirmed Working 1/13/2016
+//Confirmed Working 1/14/2016
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -1389,7 +1389,57 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
 	//Dot product
+	void vector2dDotProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dDotProductTest()";
+		vector2d_d v1(4,8);
+		vector2d_d v2(-3,10);
+
+		if(v1.dotProduct(v2)!=68)
+			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+		v1(0,1);
+		v2(1,0);
+		if(v1.dotProduct(v2)!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+	}
+	void vector3dDotProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dDotProductTest()";
+		vector3d_d v1(4,8,3);
+		vector3d_d v2(-3,10,-4);
+
+		if(v1.dotProduct(v2)!=56)
+			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+		v1(0,1,0);
+		v2(0,0,1);
+		if(v1.dotProduct(v2)!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+	}
 	//Cross product
+	void vector3dCrossProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
+		vector3d_d v1(-1,7,4);
+		vector3d_d v2(-5,8,4);
+		vector3d_d ans(-4,-16,27);
+		vector3d_d d=v1*v2;
+
+		testout<<d.x<<", "<<d.y<<", "<<d.z<<std::endl;
+		d=ans;
+		testout<<d.x<<", "<<d.y<<", "<<d.z<<std::endl;
+
+		if(v1.crossProduct(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple cross-product failed",locString),shared_type);
+		if(v1*v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple * failed",locString),shared_type);
+		if((v2*v1)!=(-ans))
+			throw os::smart_ptr<std::exception>(new generalTestException("* reverse failed",locString),shared_type);
+		if((v1*=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple *= failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("*= after failed",locString),shared_type);
+
+	}
 
 /*================================================================
 	DatastructuresLibraryTest
@@ -1452,6 +1502,7 @@ using namespace test;
 			trc->pushTest("Comparison",&vector2dEqualityTest);
 			trc->pushTest("Addition",&vector2dAdditionTest);
 			trc->pushTest("Subtraction",&vector2dSubtractionTest);
+			trc->pushTest("Dot-Product",&vector2dDotProductTest);
 		pushSuite(trc);
 
 		//3-d vector tests
@@ -1460,6 +1511,8 @@ using namespace test;
 			trc->pushTest("Comparison",&vector3dEqualityTest);
 			trc->pushTest("Addition",&vector3dAdditionTest);
 			trc->pushTest("Subtraction",&vector3dSubtractionTest);
+			trc->pushTest("Dot-Product",&vector3dDotProductTest);
+			trc->pushTest("Cross-Product",&vector3dCrossProductTest);
 		pushSuite(trc);
 	}
 
