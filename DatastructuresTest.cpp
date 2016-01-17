@@ -1,4 +1,4 @@
-//Confirmed Working 1/14/2016
+//Confirmed Working 1/15/2016
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -1422,11 +1422,6 @@ using namespace test;
 		vector3d_d v1(-1,7,4);
 		vector3d_d v2(-5,8,4);
 		vector3d_d ans(-4,-16,27);
-		vector3d_d d=v1*v2;
-
-		testout<<d.x<<", "<<d.y<<", "<<d.z<<std::endl;
-		d=ans;
-		testout<<d.x<<", "<<d.y<<", "<<d.z<<std::endl;
 
 		if(v1.crossProduct(v2)!=ans)
 			throw os::smart_ptr<std::exception>(new generalTestException("Simple cross-product failed",locString),shared_type);
