@@ -1,4 +1,4 @@
-//Confirmed Working 11/21/2015
+//Confirmed Working 1/15/2016
 //Primary Author: Jonathan Bedard
 
 #ifndef DATASTRUCTURES_TEST_CPP
@@ -1109,6 +1109,334 @@ using namespace test;
     }
 
 /*================================================================
+	Vector Tests
+ ================================================================*/
+
+	//Tests the copy constructor and equality constructor
+	void vector2dConstructorTest()throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dConstructorTest()";
+		vector2d_d v1;
+		
+		//Test default init values
+		if(v1.x!=0 || v1.y!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector default init failed",locString),shared_type);
+
+		//Tests the value init
+		vector2d_d v2(.5,1.5);
+		if(v2.x!=.5 || v2.y!=1.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector init failed",locString),shared_type);
+
+		//Tests the copy constructor
+		vector2d_d v3(v2);
+		if(v3.x!=.5 || v3.y!=1.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+		v1=v3;
+		if(v1.x!=.5 || v1.y!=1.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+	}
+	void vector3dConstructorTest()throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dConstructorTest()";
+		vector3d_d v1;
+		
+		//Test default init values
+		if(v1.x!=0 || v1.y!=0 || v1.z!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector default init failed",locString),shared_type);
+
+		//Tests the value init
+		vector3d_d v2(.5,1.5,2.5);
+		if(v2.x!=.5 || v2.y!=1.5 || v2.z!=2.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector init failed",locString),shared_type);
+
+		//Tests the copy constructor
+		vector3d_d v3(v2);
+		if(v3.x!=.5 || v3.y!=1.5 || v3.z!=2.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+		v1=v3;
+		if(v1.x!=.5 || v1.y!=1.5 || v1.z!=2.5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector equals init failed",locString),shared_type);
+
+		//Tests the 2d constructor
+		vector2d_d t(1,2);
+		vector3d_d v4(t);
+		if(v4.x!=1 || v4.y!=2 || v4.z !=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Vector 2d init failed",locString),shared_type);
+	}
+	//Tests equality functions
+	void vector2dEqualityTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dEqualityTest()";
+
+		for(int i=0;i<30;i++)
+		{
+			vector2d_16 v1(rand(),rand());
+			vector2d_16 v2(rand(),rand());
+			if(i==0)
+			{
+				v1=vector2d_16();
+				v2=vector2d_16();
+			}
+			
+			//Find type
+			int v=-1;
+			if(v1.x>v2.x) v=1;
+			else if(v1.x==v2.x && v1.y>v2.y) v=1;
+			else if(v1.x==v2.x && v1.y==v2.y) v=0;
+
+			if(v!=v1.compare(v2))
+				throw os::smart_ptr<std::exception>(new generalTestException("Compare failed.  Cycle: "+to_string(i),locString),shared_type);
+			
+			//Test all cases
+			if(v!=0 && v1==v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::smart_ptr<std::exception>(new generalTestException("> failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::smart_ptr<std::exception>(new generalTestException(">= failed.  Cycle: "+to_string(i),locString),shared_type);
+		}
+	}
+	void vector3dEqualityTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dEqualityTest()";
+
+		for(int i=0;i<30;i++)
+		{
+			vector3d_16 v1(rand(),rand(),rand());
+			vector3d_16 v2(rand(),rand(),rand());
+			if(i==0)
+			{
+				v1=vector3d_16();
+				v2=vector3d_16();
+			}
+			
+			//Find type
+			int v=-1;
+			if(v1.x>v2.x) v=1;
+			else if(v1.x==v2.x && v1.y>v2.y) v=1;
+			else if(v1.x==v2.x && v1.y==v2.y) v=0;
+
+			if(v!=v1.compare(v2))
+				throw os::smart_ptr<std::exception>(new generalTestException("Compare failed.  Cycle: "+to_string(i),locString),shared_type);
+			
+			//Test all cases
+			if(v!=0 && v1==v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::smart_ptr<std::exception>(new generalTestException("> failed.  Cycle: "+to_string(i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::smart_ptr<std::exception>(new generalTestException(">= failed.  Cycle: "+to_string(i),locString),shared_type);
+		}
+	}
+	//Addition
+	void vector2dAdditionTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dAdditionTest()";
+
+		//Simple addition
+		vector2d_d v1(3,9);
+		vector2d_d v2(7,2);
+		vector2d_d ans(10,11);
+
+		if(v1.add(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple addition failed",locString),shared_type);
+		if(v1+v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple + failed",locString),shared_type);
+		if(v2+v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("+ reverse failed",locString),shared_type);
+		if((v1+=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple += failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("+= after failed",locString),shared_type);
+
+		//Increment and decrement
+		vector2d_d raw(0,1);
+		raw++;
+		if(raw.x!=0 && raw.y!=2)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+		++raw;
+		if(raw.x!=0 && raw.y!=3)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+		
+		raw=vector2d_d(3,4);
+		if(raw.length()!=5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+		raw++;
+		if(raw.length()!=6)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment failed",locString),shared_type);
+		raw++;
+		if(raw.length()!=7)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
+	}
+	void vector3dAdditionTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dAdditionTest()";
+
+		//Simple addition
+		vector3d_d v1(3,9,4);
+		vector3d_d v2(7,2,1);
+		vector3d_d ans(10,11,5);
+
+		if(v1.add(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple addition failed",locString),shared_type);
+		if(v1+v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple + failed",locString),shared_type);
+		if(v2+v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("+ reverse failed",locString),shared_type);
+		if((v1+=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple += failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("+= after failed",locString),shared_type);
+
+		//Increment and decrement
+		vector3d_d raw(0,1,0);
+		raw++;
+		if(raw.x!=0 || raw.y!=2 || raw.z!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+		++raw;
+		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+		
+		raw=vector3d_d(1,1,1);
+		if(raw.length()!=sqrt(3))
+			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+		raw++;
+
+		if(raw.length() < sqrt(3)+.9 || raw.length() > sqrt(3)+1.1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment failed",locString),shared_type);
+		raw++;
+		if(raw.length() < sqrt(3)+1.9 || raw.length() > sqrt(3)+2.1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
+	}
+	//Subtraction
+	void vector2dSubtractionTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dSubtractionTest()";
+
+		//Simple addition
+		vector2d_d v1(3,9);
+		vector2d_d v2(7,2);
+		vector2d_d ans(-4,7);
+
+		if(v1.subtract(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple subtract failed",locString),shared_type);
+		if(v1-v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple - failed",locString),shared_type);
+		if((v2-v1) != (-ans))
+			throw os::smart_ptr<std::exception>(new generalTestException("- reverse failed",locString),shared_type);
+		if((v1-=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple -= failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("-= after failed",locString),shared_type);
+
+		//Increment and decrement
+		vector2d_d raw(0,5);
+		raw--;
+		if(raw.x!=0 && raw.y!=4)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple decrement failed",locString),shared_type);
+		--raw;
+		if(raw.x!=0 && raw.y!=3)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple decrement (2) failed",locString),shared_type);
+		
+		raw=vector2d_d(3,4);
+		if(raw.length()!=5)
+			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+		raw--;
+		if(raw.length()!=4)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement failed",locString),shared_type);
+		raw--;
+		if(raw.length()!=3)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+	}
+	void vector3dSubtractionTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dSubtractionTest()";
+
+		//Simple addition
+		vector3d_d v1(3,9,4);
+		vector3d_d v2(7,2,1);
+		vector3d_d ans(-4,7,3);
+
+		if(v1.subtract(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple subtraction failed",locString),shared_type);
+		if(v1-v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple - failed",locString),shared_type);
+		if((v2-v1)!=(-ans))
+			throw os::smart_ptr<std::exception>(new generalTestException("- reverse failed",locString),shared_type);
+		if((v1-=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple -= failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("-= after failed",locString),shared_type);
+
+		//Increment and decrement
+		vector3d_d raw(0,5,0);
+		raw--;
+		if(raw.x!=0 || raw.y!=4 || raw.z!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+		--raw;
+		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+		
+		raw=vector3d_d(4,4,4);
+		if(raw.length()!=sqrt(3*16))
+			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+		raw--;
+
+		if(raw.length() > sqrt(3*16)-.9 || raw.length() < sqrt(3*16)-1.1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement failed",locString),shared_type);
+		raw--;
+		if(raw.length() > sqrt(3*16)-1.9 || raw.length() < sqrt(3*16)-2.1)
+			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+	}
+	//Dot product
+	void vector2dDotProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector2dDotProductTest()";
+		vector2d_d v1(4,8);
+		vector2d_d v2(-3,10);
+
+		if(v1.dotProduct(v2)!=68)
+			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+		v1(0,1);
+		v2(1,0);
+		if(v1.dotProduct(v2)!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+	}
+	void vector3dDotProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dDotProductTest()";
+		vector3d_d v1(4,8,3);
+		vector3d_d v2(-3,10,-4);
+
+		if(v1.dotProduct(v2)!=56)
+			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+		v1(0,1,0);
+		v2(0,0,1);
+		if(v1.dotProduct(v2)!=0)
+			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+	}
+	//Cross product
+	void vector3dCrossProductTest() throw(os::smart_ptr<std::exception>)
+	{
+		std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
+		vector3d_d v1(-1,7,4);
+		vector3d_d v2(-5,8,4);
+		vector3d_d ans(-4,-16,27);
+
+		if(v1.crossProduct(v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple cross-product failed",locString),shared_type);
+		if(v1*v2!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple * failed",locString),shared_type);
+		if((v2*v1)!=(-ans))
+			throw os::smart_ptr<std::exception>(new generalTestException("* reverse failed",locString),shared_type);
+		if((v1*=v2)!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("Simple *= failed",locString),shared_type);
+		if(v1!=ans)
+			throw os::smart_ptr<std::exception>(new generalTestException("*= after failed",locString),shared_type);
+
+	}
+
+/*================================================================
 	DatastructuresLibraryTest
 ================================================================*/
 
@@ -1162,6 +1490,25 @@ using namespace test;
             trc->pushTest("Advanced Subtraction",&matrixAdvancedSubtractionTest);
             trc->pushTest("Advanced Dot Product",&matrixAdvancedDotProductTest);
         pushSuite(trc);
+
+		//2-d vector tests
+		trc = smart_ptr<testSuite>(new testSuite("2-d Vector"),shared_type);
+			trc->pushTest("Constructor",&vector2dConstructorTest);
+			trc->pushTest("Comparison",&vector2dEqualityTest);
+			trc->pushTest("Addition",&vector2dAdditionTest);
+			trc->pushTest("Subtraction",&vector2dSubtractionTest);
+			trc->pushTest("Dot-Product",&vector2dDotProductTest);
+		pushSuite(trc);
+
+		//3-d vector tests
+		trc = smart_ptr<testSuite>(new testSuite("3-d Vector"),shared_type);
+			trc->pushTest("Constructor",&vector3dConstructorTest);
+			trc->pushTest("Comparison",&vector3dEqualityTest);
+			trc->pushTest("Addition",&vector3dAdditionTest);
+			trc->pushTest("Subtraction",&vector3dSubtractionTest);
+			trc->pushTest("Dot-Product",&vector3dDotProductTest);
+			trc->pushTest("Cross-Product",&vector3dCrossProductTest);
+		pushSuite(trc);
 	}
 
 #endif
