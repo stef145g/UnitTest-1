@@ -1,11 +1,17 @@
-\section{Unit Test} \label{sec:unit-test}
+\part{Unit Test Library} \label{sec:unit-test}
 
-\tab{The UnitTest library contains classes which preform automated unit tests while a project is under development.  Utilizing C++ exceptions, the UnitTest library separates its test battery into libraries tested, suites in libraries and tests in suites.  The UnitTest library iterates through instantiated libraries running every test suite in the library.}
+\chapter{Introduction}
 
-	\subsection{Datastructures Testing} \label{subsec:datastructures-testing}
+The UnitTest library contains classes which preform automated unit tests while a project is under development.  Utilizing C++ exceptions, the UnitTest library separates its test battery into libraries tested, suites in libraries and tests in suites.  The UnitTest library iterates through instantiated libraries running every test suite in the library.
+
+	\section{Namespace test}
+
+	\section{Datastructures Testing} \label{subsec:datastructures-testing}
 	
-	\tab{The Datastructures library is rigorously unit tested by the UnitTest library, and the Datastructures unit tests are automatically included in any system unit test unless specifically removed.  The Datastructures UnitTests are particularly important because the Datastructures library serves as a base for memory management and data organization.  These tests fall broadly into two categories: deterministic and random.}\\
+	The Datastructures library is rigorously unit tested by the UnitTest library, and the Datastructures unit tests are automatically included in any system unit test unless specifically removed.  The Datastructures UnitTests are particularly important because the Datastructures library serves as a base for memory management and data organization.  These tests fall broadly into two categories: deterministic and random.
 	
-	Deterministic tests preform the exact same test every iteration.  Deterministic tests are used to ensure that specific functions and operators are returning expected data.  Deterministic tests don't merely identify the existence of an error, but usually identify the precise nature of the error as well.\\
+	Deterministic tests preform the exact same test every iteration.  Deterministic tests are used to ensure that specific functions and operators are returning expected data.  Deterministic tests don't merely identify the existence of an error, but usually identify the precise nature of the error as well.
 	
 	Random tests use a random number generator to preform a unique test with every iteration.  This allows unit tests to, over time, catch edge cases with complex data structures.  In contrast to deterministic tests, random testing will usually not identify the precise nature of the error.
+
+	Note that as a general rule, the implementation of tests is not documented.  The location of test suites is documented, through both .h and .cpp files, but the classes and functions which make up these tests are not included.
