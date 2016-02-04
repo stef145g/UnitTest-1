@@ -1,0 +1,119 @@
+\section{test\+:\+:master\+Test\+Holder Class Reference}
+\label{classtest_1_1masterTestHolder}\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bf $\sim$master\+Test\+Holder} ()
+\item 
+bool {\bf run\+Tests} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
+\item 
+int {\bf get\+Num\+Libs} () const 
+\item 
+int {\bf get\+Num\+Success} () const 
+\item 
+int {\bf get\+Num\+Run} () const 
+\item 
+void {\bf push\+Library} (os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$ lib)
+\item 
+void {\bf remove\+Library} (os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$ lib)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static os\+::smart\+\_\+ptr$<$ {\bf master\+Test\+Holder} $>$ {\bf singleton} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf master\+Test\+Holder} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+os\+::smart\+Set$<$ {\bf library\+Tests} $>$ {\bf library\+List}
+\item 
+int {\bf libs\+Completed}
+\item 
+int {\bf libs\+Run}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!master\+Test\+Holder@{master\+Test\+Holder}}
+\index{master\+Test\+Holder@{master\+Test\+Holder}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{master\+Test\+Holder()}]{\setlength{\rightskip}{0pt plus 5cm}master\+Test\+Holder\+::master\+Test\+Holder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a764aa659aa29e6d2a5e7efe21dc5574c}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!````~master\+Test\+Holder@{$\sim$master\+Test\+Holder}}
+\index{````~master\+Test\+Holder@{$\sim$master\+Test\+Holder}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{$\sim$master\+Test\+Holder()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::master\+Test\+Holder\+::$\sim$master\+Test\+Holder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1masterTestHolder_aaf427e8512f2c6bbcda3e9edd5c3715f}
+
+
+\subsection{Member Function Documentation}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Libs@{get\+Num\+Libs}}
+\index{get\+Num\+Libs@{get\+Num\+Libs}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{get\+Num\+Libs() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::get\+Num\+Libs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a035a252c8a5d91097f9effa4fa9b5bbf}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Run@{get\+Num\+Run}}
+\index{get\+Num\+Run@{get\+Num\+Run}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{get\+Num\+Run() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::get\+Num\+Run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_abfcdad14cec7416c42f8072c6e7f7c71}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Success@{get\+Num\+Success}}
+\index{get\+Num\+Success@{get\+Num\+Success}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{get\+Num\+Success() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::get\+Num\+Success (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a574ef8cce605e4e87508632a7c1dd51f}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!push\+Library@{push\+Library}}
+\index{push\+Library@{push\+Library}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{push\+Library(os\+::smart\+\_\+ptr$<$ library\+Tests $>$ lib)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::master\+Test\+Holder\+::push\+Library (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$}]{lib}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a87a4291097480a083b8b190962f8e24c}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!remove\+Library@{remove\+Library}}
+\index{remove\+Library@{remove\+Library}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{remove\+Library(os\+::smart\+\_\+ptr$<$ library\+Tests $>$ lib)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::master\+Test\+Holder\+::remove\+Library (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$}]{lib}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a59b551ee152e99eb6a0f0396691aa589}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!run\+Tests@{run\+Tests}}
+\index{run\+Tests@{run\+Tests}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{run\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}bool master\+Test\+Holder\+::run\+Tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) }\label{classtest_1_1masterTestHolder_ad28acb0ee585a7fedf38fb932670d90e}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!singleton@{singleton}}
+\index{singleton@{singleton}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{singleton()}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+\_\+ptr$<$ {\bf master\+Test\+Holder} $>$ master\+Test\+Holder\+::singleton (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classtest_1_1masterTestHolder_a4e05485b4045b2d46d526ed305ba36d1}
+
+
+\subsection{Member Data Documentation}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!library\+List@{library\+List}}
+\index{library\+List@{library\+List}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{library\+List}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+Set$<${\bf library\+Tests}$>$ test\+::master\+Test\+Holder\+::library\+List\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a13a6ee05f589d14b8e7145f92a789152}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!libs\+Completed@{libs\+Completed}}
+\index{libs\+Completed@{libs\+Completed}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{libs\+Completed}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::libs\+Completed\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_ac14a4635bd148a1e5cafe42905354cc9}
+\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!libs\+Run@{libs\+Run}}
+\index{libs\+Run@{libs\+Run}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+\subsubsection[{libs\+Run}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::libs\+Run\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a6f0d70a86085ad77c2b2d112e4dbe323}

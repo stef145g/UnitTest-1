@@ -1,0 +1,178 @@
+\section{test\+:\+:library\+Tests Class Reference}
+\label{classtest_1_1libraryTests}\index{test\+::library\+Tests@{test\+::library\+Tests}}
+Inheritance diagram for test\+:\+:library\+Tests\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtest_1_1libraryTests}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf library\+Tests} (std\+::string ln)
+\item 
+virtual {\bf $\sim$library\+Tests} ()
+\item 
+void {\bf run\+Tests} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
+\item 
+void {\bf log\+Begin} ()
+\item 
+bool {\bf log\+End} (os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=N\+U\+LL)
+\item 
+int {\bf get\+Num\+Suites} () const 
+\item 
+int {\bf get\+Num\+Success} () const 
+\item 
+int {\bf get\+Num\+Run} () const 
+\item 
+void {\bf push\+Suite} (os\+::smart\+\_\+ptr$<$ {\bf test\+Suite} $>$ suite)
+\item 
+void {\bf remove\+Suite} (os\+::smart\+\_\+ptr$<$ {\bf test\+Suite} $>$ suite)
+\item 
+bool {\bf operator==} (const {\bf library\+Tests} \&lt) const 
+\item 
+bool {\bf operator$>$} (const {\bf library\+Tests} \&lt) const 
+\item 
+bool {\bf operator$<$} (const {\bf library\+Tests} \&lt) const 
+\item 
+bool {\bf operator$>$=} (const {\bf library\+Tests} \&lt) const 
+\item 
+bool {\bf operator$<$=} (const {\bf library\+Tests} \&lt) const 
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string {\bf lib\+Name}
+\item 
+os\+::smart\+Set$<$ {\bf test\+Suite} $>$ {\bf suite\+List}
+\item 
+int {\bf suites\+Completed}
+\item 
+int {\bf suites\+Run}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!library\+Tests@{library\+Tests}}
+\index{library\+Tests@{library\+Tests}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{library\+Tests(std\+::string ln)}]{\setlength{\rightskip}{0pt plus 5cm}library\+Tests\+::library\+Tests (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{ln}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1libraryTests_ab1ea8e845c1cf8a92bd75bf96ada9272}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!````~library\+Tests@{$\sim$library\+Tests}}
+\index{````~library\+Tests@{$\sim$library\+Tests}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{$\sim$library\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::library\+Tests\+::$\sim$library\+Tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1libraryTests_a7a09dc378a8c09c6b236000743d85d76}
+
+
+\subsection{Member Function Documentation}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!get\+Num\+Run@{get\+Num\+Run}}
+\index{get\+Num\+Run@{get\+Num\+Run}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{get\+Num\+Run() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::library\+Tests\+::get\+Num\+Run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_ab2b9f4437af22e028cb8017fc87fdf80}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!get\+Num\+Success@{get\+Num\+Success}}
+\index{get\+Num\+Success@{get\+Num\+Success}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{get\+Num\+Success() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::library\+Tests\+::get\+Num\+Success (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_aad33e30653eaafc53c8e6dfeb88973c1}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!get\+Num\+Suites@{get\+Num\+Suites}}
+\index{get\+Num\+Suites@{get\+Num\+Suites}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{get\+Num\+Suites() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::library\+Tests\+::get\+Num\+Suites (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_aafeb48005f3a81013855d81a56f7c4e1}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!log\+Begin@{log\+Begin}}
+\index{log\+Begin@{log\+Begin}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{log\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}void library\+Tests\+::log\+Begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1libraryTests_a278425918a6b1a37df4f8294702b2cf1}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!log\+End@{log\+End}}
+\index{log\+End@{log\+End}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{log\+End(os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}bool library\+Tests\+::log\+End (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ std\+::exception $>$}]{except = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1libraryTests_af73dee89fd88600e5a42aadeb527db97}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{operator$<$(const library\+Tests \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::library\+Tests\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf library\+Tests} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_a3d38fc0fe6695c7db3f36d50731fc0f0}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{operator$<$=(const library\+Tests \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::library\+Tests\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf library\+Tests} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_aa023fef5aee99938b7776498114f45be}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!operator==@{operator==}}
+\index{operator==@{operator==}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{operator==(const library\+Tests \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::library\+Tests\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf library\+Tests} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_ac9d8c2261c3ff24223e5f732c63fb47f}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{operator$>$(const library\+Tests \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::library\+Tests\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf library\+Tests} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_a5bde6dbab37c6ee65a5718e79db2aad5}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{operator$>$=(const library\+Tests \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::library\+Tests\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf library\+Tests} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_a0d7fbe10441bcc71df6b942f630a933d}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!push\+Suite@{push\+Suite}}
+\index{push\+Suite@{push\+Suite}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{push\+Suite(os\+::smart\+\_\+ptr$<$ test\+Suite $>$ suite)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::library\+Tests\+::push\+Suite (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf test\+Suite} $>$}]{suite}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_aec4f873ce29368b53bd4fe64348e315f}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!remove\+Suite@{remove\+Suite}}
+\index{remove\+Suite@{remove\+Suite}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{remove\+Suite(os\+::smart\+\_\+ptr$<$ test\+Suite $>$ suite)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::library\+Tests\+::remove\+Suite (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf test\+Suite} $>$}]{suite}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1libraryTests_a819fd58347cfd7c669fd891e2dc7fbb7}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!run\+Tests@{run\+Tests}}
+\index{run\+Tests@{run\+Tests}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{run\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}void library\+Tests\+::run\+Tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) }\label{classtest_1_1libraryTests_aa572974894c39f343f4ed0b185f21cdc}
+
+
+\subsection{Member Data Documentation}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!lib\+Name@{lib\+Name}}
+\index{lib\+Name@{lib\+Name}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{lib\+Name}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::library\+Tests\+::lib\+Name\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1libraryTests_ab7911a8c2742bb39f7e41580ef68122c}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!suite\+List@{suite\+List}}
+\index{suite\+List@{suite\+List}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{suite\+List}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+Set$<${\bf test\+Suite}$>$ test\+::library\+Tests\+::suite\+List\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1libraryTests_ae5817ecf4c87d44adbc41366ef59d813}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!suites\+Completed@{suites\+Completed}}
+\index{suites\+Completed@{suites\+Completed}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{suites\+Completed}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::library\+Tests\+::suites\+Completed\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1libraryTests_a652154e46e18766372f78e13bd10cc61}
+\index{test\+::library\+Tests@{test\+::library\+Tests}!suites\+Run@{suites\+Run}}
+\index{suites\+Run@{suites\+Run}!test\+::library\+Tests@{test\+::library\+Tests}}
+\subsubsection[{suites\+Run}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::library\+Tests\+::suites\+Run\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1libraryTests_ad384d1a87318cb51b02a8be3102288af}
