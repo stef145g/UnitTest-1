@@ -1,52 +1,66 @@
 \section{test\+:\+:master\+Test\+Holder Class Reference}
 \label{classtest_1_1masterTestHolder}\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
+
+
+Unit Test singleton.  
+
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 virtual {\bf $\sim$master\+Test\+Holder} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
 bool {\bf run\+Tests} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
-\item 
+\begin{DoxyCompactList}\small\item\em Runs all of the library tests. \end{DoxyCompactList}\item 
 int {\bf get\+Num\+Libs} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Number of libraries in the set. \end{DoxyCompactList}\item 
 int {\bf get\+Num\+Success} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Number of libraries successfully completed. \end{DoxyCompactList}\item 
 int {\bf get\+Num\+Run} () const 
-\item 
+\begin{DoxyCompactList}\small\item\em Number of libraries attempted to run. \end{DoxyCompactList}\item 
 void {\bf push\+Library} (os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$ lib)
-\item 
+\begin{DoxyCompactList}\small\item\em Add library to the set. \end{DoxyCompactList}\item 
 void {\bf remove\+Library} (os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$ lib)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Remove library from the set. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static os\+::smart\+\_\+ptr$<$ {\bf master\+Test\+Holder} $>$ {\bf singleton} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Singleton access. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 {\bf master\+Test\+Holder} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Private constructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 os\+::smart\+Set$<$ {\bf library\+Tests} $>$ {\bf library\+List}
-\item 
+\begin{DoxyCompactList}\small\item\em Set of library tests. \end{DoxyCompactList}\item 
 int {\bf libs\+Completed}
-\item 
+\begin{DoxyCompactList}\small\item\em Number of libraries successfully completed. \end{DoxyCompactList}\item 
 int {\bf libs\+Run}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Number of libraries attempted to run. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Unit Test singleton. 
+
+This class contains a set of library tests. Every library test must add itself to this class in-\/order to be tested. The \doxyref{test\+::master\+Test\+Holder\+::run\+Tests()}{p.}{classtest_1_1masterTestHolder_aaf3fe2e7899371abf2ad03505e8fcc7d} function runs all of the library tests. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!master\+Test\+Holder@{master\+Test\+Holder}}
 \index{master\+Test\+Holder@{master\+Test\+Holder}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
-\subsubsection[{master\+Test\+Holder()}]{\setlength{\rightskip}{0pt plus 5cm}master\+Test\+Holder\+::master\+Test\+Holder (
+\subsubsection[{master\+Test\+Holder()}]{\setlength{\rightskip}{0pt plus 5cm}test\+::master\+Test\+Holder\+::master\+Test\+Holder (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a764aa659aa29e6d2a5e7efe21dc5574c}
-\index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!````~master\+Test\+Holder@{$\sim$master\+Test\+Holder}}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a45cd6e2a7d148575329854e3eb8ad82a}
+
+
+Private constructor. 
+
+The \doxyref{test\+::master\+Test\+Holder}{p.}{classtest_1_1masterTestHolder} class is a singleton class. This constructor initializes the number of libraries completed and number of libraries run to 0. \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!````~master\+Test\+Holder@{$\sim$master\+Test\+Holder}}
 \index{````~master\+Test\+Holder@{$\sim$master\+Test\+Holder}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{$\sim$master\+Test\+Holder()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::master\+Test\+Holder\+::$\sim$master\+Test\+Holder (
 \begin{DoxyParamCaption}
@@ -54,6 +68,10 @@ int {\bf libs\+Run}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1masterTestHolder_aaf427e8512f2c6bbcda3e9edd5c3715f}
 
+
+Virtual destructor. 
+
+Destructor must be virtual, if an object of this type is deleted, the destructor of the type which inherits this class should be called. 
 
 \subsection{Member Function Documentation}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Libs@{get\+Num\+Libs}}
@@ -63,6 +81,13 @@ int {\bf libs\+Run}
 {}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a035a252c8a5d91097f9effa4fa9b5bbf}
+
+
+Number of libraries in the set. 
+
+\begin{DoxyReturn}{Returns}
+test\+::master\+Test\+Holder\+::library\+List.\+size() 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Run@{get\+Num\+Run}}
 \index{get\+Num\+Run@{get\+Num\+Run}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{get\+Num\+Run() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::get\+Num\+Run (
@@ -70,6 +95,13 @@ int {\bf libs\+Run}
 {}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_abfcdad14cec7416c42f8072c6e7f7c71}
+
+
+Number of libraries attempted to run. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::master\+Test\+Holder\+::libs\+Run}{p.}{classtest_1_1masterTestHolder_a6f0d70a86085ad77c2b2d112e4dbe323} 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!get\+Num\+Success@{get\+Num\+Success}}
 \index{get\+Num\+Success@{get\+Num\+Success}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{get\+Num\+Success() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::get\+Num\+Success (
@@ -77,6 +109,13 @@ int {\bf libs\+Run}
 {}
 \end{DoxyParamCaption}
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a574ef8cce605e4e87508632a7c1dd51f}
+
+
+Number of libraries successfully completed. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::master\+Test\+Holder\+::libs\+Completed}{p.}{classtest_1_1masterTestHolder_ac14a4635bd148a1e5cafe42905354cc9} 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!push\+Library@{push\+Library}}
 \index{push\+Library@{push\+Library}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{push\+Library(os\+::smart\+\_\+ptr$<$ library\+Tests $>$ lib)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::master\+Test\+Holder\+::push\+Library (
@@ -84,6 +123,20 @@ int {\bf libs\+Run}
 \item[{os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$}]{lib}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a87a4291097480a083b8b190962f8e24c}
+
+
+Add library to the set. 
+
+Adds a \doxyref{test\+::library\+Tests}{p.}{classtest_1_1libraryTests} to the set of library tests to be tested.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lib} & Library test to be added to set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!remove\+Library@{remove\+Library}}
 \index{remove\+Library@{remove\+Library}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{remove\+Library(os\+::smart\+\_\+ptr$<$ library\+Tests $>$ lib)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::master\+Test\+Holder\+::remove\+Library (
@@ -91,29 +144,73 @@ int {\bf libs\+Run}
 \item[{os\+::smart\+\_\+ptr$<$ {\bf library\+Tests} $>$}]{lib}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1masterTestHolder_a59b551ee152e99eb6a0f0396691aa589}
+
+
+Remove library from the set. 
+
+Removes a \doxyref{test\+::library\+Tests}{p.}{classtest_1_1libraryTests} from the set of library tests to be tested.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lib} & Library test to be removed from the set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!run\+Tests@{run\+Tests}}
 \index{run\+Tests@{run\+Tests}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
-\subsubsection[{run\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}bool master\+Test\+Holder\+::run\+Tests (
+\subsubsection[{run\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::master\+Test\+Holder\+::run\+Tests (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) }\label{classtest_1_1masterTestHolder_ad28acb0ee585a7fedf38fb932670d90e}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) }\label{classtest_1_1masterTestHolder_aaf3fe2e7899371abf2ad03505e8fcc7d}
+
+
+Runs all of the library tests. 
+
+Runs all library tests bound to this class. Each library should manage its own errors, but it is possible that this function will throw an error of type os\+::smart\+\_\+ptr$<$std\+::exception$>$.
+
+\begin{DoxyReturn}{Returns}
+True if all the tests were successful, else, false 
+\end{DoxyReturn}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!singleton@{singleton}}
 \index{singleton@{singleton}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
-\subsubsection[{singleton()}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+\_\+ptr$<$ {\bf master\+Test\+Holder} $>$ master\+Test\+Holder\+::singleton (
+\subsubsection[{singleton()}]{\setlength{\rightskip}{0pt plus 5cm}static os\+::smart\+\_\+ptr$<${\bf master\+Test\+Holder}$>$ test\+::master\+Test\+Holder\+::singleton (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\label{classtest_1_1masterTestHolder_a4e05485b4045b2d46d526ed305ba36d1}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classtest_1_1masterTestHolder_a87c6badf926844e3a9ebe9876147d32f}
+
+
+Singleton access. 
+
+This function constructs the single reference to the \doxyref{test\+::master\+Test\+Holder}{p.}{classtest_1_1masterTestHolder} class if needed. Then, it returns a pointer to this single reference.
+
+\begin{DoxyReturn}{Returns}
+Singleton reference to \doxyref{test\+::master\+Test\+Holder}{p.}{classtest_1_1masterTestHolder} 
+\end{DoxyReturn}
 
 
 \subsection{Member Data Documentation}
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!library\+List@{library\+List}}
 \index{library\+List@{library\+List}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{library\+List}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+Set$<${\bf library\+Tests}$>$ test\+::master\+Test\+Holder\+::library\+List\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a13a6ee05f589d14b8e7145f92a789152}
+
+
+Set of library tests. 
+
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!libs\+Completed@{libs\+Completed}}
 \index{libs\+Completed@{libs\+Completed}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{libs\+Completed}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::libs\+Completed\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_ac14a4635bd148a1e5cafe42905354cc9}
+
+
+Number of libraries successfully completed. 
+
 \index{test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}!libs\+Run@{libs\+Run}}
 \index{libs\+Run@{libs\+Run}!test\+::master\+Test\+Holder@{test\+::master\+Test\+Holder}}
 \subsubsection[{libs\+Run}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::master\+Test\+Holder\+::libs\+Run\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1masterTestHolder_a6f0d70a86085ad77c2b2d112e4dbe323}
+
+
+Number of libraries attempted to run. 
+

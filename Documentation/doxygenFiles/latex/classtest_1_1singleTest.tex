@@ -1,5 +1,10 @@
 \section{test\+:\+:single\+Test Class Reference}
 \label{classtest_1_1singleTest}\index{test\+::single\+Test@{test\+::single\+Test}}
+
+
+Single unit test class.  
+
+
 Inheritance diagram for test\+:\+:single\+Test\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,34 +15,48 @@ Inheritance diagram for test\+:\+:single\+Test\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 {\bf single\+Test} (std\+::string tn)
-\item 
+\begin{DoxyCompactList}\small\item\em Single unit test constructor. \end{DoxyCompactList}\item 
 virtual {\bf $\sim$single\+Test} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
 virtual void {\bf setup\+Test} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
-\item 
+\begin{DoxyCompactList}\small\item\em Preforms any test set-\/up. \end{DoxyCompactList}\item 
 virtual void {\bf test} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
-\item 
+\begin{DoxyCompactList}\small\item\em Preforms core unit-\/test. \end{DoxyCompactList}\item 
 virtual void {\bf teardown\+Test} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
-\item 
+\begin{DoxyCompactList}\small\item\em Preforms any test tear-\/down. \end{DoxyCompactList}\item 
 void {\bf log\+Begin} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Prints out the name of the test. \end{DoxyCompactList}\item 
 bool {\bf log\+End} (os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=N\+U\+LL)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Logs errors for test. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 std\+::string {\bf test\+Name}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Name of unit test. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Single unit test class. 
+
+This class acts as the base class for all unit tests. It inherits from the os\+::ptr\+Comp class to allow it to be inserted into abstract data-\/structures. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{test\+::single\+Test@{test\+::single\+Test}!single\+Test@{single\+Test}}
 \index{single\+Test@{single\+Test}!test\+::single\+Test@{test\+::single\+Test}}
-\subsubsection[{single\+Test(std\+::string tn)}]{\setlength{\rightskip}{0pt plus 5cm}single\+Test\+::single\+Test (
+\subsubsection[{single\+Test(std\+::string tn)}]{\setlength{\rightskip}{0pt plus 5cm}test\+::single\+Test\+::single\+Test (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{tn}
 \end{DoxyParamCaption}
-)}\label{classtest_1_1singleTest_a057145c4649c195c47491dd776736d62}
+)}\label{classtest_1_1singleTest_a25137cf95d2bda31596b9cd71e8a7591}
+
+
+Single unit test constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tn} & Name of unit test \\
+\hline
+\end{DoxyParams}
 \index{test\+::single\+Test@{test\+::single\+Test}!````~single\+Test@{$\sim$single\+Test}}
 \index{````~single\+Test@{$\sim$single\+Test}!test\+::single\+Test@{test\+::single\+Test}}
 \subsubsection[{$\sim$single\+Test()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::single\+Test\+::$\sim$single\+Test (
@@ -47,21 +66,46 @@ std\+::string {\bf test\+Name}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1singleTest_a2fe44722bb8868907ebddb87c527922a}
 
 
+Virtual destructor. 
+
+Destructor must be virtual, if an object of this type is deleted, the destructor of the type which inherits this class should be called. 
+
 \subsection{Member Function Documentation}
 \index{test\+::single\+Test@{test\+::single\+Test}!log\+Begin@{log\+Begin}}
 \index{log\+Begin@{log\+Begin}!test\+::single\+Test@{test\+::single\+Test}}
-\subsubsection[{log\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}void single\+Test\+::log\+Begin (
+\subsubsection[{log\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::single\+Test\+::log\+Begin (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{classtest_1_1singleTest_a5f1453f15edb218029d1899bcdf4283a}
+)}\label{classtest_1_1singleTest_a211ffe4af052f4c4fbc977d60ec8ceec}
+
+
+Prints out the name of the test. 
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test\+::single\+Test@{test\+::single\+Test}!log\+End@{log\+End}}
 \index{log\+End@{log\+End}!test\+::single\+Test@{test\+::single\+Test}}
-\subsubsection[{log\+End(os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}bool single\+Test\+::log\+End (
+\subsubsection[{log\+End(os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::single\+Test\+::log\+End (
 \begin{DoxyParamCaption}
 \item[{os\+::smart\+\_\+ptr$<$ std\+::exception $>$}]{except = {\ttfamily NULL}}
 \end{DoxyParamCaption}
-)}\label{classtest_1_1singleTest_a59206ae98eef700879f8d9af4fe2c086}
+)}\label{classtest_1_1singleTest_a1febca79a14d6a1f8c94f336d59f6149}
+
+
+Logs errors for test. 
+
+If the passed exception is N\+U\+LL, no logging is preformed. Otherwise, the \char`\"{}what()\char`\"{} function of the exception is printed. This function return true if N\+U\+LL is passed as the exception.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em except} & Exception to be printed, N\+U\+LL by default \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if except is N\+U\+LL 
+\end{DoxyReturn}
 \index{test\+::single\+Test@{test\+::single\+Test}!setup\+Test@{setup\+Test}}
 \index{setup\+Test@{setup\+Test}!test\+::single\+Test@{test\+::single\+Test}}
 \subsubsection[{setup\+Test()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void test\+::single\+Test\+::setup\+Test (
@@ -69,6 +113,15 @@ std\+::string {\bf test\+Name}
 {}
 \end{DoxyParamCaption}
 ) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1singleTest_a51a46b19c47f17c8d95eb57579cf32c6}
+
+
+Preforms any test set-\/up. 
+
+This function is designed to preform any set-\/up a test requires. This is especially useful if a class of tests require the same set-\/up routine. This function assumes that the \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} will catch exceptions in this function if they are thrown.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test\+::single\+Test@{test\+::single\+Test}!teardown\+Test@{teardown\+Test}}
 \index{teardown\+Test@{teardown\+Test}!test\+::single\+Test@{test\+::single\+Test}}
 \subsubsection[{teardown\+Test()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void test\+::single\+Test\+::teardown\+Test (
@@ -76,16 +129,34 @@ std\+::string {\bf test\+Name}
 {}
 \end{DoxyParamCaption}
 ) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1singleTest_a3798eac5cdc1604310140edb37c1e890}
+
+
+Preforms any test tear-\/down. 
+
+This function is designed to preform any tear-\/down a test requires. This is especially useful if a class of tests require the same tear-\/down routine. This function assumes that the \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} will catch exceptions in this function if they are thrown.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test\+::single\+Test@{test\+::single\+Test}!test@{test}}
 \index{test@{test}!test\+::single\+Test@{test\+::single\+Test}}
-\subsubsection[{test()}]{\setlength{\rightskip}{0pt plus 5cm}void single\+Test\+::test (
+\subsubsection[{test()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void test\+::single\+Test\+::test (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [virtual]}}\label{classtest_1_1singleTest_a260dd0b4b6c13eb003267850a94b7357}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [virtual]}}\label{classtest_1_1singleTest_ac1db89aba5f272b0f4ecfcedd4aeb016}
 
 
-Reimplemented in {\bf ads\+Test$<$ ads\+Type, node\+Type $>$} \doxyref{}{p.}{classadsTest_a22a4cc47678566ab9b56066e2dcb9640}, and {\bf test\+::single\+Function\+Test} \doxyref{}{p.}{classtest_1_1singleFunctionTest_a14a9559e8c2ce281bf5462b433e4ef80}.
+Preforms core unit-\/test. 
+
+This function is designed to preform the actual unit test. This function assumes that the \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} will catch exceptions in this function if they are thrown.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+Reimplemented in {\bf test\+::single\+Function\+Test} \doxyref{}{p.}{classtest_1_1singleFunctionTest_aefc01958d3443a65c5c3db31bfa32901}.
 
 
 
@@ -93,3 +164,7 @@ Reimplemented in {\bf ads\+Test$<$ ads\+Type, node\+Type $>$} \doxyref{}{p.}{cla
 \index{test\+::single\+Test@{test\+::single\+Test}!test\+Name@{test\+Name}}
 \index{test\+Name@{test\+Name}!test\+::single\+Test@{test\+::single\+Test}}
 \subsubsection[{test\+Name}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::single\+Test\+::test\+Name\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1singleTest_a2d6a35482ac2ead767be46334f5a0c6e}
+
+
+Name of unit test. 
+

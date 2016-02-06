@@ -3,57 +3,64 @@
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class {\bf Datastructures\+Library\+Test}
-\item 
 class {\bf general\+Test\+Exception}
-\item 
+\begin{DoxyCompactList}\small\item\em Base class for test exceptions. \end{DoxyCompactList}\item 
 class {\bf library\+Tests}
-\item 
+\begin{DoxyCompactList}\small\item\em Library test group. \end{DoxyCompactList}\item 
 class {\bf master\+Test\+Holder}
-\item 
+\begin{DoxyCompactList}\small\item\em Unit Test singleton. \end{DoxyCompactList}\item 
 class {\bf null\+Function\+Exception}
-\item 
+\begin{DoxyCompactList}\small\item\em N\+U\+LL function exception class. \end{DoxyCompactList}\item 
 class {\bf single\+Function\+Test}
-\item 
+\begin{DoxyCompactList}\small\item\em Single unit test from function. \end{DoxyCompactList}\item 
 class {\bf single\+Test}
-\item 
+\begin{DoxyCompactList}\small\item\em Single unit test class. \end{DoxyCompactList}\item 
 class {\bf test\+Suite}
 \item 
 class {\bf unknown\+Exception}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Unknown exception class. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef void($\ast$ {\bf test\+Function}) ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Typedef for single test function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void {\bf start\+Tests} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Print out header for Unit Tests. \end{DoxyCompactList}\item 
 void {\bf end\+Tests\+Error} (os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except)
-\item 
+\begin{DoxyCompactList}\small\item\em End tests in error. \end{DoxyCompactList}\item 
 void {\bf end\+Tests\+Success} ()
-\item 
+\begin{DoxyCompactList}\small\item\em End tests successfully. \end{DoxyCompactList}\item 
 void {\bf test\+Init} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Test initialization. \end{DoxyCompactList}\item 
 std\+::ostream \& {\bf testout\+\_\+func} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Standard out object for test namespace. \end{DoxyCompactList}\item 
 std\+::ostream \& {\bf testerr\+\_\+func} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Standard error object for test namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 os\+::smart\+\_\+ptr$<$ std\+::ostream $>$ {\bf testout\+\_\+ptr}
-\item 
+\begin{DoxyCompactList}\small\item\em Standard out pointer for test namespace. \end{DoxyCompactList}\item 
 os\+::smart\+\_\+ptr$<$ std\+::ostream $>$ {\bf testerr\+\_\+ptr}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Standard error pointer for test namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Typedef Documentation}
 \index{test@{test}!test\+Function@{test\+Function}}
 \index{test\+Function@{test\+Function}!test@{test}}
 \subsubsection[{test\+Function}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ test\+::test\+Function) ()}\label{namespacetest_a2a3c06baa4dc676d33980548da392593}
+
+
+Typedef for single test function. 
+
+This typedef defines what a single test function looks like. For simplicity, a single unit test can be defined by a function of this type instead of inheriting from \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest}.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 
 
 \subsection{Function Documentation}
@@ -64,6 +71,20 @@ os\+::smart\+\_\+ptr$<$ std\+::ostream $>$ {\bf testerr\+\_\+ptr}
 \item[{os\+::smart\+\_\+ptr$<$ std\+::exception $>$}]{except}
 \end{DoxyParamCaption}
 )}\label{namespacetest_a6bc9449a8c42ced538a4e3e6e07591cd}
+
+
+End tests in error. 
+
+Prints out a global division block line of \textquotesingle{}=\textquotesingle{} characters, then the information provided in the exception passed to the function then another global division block
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em except} & Exception which caused the error \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test@{test}!end\+Tests\+Success@{end\+Tests\+Success}}
 \index{end\+Tests\+Success@{end\+Tests\+Success}!test@{test}}
 \subsubsection[{end\+Tests\+Success()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::end\+Tests\+Success (
@@ -71,6 +92,15 @@ os\+::smart\+\_\+ptr$<$ std\+::ostream $>$ {\bf testerr\+\_\+ptr}
 {}
 \end{DoxyParamCaption}
 )}\label{namespacetest_a76206bd2aed0180f7ae93213052b43c5}
+
+
+End tests successfully. 
+
+Prints out a global division block line of \textquotesingle{}=\textquotesingle{} characters, then the test results data provided by the \doxyref{test\+::master\+Test\+Holder}{p.}{classtest_1_1masterTestHolder} then another global division block
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test@{test}!start\+Tests@{start\+Tests}}
 \index{start\+Tests@{start\+Tests}!test@{test}}
 \subsubsection[{start\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::start\+Tests (
@@ -78,33 +108,68 @@ os\+::smart\+\_\+ptr$<$ std\+::ostream $>$ {\bf testerr\+\_\+ptr}
 {}
 \end{DoxyParamCaption}
 )}\label{namespacetest_ad561e4a077f364d4f3128a3ab5075269}
+
+
+Print out header for Unit Tests. 
+
+Prints out a global division block line of \textquotesingle{}=\textquotesingle{} characters, then \textquotesingle{}Unit Test Battery\textquotesingle{} and then another global division block.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test@{test}!testerr\+\_\+func@{testerr\+\_\+func}}
 \index{testerr\+\_\+func@{testerr\+\_\+func}!test@{test}}
-\subsubsection[{testerr\+\_\+func()}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream \& test\+::testerr\+\_\+func (
+\subsubsection[{testerr\+\_\+func()}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& test\+::testerr\+\_\+func (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{namespacetest_abf889b484302ed207c599a458079cc46}
-\index{test@{test}!test\+Init@{test\+Init}}
+)}\label{namespacetest_abd1c224afc75942e440f95c4857ccaa1}
+
+
+Standard error object for test namespace. 
+
+\#define statements allow the user to call this function with \char`\"{}test\+::testerr.\char`\"{} Logging is achieved by using \char`\"{}test\+::testerr\char`\"{} as one would use \char`\"{}std\+::cerr.\char`\"{} \index{test@{test}!test\+Init@{test\+Init}}
 \index{test\+Init@{test\+Init}!test@{test}}
 \subsubsection[{test\+Init()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::test\+Init (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}\label{namespacetest_a49ad88d87f61803e0262a9952273e080}
+
+
+Test initialization. 
+
+This function is re-\/implemented by each executable which uses the Unit\+Test library. This function is used to bind all of the library tests, except the Datastructures library test.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
 \index{test@{test}!testout\+\_\+func@{testout\+\_\+func}}
 \index{testout\+\_\+func@{testout\+\_\+func}!test@{test}}
-\subsubsection[{testout\+\_\+func()}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream \& test\+::testout\+\_\+func (
+\subsubsection[{testout\+\_\+func()}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& test\+::testout\+\_\+func (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{namespacetest_a53dd127f3dc62004852c340446d7d376}
+)}\label{namespacetest_a0ee1ec3a7613ee9569f0702ea4c5cf6d}
 
+
+Standard out object for test namespace. 
+
+\#define statements allow the user to call this function with \char`\"{}test\+::testout.\char`\"{} Logging is achieved by using \char`\"{}test\+::testout\char`\"{} as one would use \char`\"{}std\+::cout.\char`\"{} 
 
 \subsection{Variable Documentation}
 \index{test@{test}!testerr\+\_\+ptr@{testerr\+\_\+ptr}}
 \index{testerr\+\_\+ptr@{testerr\+\_\+ptr}!test@{test}}
 \subsubsection[{testerr\+\_\+ptr}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+\_\+ptr$<$std\+::ostream$>$ test\+::testerr\+\_\+ptr}\label{namespacetest_ac2d58455f522f430465681888440ecd7}
-\index{test@{test}!testout\+\_\+ptr@{testout\+\_\+ptr}}
+
+
+Standard error pointer for test namespace. 
+
+This std\+::ostream is used as standard error for the test namespace. This pointer can be swapped out to programmatically redirect standard error for the test namespace. \index{test@{test}!testout\+\_\+ptr@{testout\+\_\+ptr}}
 \index{testout\+\_\+ptr@{testout\+\_\+ptr}!test@{test}}
 \subsubsection[{testout\+\_\+ptr}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+\_\+ptr$<$std\+::ostream$>$ test\+::testout\+\_\+ptr}\label{namespacetest_a5e3b316726ab0544ab9e57cfff2bb07d}
+
+
+Standard out pointer for test namespace. 
+
+This std\+::ostream is used as standard out for the test namespace. This pointer can be swapped out to programmatically redirect standard out for the test namespace. 

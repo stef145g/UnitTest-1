@@ -1,6 +1,17 @@
-//Confirmed Working 1/4/2016
-//Primary Author: Jonathan Bedard
+/**
+ * @file   UnitTest.cpp
+ * @author Jonathan Bedard
+ * @date   2/4/2016
+ * @brief  Unit Test logging and global functions
+ * @bug No known bugs.
+ *
+ * Implements logging in the test namespace.  Implements
+ * a number of global test functions used for initializing
+ * and ending a Unit Test battery.
+ */
 
+ ///@cond INTERNAL
+ 
 #ifndef UNIT_TEST_CPP
 #define UNIT_TEST_CPP
 
@@ -68,3 +79,5 @@ using namespace test;
 	}
 
 #endif
+
+///@endcond

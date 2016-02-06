@@ -1,5 +1,17 @@
-//Confirmed Working 12/20/2015
-//Primary Author: Jonathan Bedard
+/**
+ * @file   testSuite.cpp
+ * @Author Jonathan Bedard
+ * @date   2/6/2016
+ * @brief  Single test class
+ * @bug No known bugs.
+ *
+ * This file contains declarations for a
+ * test suite.  Consult testSuite.h for
+ * details.
+ *
+ */
+
+///@cond INTERNAL
 
 #ifndef TEST_SUITE_CPP
 #define TEST_SUITE_CPP
@@ -127,3 +139,5 @@ using namespace test;
 	}
 
 #endif
+
+///@endcond

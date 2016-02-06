@@ -1,5 +1,10 @@
 \section{test\+:\+:single\+Function\+Test Class Reference}
 \label{classtest_1_1singleFunctionTest}\index{test\+::single\+Function\+Test@{test\+::single\+Function\+Test}}
+
+
+Single unit test from function.  
+
+
 Inheritance diagram for test\+:\+:single\+Function\+Test\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,27 +15,43 @@ Inheritance diagram for test\+:\+:single\+Function\+Test\+:\begin{figure}[H]
 \begin{DoxyCompactItemize}
 \item 
 {\bf single\+Function\+Test} (std\+::string tn, {\bf test\+Function} f)
-\item 
+\begin{DoxyCompactList}\small\item\em Single unit test constructor. \end{DoxyCompactList}\item 
 virtual {\bf $\sim$single\+Function\+Test} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
 void {\bf test} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Call unit test function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 {\bf test\+Function} {\bf func}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Reference to unit test function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+Single unit test from function. 
+
+This class allows a \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest} to be defined by a single test function. 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{test\+::single\+Function\+Test@{test\+::single\+Function\+Test}!single\+Function\+Test@{single\+Function\+Test}}
 \index{single\+Function\+Test@{single\+Function\+Test}!test\+::single\+Function\+Test@{test\+::single\+Function\+Test}}
-\subsubsection[{single\+Function\+Test(std\+::string tn, test\+Function f)}]{\setlength{\rightskip}{0pt plus 5cm}single\+Function\+Test\+::single\+Function\+Test (
+\subsubsection[{single\+Function\+Test(std\+::string tn, test\+Function f)}]{\setlength{\rightskip}{0pt plus 5cm}test\+::single\+Function\+Test\+::single\+Function\+Test (
 \begin{DoxyParamCaption}
 \item[{std\+::string}]{tn, }
 \item[{{\bf test\+Function}}]{f}
 \end{DoxyParamCaption}
-)}\label{classtest_1_1singleFunctionTest_a2811a82a5519325f484cd2198f4f1bd9}
+)}\label{classtest_1_1singleFunctionTest_ae49538812a94721395ad02493741ddfa}
+
+
+Single unit test constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tn} & Name of unit test \\
+\hline
+\mbox{\tt in}  & {\em f} & Function which defines test \\
+\hline
+\end{DoxyParams}
 \index{test\+::single\+Function\+Test@{test\+::single\+Function\+Test}!````~single\+Function\+Test@{$\sim$single\+Function\+Test}}
 \index{````~single\+Function\+Test@{$\sim$single\+Function\+Test}!test\+::single\+Function\+Test@{test\+::single\+Function\+Test}}
 \subsubsection[{$\sim$single\+Function\+Test()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::single\+Function\+Test\+::$\sim$single\+Function\+Test (
@@ -40,17 +61,30 @@ void {\bf test} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1singleFunctionTest_a1720ee649fe9bf0fa589edee017c4d6c}
 
 
+Virtual destructor. 
+
+Destructor must be virtual, if an object of this type is deleted, the destructor of the type which inherits this class should be called. 
+
 \subsection{Member Function Documentation}
 \index{test\+::single\+Function\+Test@{test\+::single\+Function\+Test}!test@{test}}
 \index{test@{test}!test\+::single\+Function\+Test@{test\+::single\+Function\+Test}}
-\subsubsection[{test()}]{\setlength{\rightskip}{0pt plus 5cm}void single\+Function\+Test\+::test (
+\subsubsection[{test()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::single\+Function\+Test\+::test (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [virtual]}}\label{classtest_1_1singleFunctionTest_a14a9559e8c2ce281bf5462b433e4ef80}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) \hspace{0.3cm}{\ttfamily [virtual]}}\label{classtest_1_1singleFunctionTest_aefc01958d3443a65c5c3db31bfa32901}
 
 
-Reimplemented from {\bf test\+::single\+Test} \doxyref{}{p.}{classtest_1_1singleTest_a260dd0b4b6c13eb003267850a94b7357}.
+Call unit test function. 
+
+Calls the function bound to this class in the constructor pointed to by \doxyref{test\+::single\+Function\+Test\+::func}{p.}{classtest_1_1singleFunctionTest_a2509802c241daa9fabb927afac32b07b}. If the function pointed to by the function pointer throws an exception, this function will throw the same exception.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf test\+::single\+Test} \doxyref{}{p.}{classtest_1_1singleTest_ac1db89aba5f272b0f4ecfcedd4aeb016}.
 
 
 
@@ -58,3 +92,7 @@ Reimplemented from {\bf test\+::single\+Test} \doxyref{}{p.}{classtest_1_1single
 \index{test\+::single\+Function\+Test@{test\+::single\+Function\+Test}!func@{func}}
 \index{func@{func}!test\+::single\+Function\+Test@{test\+::single\+Function\+Test}}
 \subsubsection[{func}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\+Function} test\+::single\+Function\+Test\+::func\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1singleFunctionTest_a2509802c241daa9fabb927afac32b07b}
+
+
+Reference to unit test function. 
+

@@ -1,6 +1,17 @@
-//Confirmed Working 1/15/2016
-//Primary Author: Jonathan Bedard
+/**
+ * @file   DatastructuresTest.cpp
+ * @author Jonathan Bedard
+ * @date   2/4/2016
+ * @brief  Datastructures library test implementation
+ * @bug No known bugs.
+ *
+ * Implements the Datastructures library test.
+ * These tests are designed to guarantee the functionality
+ * of each of the elements in the Datastructures library.
+ */
 
+ ///@cond INTERNAL
+ 
 #ifndef DATASTRUCTURES_TEST_CPP
 #define DATASTRUCTURES_TEST_CPP
 
@@ -1512,3 +1523,5 @@ using namespace test;
 	}
 
 #endif
+
+///@endcond

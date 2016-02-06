@@ -1,5 +1,16 @@
-//Confirmed Working 10/25/2015
-//Primary Author: Jonathan Bedard
+/**
+ * @file   singleTest.cpp
+ * @Author Jonathan Bedard
+ * @date   2/6/2016
+ * @brief  Single test class implementation
+ * @bug No known bugs.
+ *
+ * This file contains implementation for a single
+ * unit test.  Consult singeTest.h for details.
+ *
+ */
+
+///@cond INTERNAL
 
 #ifndef SINGLE_TEST_CPP
 #define SINGLE_TEST_CPP
@@ -57,3 +68,5 @@ using namespace test;
 	}
 
 #endif
+
+///@endcond

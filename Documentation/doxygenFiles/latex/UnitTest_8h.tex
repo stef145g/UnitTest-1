@@ -1,5 +1,10 @@
 \section{Unit\+Test.\+h File Reference}
 \label{UnitTest_8h}\index{Unit\+Test.\+h@{Unit\+Test.\+h}}
+
+
+Unit Test header file.  
+
+
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -9,10 +14,26 @@
 \begin{DoxyCompactItemize}
 \item 
 void {\bf test\+::start\+Tests} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Print out header for Unit Tests. \end{DoxyCompactList}\item 
 void {\bf test\+::end\+Tests\+Error} (os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except)
-\item 
+\begin{DoxyCompactList}\small\item\em End tests in error. \end{DoxyCompactList}\item 
 void {\bf test\+::end\+Tests\+Success} ()
-\item 
+\begin{DoxyCompactList}\small\item\em End tests successfully. \end{DoxyCompactList}\item 
 void {\bf test\+::test\+Init} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Test initialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Unit Test header file. 
+
+\begin{DoxyAuthor}{Author}
+Jonathan Bedard 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2/6/2016 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[{\bf Bug}]No known bugs.\end{DoxyRefDesc}
+
+
+Packages all headers required for the Unit\+Test library and declares a number of global test functions used for initializing and ending a Unit Test battery. 
