@@ -1,6 +1,18 @@
-//Confirmed Working 11/7/2015
-//Primary Author: Jonathan Bedard
+/**
+ * @file   masterTestHolder.cpp
+ * @Author Jonathan Bedard
+ * @date   2/6/2016
+ * @brief  Library tests, masterTestHolder singleton implementations
+ * @bug No known bugs.
+ *
+ * This file contains implementations for the library
+ * test base class and test::masterTestHolder singleton
+ * class.  Consult masterTestHolder.h for details.
+ *
+ */
 
+///@cond INTERNAL
+  
 #ifndef MASTER_TEST_HOLDER_CPP
 #define MASTER_TEST_HOLDER_CPP
 
@@ -152,3 +164,5 @@ using namespace test;
 	
 
 #endif
+
+///@endcond

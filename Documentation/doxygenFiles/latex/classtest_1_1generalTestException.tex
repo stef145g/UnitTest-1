@@ -1,0 +1,147 @@
+\section{test\+:\+:general\+Test\+Exception Class Reference}
+\label{classtest_1_1generalTestException}\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+
+
+Base class for test exceptions.  
+
+
+Inheritance diagram for test\+:\+:general\+Test\+Exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classtest_1_1generalTestException}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf general\+Test\+Exception} (std\+::string err, std\+::string loc)
+\begin{DoxyCompactList}\small\item\em Construct exception with error and location. \end{DoxyCompactList}\item 
+virtual {\bf $\sim$general\+Test\+Exception} ()
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+virtual const char $\ast$ {\bf what} () const   throw ()
+\begin{DoxyCompactList}\small\item\em std\+::exception overload \end{DoxyCompactList}\item 
+const std\+::string \& {\bf get\+Location} () const 
+\begin{DoxyCompactList}\small\item\em Location description. \end{DoxyCompactList}\item 
+const std\+::string \& {\bf get\+String} () const 
+\begin{DoxyCompactList}\small\item\em Error description. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string {\bf location}
+\begin{DoxyCompactList}\small\item\em The location where the error came from. \end{DoxyCompactList}\item 
+std\+::string {\bf \+\_\+error}
+\begin{DoxyCompactList}\small\item\em A description of the error. \end{DoxyCompactList}\item 
+std\+::string {\bf total\+\_\+error}
+\begin{DoxyCompactList}\small\item\em Combination of the error and location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for test exceptions. 
+
+This class defines an exception which has a location. Because this class holds multiple std\+::string objects, the error description can be dynamically set. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!general\+Test\+Exception@{general\+Test\+Exception}}
+\index{general\+Test\+Exception@{general\+Test\+Exception}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{general\+Test\+Exception(std\+::string err, std\+::string loc)}]{\setlength{\rightskip}{0pt plus 5cm}test\+::general\+Test\+Exception\+::general\+Test\+Exception (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{err, }
+\item[{std\+::string}]{loc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1generalTestException_a1e2195d040c64ba8fa428573c387a32d}
+
+
+Construct exception with error and location. 
+
+Constructs the exception with an error string and a location string. Also builds the \doxyref{test\+::general\+Test\+Exception\+::total\+\_\+error}{p.}{classtest_1_1generalTestException_acd7171e31b8d14517d596c91eb4b5966} string for use by the \char`\"{}what()\char`\"{} function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em err} & Error string \\
+\hline
+\mbox{\tt in}  & {\em loc} & Location string \\
+\hline
+\end{DoxyParams}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!````~general\+Test\+Exception@{$\sim$general\+Test\+Exception}}
+\index{````~general\+Test\+Exception@{$\sim$general\+Test\+Exception}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{$\sim$general\+Test\+Exception()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::general\+Test\+Exception\+::$\sim$general\+Test\+Exception (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1generalTestException_a8c4355a46ce7e0ca1d7b101aec1a6e3b}
+
+
+Virtual destructor. 
+
+Destructor must be virtual, if an object of this type is deleted, the destructor of the type which inherits this class should be called. 
+
+\subsection{Member Function Documentation}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!get\+Location@{get\+Location}}
+\index{get\+Location@{get\+Location}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{get\+Location() const }]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string\& test\+::general\+Test\+Exception\+::get\+Location (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1generalTestException_a058822d91ecc46454fb6ce192082ccf3}
+
+
+Location description. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::general\+Test\+Exception\+::location}{p.}{classtest_1_1generalTestException_a0eb1ef92e7fc25a4a9f93cb5fdd74d8d} 
+\end{DoxyReturn}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!get\+String@{get\+String}}
+\index{get\+String@{get\+String}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{get\+String() const }]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string\& test\+::general\+Test\+Exception\+::get\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1generalTestException_abb06c117c03e73181e7bcdba30c4e6b0}
+
+
+Error description. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::general\+Test\+Exception\+::\+\_\+error}{p.}{classtest_1_1generalTestException_a598162a04c412de9451cf2e8d102a54c} 
+\end{DoxyReturn}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!what@{what}}
+\index{what@{what}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{what() const }]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ test\+::general\+Test\+Exception\+::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1generalTestException_aa2475c6d7bc323ef4bd64a5fb13996d6}
+
+
+std\+::exception overload 
+
+Overloaded from std\+::exception. This function outputs the complete description, which contains both the error description and location description.
+
+\begin{DoxyReturn}{Returns}
+character pointer to the complete description 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!\+\_\+error@{\+\_\+error}}
+\index{\+\_\+error@{\+\_\+error}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{\+\_\+error}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::general\+Test\+Exception\+::\+\_\+error\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1generalTestException_a598162a04c412de9451cf2e8d102a54c}
+
+
+A description of the error. 
+
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!location@{location}}
+\index{location@{location}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{location}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::general\+Test\+Exception\+::location\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1generalTestException_a0eb1ef92e7fc25a4a9f93cb5fdd74d8d}
+
+
+The location where the error came from. 
+
+\index{test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}!total\+\_\+error@{total\+\_\+error}}
+\index{total\+\_\+error@{total\+\_\+error}!test\+::general\+Test\+Exception@{test\+::general\+Test\+Exception}}
+\subsubsection[{total\+\_\+error}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::general\+Test\+Exception\+::total\+\_\+error\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1generalTestException_acd7171e31b8d14517d596c91eb4b5966}
+
+
+Combination of the error and location. 
+
+This string is constructed in the constructor so that \char`\"{}what()\char`\"{} can refer to a location in memory. This std\+::string is a combination of \doxyref{test\+::general\+Test\+Exception\+::\+\_\+error}{p.}{classtest_1_1generalTestException_a598162a04c412de9451cf2e8d102a54c} and \doxyref{test\+::general\+Test\+Exception\+::location}{p.}{classtest_1_1generalTestException_a0eb1ef92e7fc25a4a9f93cb5fdd74d8d}. 

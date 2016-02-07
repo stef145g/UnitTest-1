@@ -1,0 +1,398 @@
+\section{test\+:\+:test\+Suite Class Reference}
+\label{classtest_1_1testSuite}\index{test\+::test\+Suite@{test\+::test\+Suite}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf test\+Suite} (std\+::string sn)
+\begin{DoxyCompactList}\small\item\em Test suite constructor. \end{DoxyCompactList}\item 
+virtual {\bf $\sim$test\+Suite} ()
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+void {\bf run\+Tests} ()  throw (os\+::smart\+\_\+ptr$<$std\+::exception$>$)
+\begin{DoxyCompactList}\small\item\em Runs all of the tests. \end{DoxyCompactList}\item 
+void {\bf log\+Begin} ()
+\begin{DoxyCompactList}\small\item\em Logs the beginning of a suite test. \end{DoxyCompactList}\item 
+bool {\bf log\+End} (os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=N\+U\+LL)
+\begin{DoxyCompactList}\small\item\em Logs the end of a suite test. \end{DoxyCompactList}\item 
+int {\bf get\+Num\+Tests} () const 
+\begin{DoxyCompactList}\small\item\em Number of tests in the set. \end{DoxyCompactList}\item 
+int {\bf get\+Num\+Success} () const 
+\begin{DoxyCompactList}\small\item\em Number of tests successfully completed. \end{DoxyCompactList}\item 
+int {\bf get\+Num\+Run} () const 
+\begin{DoxyCompactList}\small\item\em Number of tests attempted to run. \end{DoxyCompactList}\item 
+void {\bf push\+Test} (os\+::smart\+\_\+ptr$<$ {\bf single\+Test} $>$ tst)
+\begin{DoxyCompactList}\small\item\em Add test to the set. \end{DoxyCompactList}\item 
+void {\bf remove\+Test} (os\+::smart\+\_\+ptr$<$ {\bf single\+Test} $>$ tst)
+\begin{DoxyCompactList}\small\item\em Remove test to the set. \end{DoxyCompactList}\item 
+virtual void {\bf push\+Test} (std\+::string str, {\bf test\+Function} tst)
+\begin{DoxyCompactList}\small\item\em Add test to the set. \end{DoxyCompactList}\item 
+bool {\bf operator==} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Equality comparison. \end{DoxyCompactList}\item 
+bool {\bf operator!=} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Not-\/equals comparison. \end{DoxyCompactList}\item 
+bool {\bf operator$>$} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Greater-\/than comparison. \end{DoxyCompactList}\item 
+bool {\bf operator$<$} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Less-\/than comparison. \end{DoxyCompactList}\item 
+bool {\bf operator$>$=} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Greater-\/than or equal to comparison. \end{DoxyCompactList}\item 
+bool {\bf operator$<$=} (const {\bf test\+Suite} \&lt) const 
+\begin{DoxyCompactList}\small\item\em Less-\/than or equal to comparison. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string {\bf suite\+Name}
+\begin{DoxyCompactList}\small\item\em Name of test suite. \end{DoxyCompactList}\item 
+os\+::smart\+Set$<$ {\bf single\+Test} $>$ {\bf test\+List}
+\begin{DoxyCompactList}\small\item\em Set of tests. \end{DoxyCompactList}\item 
+int {\bf tests\+Completed}
+\begin{DoxyCompactList}\small\item\em Number of tests successfully completed. \end{DoxyCompactList}\item 
+int {\bf tests\+Run}
+\begin{DoxyCompactList}\small\item\em Number of tests attempted to run. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!test\+Suite@{test\+Suite}}
+\index{test\+Suite@{test\+Suite}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{test\+Suite(std\+::string sn)}]{\setlength{\rightskip}{0pt plus 5cm}test\+::test\+Suite\+::test\+Suite (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{sn}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1testSuite_a96d9d5475bd9d3556c02b4be7f8337dc}
+
+
+Test suite constructor. 
+
+This constructor initializes the number of tests completed and number of tests run to 0, along with sets the name of suite being tested.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sn} & Name of suite to be tested \\
+\hline
+\end{DoxyParams}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!````~test\+Suite@{$\sim$test\+Suite}}
+\index{````~test\+Suite@{$\sim$test\+Suite}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{$\sim$test\+Suite()}]{\setlength{\rightskip}{0pt plus 5cm}virtual test\+::test\+Suite\+::$\sim$test\+Suite (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1testSuite_a10054775c5fd97da622c06cf58c9b223}
+
+
+Virtual destructor. 
+
+Destructor must be virtual, if an object of this type is deleted, the destructor of the type which inherits this class should be called. 
+
+\subsection{Member Function Documentation}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!get\+Num\+Run@{get\+Num\+Run}}
+\index{get\+Num\+Run@{get\+Num\+Run}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{get\+Num\+Run() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::test\+Suite\+::get\+Num\+Run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_ad450d7a8596f6196c91580ea977fdde4}
+
+
+Number of tests attempted to run. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::test\+Suite\+::tests\+Run}{p.}{classtest_1_1testSuite_a4aa13f60f42de44e36084ba39f4802c8} 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!get\+Num\+Success@{get\+Num\+Success}}
+\index{get\+Num\+Success@{get\+Num\+Success}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{get\+Num\+Success() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::test\+Suite\+::get\+Num\+Success (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_ad32141e5a8a41b99fbf87a80fbecc322}
+
+
+Number of tests successfully completed. 
+
+\begin{DoxyReturn}{Returns}
+\doxyref{test\+::test\+Suite\+::tests\+Completed}{p.}{classtest_1_1testSuite_a193da8a8a5a1b163f31c42d43c171c38} 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!get\+Num\+Tests@{get\+Num\+Tests}}
+\index{get\+Num\+Tests@{get\+Num\+Tests}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{get\+Num\+Tests() const }]{\setlength{\rightskip}{0pt plus 5cm}int test\+::test\+Suite\+::get\+Num\+Tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a42d7c8624cdd5dbde514a0b2c12e0067}
+
+
+Number of tests in the set. 
+
+\begin{DoxyReturn}{Returns}
+test\+::test\+Suite\+::test\+List.\+size() 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!log\+Begin@{log\+Begin}}
+\index{log\+Begin@{log\+Begin}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{log\+Begin()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::test\+Suite\+::log\+Begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1testSuite_ab531a1949d48b970d347a5c008e8f3a9}
+
+
+Logs the beginning of a suite test. 
+
+Outputs the name of the suite to be tested along with a line break made of \textquotesingle{}-\/\textquotesingle{} characters.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!log\+End@{log\+End}}
+\index{log\+End@{log\+End}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{log\+End(os\+::smart\+\_\+ptr$<$ std\+::exception $>$ except=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::log\+End (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ std\+::exception $>$}]{except = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)}\label{classtest_1_1testSuite_a0e54fd32bd2bf7e79cd41c662745c090}
+
+
+Logs the end of a suite test. 
+
+Outputs the number of tests run and how many of these tests were both successful and how many of these tests failed.
+
+\begin{DoxyReturn}{Returns}
+True if all tests successful, else false 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator"!=(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a53cee10c86ef83ce041e5c8e548dab19}
+
+
+Not-\/equals comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the library name. If the two names are not-\/equal, the suites are not-\/equal.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name!=lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator$<$(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a2637c42e0e302b3662523f205eeb8c94}
+
+
+Less-\/than comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the library name. If the name of this object is less than the name of the reference object, return true.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name$<$lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator$<$=(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a83094c947aa0ea6642d771f7b7796ea3}
+
+
+Less-\/than or equal to comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the library name. If the name of this object is less than or equal to the name of the reference object, return true.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name$<$=lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator==@{operator==}}
+\index{operator==@{operator==}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator==(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_aaebce319e3f5d8c836c9d4f918449c53}
+
+
+Equality comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the suite name. If the two names are equal, the suites are equal.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name==lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator$>$(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a3a0003e5c5e91c0fef6df256eec348e2}
+
+
+Greater-\/than comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the library name. If the name of this object is greater than the name of the reference object, return true.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name$>$lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{operator$>$=(const test\+Suite \&lt) const }]{\setlength{\rightskip}{0pt plus 5cm}bool test\+::test\+Suite\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf test\+Suite} \&}]{lt}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_aacafc11baafd041d94e2fd0dfe912158}
+
+
+Greater-\/than or equal to comparison. 
+
+Compares two \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} based on the library name. If the name of this object is greater than or equal to the name of the reference object, return true.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lt} & Reference to \doxyref{test\+::test\+Suite}{p.}{classtest_1_1testSuite} to be compared against \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+this-\/$>$suite\+Name$>$=lt.\+suite\+Name 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!push\+Test@{push\+Test}}
+\index{push\+Test@{push\+Test}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{push\+Test(os\+::smart\+\_\+ptr$<$ single\+Test $>$ tst)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::test\+Suite\+::push\+Test (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf single\+Test} $>$}]{tst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_a590a73b8519b87bb3b67ee02d74e5a62}
+
+
+Add test to the set. 
+
+Adds a \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest} to the set of tests to be tested.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tst} & Test to be added to set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!push\+Test@{push\+Test}}
+\index{push\+Test@{push\+Test}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{push\+Test(std\+::string str, test\+Function tst)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void test\+::test\+Suite\+::push\+Test (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{str, }
+\item[{{\bf test\+Function}}]{tst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtest_1_1testSuite_a7f7ff5d2590941a7de4909372a58bfae}
+
+
+Add test to the set. 
+
+Adds a \doxyref{test\+::test\+Function}{p.}{namespacetest_a2a3c06baa4dc676d33980548da392593} to the set of tests to be tested. Constructs a \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest} from a function and a test name
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em str} & Test name \\
+\hline
+\mbox{\tt in}  & {\em tst} & Function which defines test \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!remove\+Test@{remove\+Test}}
+\index{remove\+Test@{remove\+Test}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{remove\+Test(os\+::smart\+\_\+ptr$<$ single\+Test $>$ tst)}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::test\+Suite\+::remove\+Test (
+\begin{DoxyParamCaption}
+\item[{os\+::smart\+\_\+ptr$<$ {\bf single\+Test} $>$}]{tst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtest_1_1testSuite_aa3c13e5814f3a00f4bf9b1ddf6c4b533}
+
+
+Remove test to the set. 
+
+Removes a \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest} from the set of tests to be tested.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em tst} & Test to be removed from the set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!run\+Tests@{run\+Tests}}
+\index{run\+Tests@{run\+Tests}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{run\+Tests()}]{\setlength{\rightskip}{0pt plus 5cm}void test\+::test\+Suite\+::run\+Tests (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throw  os\+::smart\+\_\+ptr$<$ std\+::exception $>$) }\label{classtest_1_1testSuite_a0cf736655a2f8de375c76e9665feb414}
+
+
+Runs all of the tests. 
+
+Runs all tests bound to this class. This function catches exceptions thrown by \doxyref{test\+::single\+Test}{p.}{classtest_1_1singleTest} and logs the results.
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\index{test\+::test\+Suite@{test\+::test\+Suite}!suite\+Name@{suite\+Name}}
+\index{suite\+Name@{suite\+Name}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{suite\+Name}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string test\+::test\+Suite\+::suite\+Name\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1testSuite_a8a5af41860a56d04413f521aecf42fa1}
+
+
+Name of test suite. 
+
+\index{test\+::test\+Suite@{test\+::test\+Suite}!test\+List@{test\+List}}
+\index{test\+List@{test\+List}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{test\+List}]{\setlength{\rightskip}{0pt plus 5cm}os\+::smart\+Set$<${\bf single\+Test}$>$ test\+::test\+Suite\+::test\+List\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1testSuite_ab7cbab706752d5c26a260219c137a1d7}
+
+
+Set of tests. 
+
+\index{test\+::test\+Suite@{test\+::test\+Suite}!tests\+Completed@{tests\+Completed}}
+\index{tests\+Completed@{tests\+Completed}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{tests\+Completed}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::test\+Suite\+::tests\+Completed\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1testSuite_a193da8a8a5a1b163f31c42d43c171c38}
+
+
+Number of tests successfully completed. 
+
+\index{test\+::test\+Suite@{test\+::test\+Suite}!tests\+Run@{tests\+Run}}
+\index{tests\+Run@{tests\+Run}!test\+::test\+Suite@{test\+::test\+Suite}}
+\subsubsection[{tests\+Run}]{\setlength{\rightskip}{0pt plus 5cm}int test\+::test\+Suite\+::tests\+Run\hspace{0.3cm}{\ttfamily [private]}}\label{classtest_1_1testSuite_a4aa13f60f42de44e36084ba39f4802c8}
+
+
+Number of tests attempted to run. 
+

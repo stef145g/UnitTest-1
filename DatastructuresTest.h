@@ -1,6 +1,17 @@
-//Confirmed Working 11/7/2015
-//Primary Author: Jonathan Bedard
+/**
+ * @file   DatastructuresTest.h
+ * @author Jonathan Bedard
+ * @date   2/4/2016
+ * @brief  Datastructures library test
+ * @bug No known bugs.
+ *
+ * Contains the declaration of the Datastructures
+ * library test.  Note that this library test
+ * is automatically added to all Unit Test executables.
+ */
 
+ ///@cond INTERNAL
+ 
 #ifndef DATASTRUCTURES_TEST_H
 #define DATASTRUCTURES_TEST_H
 
@@ -19,3 +30,5 @@ namespace test
 }
 
 #endif
+
+///@endcond
