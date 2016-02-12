@@ -1482,6 +1482,7 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
 			//Unique element, sorted
 		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
+        pushSuite(smart_ptr<testSuite>(new adsSuite<asyncAVLTree<int>,asyncAVLNode<int> >("Async AVL Tree",2),shared_type));
 			//Unique element, unsorted, set
 		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));
         
