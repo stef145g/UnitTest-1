@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   2/4/2016
+ * @date   2/12/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -487,7 +487,6 @@ using namespace test;
 	{
 		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
 
-		dataStruct->resetTraverse();
 		auto last = dataStruct->getFirst();
 		for(auto it = dataStruct->getFirst();it;it=it->getNext())
 		{
@@ -595,7 +594,6 @@ using namespace test;
         
         //Iterate through
         int trace = 0;
-        dataStruct->resetTraverse();
         for(auto it = dataStruct->getFirst();it;it=it->getNext())
         {
             trace++;
@@ -603,7 +601,7 @@ using namespace test;
             throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string(dataStruct->size())+" but found "+std::to_string(trace),locString),shared_type);
     }
     void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
     {
@@ -636,7 +634,6 @@ using namespace test;
     
         //Iterate through
         int trace = 0;
-        dataStruct->resetTraverse();
         for(auto it = dataStruct->getLast();it;it=it->getPrev())
         {
             trace++;
@@ -644,7 +641,7 @@ using namespace test;
             throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string(dataStruct->size())+" but found "+std::to_string(trace),locString),shared_type);
 }
 
 	//adsSuite test

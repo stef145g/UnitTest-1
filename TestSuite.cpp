@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.cpp
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   2/12/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -43,7 +43,6 @@ using namespace test;
 		//Test loop
 		try
 		{
-			testList.resetTraverse();
 			for(auto it = testList.getFirst();it;it=it->getNext())
 			{
 				os::smart_ptr<exception> grabbed_exception;
