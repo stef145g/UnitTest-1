@@ -79,5 +79,5 @@ LATEX_BATCHMODE			= NO
 GENERATE_MAN			= YES
 MAN_OUTPUT				= manpage
 
-INPUT					= ../
+INPUT					= ../ ../UnitTestExe
 EXCLUDE_PATTERNS 		= *.txt
