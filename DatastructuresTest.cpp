@@ -1467,11 +1467,15 @@ using namespace test;
         {
             for(int i2=0;i2<100;i2++)
                 array[i2]=rand()%100;
-            os::quicksort(array, 100,&integerSorting);
+            os::quicksort(array, 0,100);
             for(int i2=0;i2<99;i2++)
             {
                 if(array[i2]>array[i2+1])
-                    throw os::smart_ptr<std::exception>(new generalTestException("quicksort failed",locString),shared_type);
+                {
+                    for(int i=0;i<100;i++)
+                        std::cout<<array[i]<<std::endl;
+                        throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                }
             }
         }
     }
