@@ -1,8 +1,0 @@
-# Ignore Specific doxygen files
-manpage/
-*.log
-*.sty
-*.bat
-*.eps
-Makefile
-refman.tex
