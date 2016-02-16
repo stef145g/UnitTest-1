@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   2/12/2016
+ * @date   2/15/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1448,15 +1448,21 @@ using namespace test;
 	Misc Function Tests
  ================================================================*/
 
-    //Integer sorting function
-    int integerSorting(void* ptr1,void* ptr2)
+    //Reverse compare
+    int reverseCompare(const int& v1,const int& v2)
     {
-        if(*(int*)ptr1>*(int*)ptr2)
-            return 1;
-        if(*(int*)ptr1<*(int*)ptr2)
-            return -1;
+        if(v1<v2) return 1;
+        if(v1>v2) return -1;
         return 0;
     }
+    //Int pointer compare
+    int pointerCompareSort(smart_ptr<int> ptr1, smart_ptr<int> ptr2)
+    {
+        if((*ptr1)>(*ptr2)) return 1;
+        else if((*ptr1)<(*ptr2)) return -1;
+        return 0;
+    }
+
     //Basic quicksort test
     void quicksortArrayTest() throw (os::smart_ptr<std::exception>)
     {
@@ -1467,14 +1473,52 @@ using namespace test;
         {
             for(int i2=0;i2<100;i2++)
                 array[i2]=rand()%100;
-            os::quicksort(array, 0,100);
+            os::quicksort(array, 100);
             for(int i2=0;i2<99;i2++)
             {
                 if(array[i2]>array[i2+1])
                 {
-                    for(int i=0;i<100;i++)
-                        std::cout<<array[i]<<std::endl;
-                        throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                }
+            }
+        }
+    }
+    //Reverse quicksort test
+    void reverseQuicksortArrayTest() throw (os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, reverseQuicksortArrayTest()";
+        int array[100];
+        srand(time(NULL));
+        for(int i1=0;i1<15;i1++)
+        {
+            for(int i2=0;i2<100;i2++)
+                array[i2]=rand()%100;
+            os::quicksort(array, 100,&reverseCompare);
+            for(int i2=0;i2<99;i2++)
+            {
+                if(array[i2]<array[i2+1])
+                {
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                }
+            }
+        }
+    }
+    //Pointer quicksort
+    void pointerQuicksortTest() throw (os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
+        os::smart_ptr<os::smart_ptr<int> > array(new os::smart_ptr<int>[100],os::shared_type_array);
+        srand(time(NULL));
+        for(int i1=0;i1<15;i1++)
+        {
+            for(int i2=0;i2<100;i2++)
+                array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
+            os::pointerQuicksort(array,100,&pointerCompareSort);
+            for(int i2=0;i2<99;i2++)
+            {
+                if(*(array[i2])>*(array[i2+1]))
+                {
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(*array[i2])+" vs "+std::to_string(*array[i2+1]),locString),shared_type);
                 }
             }
         }
@@ -1557,7 +1601,9 @@ using namespace test;
         
         //Misc Function
         trc = smart_ptr<testSuite>(new testSuite("Misc Functions"),shared_type);
-            trc->pushTest("Raw-Quicksort",&quicksortArrayTest);
+            trc->pushTest("Raw Quicksort",&quicksortArrayTest);
+            trc->pushTest("Reverse Quicksort",&quicksortArrayTest);
+            trc->pushTest("Pointer Quicksort",&pointerQuicksortTest);
         pushSuite(trc);
 	}
 
