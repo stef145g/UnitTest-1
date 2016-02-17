@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_DIR=$PWD
+START_DIR_BUILD=$PWD
 
 cd ..
 cd ..
@@ -17,4 +17,4 @@ cd Unix
 fi
 fi
 
-cd $START_DIR
+cd $START_DIR_BUILD
