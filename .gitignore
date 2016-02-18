@@ -5,6 +5,8 @@
 *.synctex.gz
 *.toc
 *.lof
+*.dvi
+doxygenFiles/
 
 # Debug/Release
 Debug/

@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.cpp
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   2/12/2016
  * @brief  Library tests, masterTestHolder singleton implementations
  * @bug No known bugs.
  *
@@ -47,7 +47,6 @@ using namespace test;
 		//Suite loop
 		try
 		{
-			suiteList.resetTraverse();
 			for(auto it = suiteList.getFirst();it;it=it->getNext())
 			{
 				os::smart_ptr<exception> grabbed_exception;
@@ -137,7 +136,6 @@ using namespace test;
 		//Main Loop
 		try
 		{
-			libraryList.resetTraverse();
 			for(auto it = libraryList.getFirst();it;it=it->getNext())
 			{
 				os::smart_ptr<exception> grabbed_exception;

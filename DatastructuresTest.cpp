@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   2/4/2016
+ * @date   2/15/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -487,7 +487,6 @@ using namespace test;
 	{
 		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
 
-		dataStruct->resetTraverse();
 		auto last = dataStruct->getFirst();
 		for(auto it = dataStruct->getFirst();it;it=it->getNext())
 		{
@@ -595,7 +594,6 @@ using namespace test;
         
         //Iterate through
         int trace = 0;
-        dataStruct->resetTraverse();
         for(auto it = dataStruct->getFirst();it;it=it->getNext())
         {
             trace++;
@@ -603,7 +601,7 @@ using namespace test;
             throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string(dataStruct->size())+" but found "+std::to_string(trace),locString),shared_type);
     }
     void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
     {
@@ -636,7 +634,6 @@ using namespace test;
     
         //Iterate through
         int trace = 0;
-        dataStruct->resetTraverse();
         for(auto it = dataStruct->getLast();it;it=it->getPrev())
         {
             trace++;
@@ -644,7 +641,7 @@ using namespace test;
             throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string(trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed",locString),shared_type);
+        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string(dataStruct->size())+" but found "+std::to_string(trace),locString),shared_type);
 }
 
 	//adsSuite test
@@ -863,7 +860,7 @@ using namespace test;
         throw os::smart_ptr<std::exception>(new generalTestException("Addition transitivity failed!",locString),shared_type);
     }
     //Subtraction test
-    void matrixSubtractionTest()throw(os::smart_ptr<std::exception>)
+    static void matrixSubtractionTest()throw(os::smart_ptr<std::exception>)
     {
         std::string locString = "DatastructuresTest.cpp, matrixSubtractionTest()";
         matrix<int> mat1(2,2);
@@ -1124,7 +1121,7 @@ using namespace test;
  ================================================================*/
 
 	//Tests the copy constructor and equality constructor
-	void vector2dConstructorTest()throw(os::smart_ptr<std::exception>)
+    void vector2dConstructorTest()throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dConstructorTest()";
 		vector2d_d v1;
@@ -1146,7 +1143,7 @@ using namespace test;
 		if(v1.x!=.5 || v1.y!=1.5)
 			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
 	}
-	void vector3dConstructorTest()throw(os::smart_ptr<std::exception>)
+    void vector3dConstructorTest()throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dConstructorTest()";
 		vector3d_d v1;
@@ -1175,7 +1172,7 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Vector 2d init failed",locString),shared_type);
 	}
 	//Tests equality functions
-	void vector2dEqualityTest() throw(os::smart_ptr<std::exception>)
+    void vector2dEqualityTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dEqualityTest()";
 
@@ -1207,7 +1204,7 @@ using namespace test;
 			if(v==-1 && v1>=v2) throw os::smart_ptr<std::exception>(new generalTestException(">= failed.  Cycle: "+to_string(i),locString),shared_type);
 		}
 	}
-	void vector3dEqualityTest() throw(os::smart_ptr<std::exception>)
+    void vector3dEqualityTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dEqualityTest()";
 
@@ -1240,7 +1237,7 @@ using namespace test;
 		}
 	}
 	//Addition
-	void vector2dAdditionTest() throw(os::smart_ptr<std::exception>)
+    void vector2dAdditionTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dAdditionTest()";
 
@@ -1279,7 +1276,7 @@ using namespace test;
 		if(raw.length()!=7)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
-	void vector3dAdditionTest() throw(os::smart_ptr<std::exception>)
+    void vector3dAdditionTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dAdditionTest()";
 
@@ -1320,7 +1317,7 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
 	//Subtraction
-	void vector2dSubtractionTest() throw(os::smart_ptr<std::exception>)
+    void vector2dSubtractionTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dSubtractionTest()";
 
@@ -1359,7 +1356,7 @@ using namespace test;
 		if(raw.length()!=3)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
-	void vector3dSubtractionTest() throw(os::smart_ptr<std::exception>)
+    void vector3dSubtractionTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dSubtractionTest()";
 
@@ -1400,7 +1397,7 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
 	//Dot product
-	void vector2dDotProductTest() throw(os::smart_ptr<std::exception>)
+    void vector2dDotProductTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dDotProductTest()";
 		vector2d_d v1(4,8);
@@ -1413,7 +1410,7 @@ using namespace test;
 		if(v1.dotProduct(v2)!=0)
 			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
-	void vector3dDotProductTest() throw(os::smart_ptr<std::exception>)
+    void vector3dDotProductTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dDotProductTest()";
 		vector3d_d v1(4,8,3);
@@ -1427,7 +1424,7 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
 	//Cross product
-	void vector3dCrossProductTest() throw(os::smart_ptr<std::exception>)
+    void vector3dCrossProductTest() throw(os::smart_ptr<std::exception>)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
 		vector3d_d v1(-1,7,4);
@@ -1446,6 +1443,86 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("*= after failed",locString),shared_type);
 
 	}
+
+/*================================================================
+	Misc Function Tests
+ ================================================================*/
+
+    //Reverse compare
+    int reverseCompare(const int& v1,const int& v2)
+    {
+        if(v1<v2) return 1;
+        if(v1>v2) return -1;
+        return 0;
+    }
+    //Int pointer compare
+    int pointerCompareSort(smart_ptr<int> ptr1, smart_ptr<int> ptr2)
+    {
+        if((*ptr1)>(*ptr2)) return 1;
+        else if((*ptr1)<(*ptr2)) return -1;
+        return 0;
+    }
+
+    //Basic quicksort test
+    void quicksortArrayTest() throw (os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, quicksortArrayTest()";
+        int array[100];
+        srand(time(NULL));
+        for(int i1=0;i1<15;i1++)
+        {
+            for(int i2=0;i2<100;i2++)
+                array[i2]=rand()%100;
+            os::quicksort(array, 100);
+            for(int i2=0;i2<99;i2++)
+            {
+                if(array[i2]>array[i2+1])
+                {
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                }
+            }
+        }
+    }
+    //Reverse quicksort test
+    void reverseQuicksortArrayTest() throw (os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, reverseQuicksortArrayTest()";
+        int array[100];
+        srand(time(NULL));
+        for(int i1=0;i1<15;i1++)
+        {
+            for(int i2=0;i2<100;i2++)
+                array[i2]=rand()%100;
+            os::quicksort(array, 100,&reverseCompare);
+            for(int i2=0;i2<99;i2++)
+            {
+                if(array[i2]<array[i2+1])
+                {
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(array[i2])+" vs "+std::to_string(array[i2+1]),locString),shared_type);
+                }
+            }
+        }
+    }
+    //Pointer quicksort
+    void pointerQuicksortTest() throw (os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
+        os::smart_ptr<os::smart_ptr<int> > array(new os::smart_ptr<int>[100],os::shared_type_array);
+        srand(time(NULL));
+        for(int i1=0;i1<15;i1++)
+        {
+            for(int i2=0;i2<100;i2++)
+                array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
+            os::pointerQuicksort(array,100,&pointerCompareSort);
+            for(int i2=0;i2<99;i2++)
+            {
+                if(*(array[i2])>*(array[i2+1]))
+                {
+                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string(i2)+" "+std::to_string(*array[i2])+" vs "+std::to_string(*array[i2+1]),locString),shared_type);
+                }
+            }
+        }
+    }
 
 /*================================================================
 	DatastructuresLibraryTest
@@ -1485,6 +1562,7 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
 			//Unique element, sorted
 		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
+        pushSuite(smart_ptr<testSuite>(new adsSuite<asyncAVLTree<int>,asyncAVLNode<int> >("Async AVL Tree",2),shared_type));
 			//Unique element, unsorted, set
 		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));
         
@@ -1520,6 +1598,13 @@ using namespace test;
 			trc->pushTest("Dot-Product",&vector3dDotProductTest);
 			trc->pushTest("Cross-Product",&vector3dCrossProductTest);
 		pushSuite(trc);
+        
+        //Misc Function
+        trc = smart_ptr<testSuite>(new testSuite("Misc Functions"),shared_type);
+            trc->pushTest("Raw Quicksort",&quicksortArrayTest);
+            trc->pushTest("Reverse Quicksort",&quicksortArrayTest);
+            trc->pushTest("Pointer Quicksort",&pointerQuicksortTest);
+        pushSuite(trc);
 	}
 
 #endif

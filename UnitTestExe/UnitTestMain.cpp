@@ -1,5 +1,18 @@
-//Confirmed Working 1/4/2016
-//Primary Author: Jonathan Bedard
+/**
+ * @file   UnitTestExe/UnitTestMain.cpp
+ * @author Jonathan Bedard
+ * @date   2/12/2016
+ * @brief  UnitTest entry point
+ * @bug No known bugs.
+ *
+ * This file is the entry point
+ * to a UnitTestExe application.
+ * The application created with this
+ * file will initialize and run the 
+ * test battery.  If successful, the
+ * application will return 0, else,
+ * it will return -1.
+ */
 
 #ifndef UNIT_TEST_CPP
 #define UNIT_TEST_CPP
@@ -39,7 +52,7 @@ int main(int argc,char** argv)
 	}
 	catch (...)
 	{
-		endTestsError(os::smart_ptr<exception>(new test::unknownException("UnitTestMain.cpp, 39"),shared_type));
+		endTestsError(os::smart_ptr<exception>(new test::unknownException("UnitTestMain.cpp, 55"),shared_type));
 		return -1;
 	}
 	endTestsSuccess();
