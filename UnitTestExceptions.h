@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExceptions.h
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   2/19/2016
  * @brief  Common exceptions thrown by unit tests
  * @bug No known bugs.
  *
@@ -69,7 +69,7 @@ namespace test
 		 * of the type which inherits this class should
 		 * be called.
 		 */
-        virtual ~generalTestException(){}
+		virtual ~generalTestException() throw(){}
 		/** @brief std::exception overload
 		 *
 		 * Overloaded from std::exception.  This function
@@ -115,7 +115,7 @@ namespace test
 		 * of the type which inherits this class should
 		 * be called.
 		 */
-        virtual ~unknownException(){}
+		 virtual ~unknownException() throw(){}
 	};
 
 	/** @brief NULL function exception class
@@ -145,7 +145,7 @@ namespace test
 		 * of the type which inherits this class should
 		 * be called.
 		 */
-        virtual ~nullFunctionException(){}
+		virtual ~nullFunctionException() throw(){}
 	};
 }
 
