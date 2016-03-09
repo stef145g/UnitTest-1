@@ -1267,13 +1267,13 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
-		if(raw.length()!=5)
+		if(5.1>raw.length()>4.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
 		raw++;
-		if(raw.length()!=6)
+		if(6.1>raw.length()>5.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment failed",locString),shared_type);
 		raw++;
-		if(raw.length()!=7)
+		if(7.1>raw.length()>6.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
     void vector3dAdditionTest() throw(os::smart_ptr<std::exception>)
@@ -1347,13 +1347,13 @@ using namespace test;
 			throw os::smart_ptr<std::exception>(new generalTestException("Simple decrement (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
-		if(raw.length()!=5)
+		if(5.1>raw.length()>4.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
 		raw--;
-		if(raw.length()!=4)
+		if(4.1>raw.length()>3.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement failed",locString),shared_type);
 		raw--;
-		if(raw.length()!=3)
+		if(3.1>raw.length()>2.9)
 			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
     void vector3dSubtractionTest() throw(os::smart_ptr<std::exception>)
