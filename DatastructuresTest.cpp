@@ -1457,14 +1457,38 @@ using namespace test;
             throw os::smart_ptr<std::exception>(new generalTestException("No rotation failed",locString),shared_type);
         
         rotate(0,1);
-        comp(5,4);
+        comp(-5,4);
         ans=v1.rotate(rotate);
         if(ans!=comp)
             throw os::smart_ptr<std::exception>(new generalTestException("90 degree rotation failed",locString),shared_type);
         
+        rotate(-1,0);
+        comp(-4,-5);
+        ans=v1.rotate(rotate);
+        if(ans!=comp)
+            throw os::smart_ptr<std::exception>(new generalTestException("180 degree rotation failed",locString),shared_type);
+
+        rotate(0,-1);
+        comp(5,-4);
+        ans=v1.rotate(rotate);
+        if(ans!=comp)
+            throw os::smart_ptr<std::exception>(new generalTestException("270 degree rotation failed",locString),shared_type);
+
+        v1(4,4);
         rotate(1,1);
         rotate.scaleSelf();
         ans=v1.rotate(rotate);
+        if(!(ans.y>5.6 && ans.y<5.7 &&
+           ans.x>-.1 && ans.x<.1))
+            throw os::smart_ptr<std::exception>(new generalTestException("45 degree rotation failed",locString),shared_type);
+        
+        v1(4,4);
+        rotate(1,-1);
+        rotate.scaleSelf();
+        ans=v1.rotate(rotate);
+        if(!(ans.x>5.6 && ans.x<5.7 &&
+             ans.y>-.1 && ans.y<.1))
+            throw os::smart_ptr<std::exception>(new generalTestException("45 degree rotation failed",locString),shared_type);
     }
 
 /*================================================================
