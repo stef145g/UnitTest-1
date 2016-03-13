@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   2/15/2016
+ * @date   3/12/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1444,6 +1444,29 @@ using namespace test;
 
 	}
 
+    //Rotation test
+    void vector2dRotationTest() throw(os::smart_ptr<std::exception>)
+    {
+        std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
+        vector2d_d v1(4,5);
+        vector2d_d rotate(1,0);
+        
+        vector2d_d ans=v1.rotate(rotate);
+        vector2d_d comp=v1;
+        if(ans!=comp)
+            throw os::smart_ptr<std::exception>(new generalTestException("No rotation failed",locString),shared_type);
+        
+        rotate(0,1);
+        comp(5,4);
+        ans=v1.rotate(rotate);
+        if(ans!=comp)
+            throw os::smart_ptr<std::exception>(new generalTestException("90 degree rotation failed",locString),shared_type);
+        
+        rotate(1,1);
+        rotate.scaleSelf();
+        ans=v1.rotate(rotate);
+    }
+
 /*================================================================
 	Misc Function Tests
  ================================================================*/
@@ -1587,6 +1610,7 @@ using namespace test;
 			trc->pushTest("Addition",&vector2dAdditionTest);
 			trc->pushTest("Subtraction",&vector2dSubtractionTest);
 			trc->pushTest("Dot-Product",&vector2dDotProductTest);
+            trc->pushTest("Rotate Test",&vector2dRotationTest);
 		pushSuite(trc);
 
 		//3-d vector tests
