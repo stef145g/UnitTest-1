@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.h
  * @author Jonathan Bedard
- * @date   2/6/2016
+ * @date   4/2/2016
  * @brief  Unit Test header file
  * @bug No known bugs.
  *
@@ -65,7 +65,7 @@ namespace test
 	 *
 	 * @return void
 	 */
-	void testInit();
+	void testInit(int argc=0,char** argv=NULL);
 }
 
 #endif

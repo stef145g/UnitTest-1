@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExe/UnitTestMain.cpp
  * @author Jonathan Bedard
- * @date   2/12/2016
+ * @date   4/2/2016
  * @brief  UnitTest entry point
  * @bug No known bugs.
  *
@@ -31,7 +31,7 @@ using namespace test;
 //Entry Function
 int main(int argc,char** argv)
 {
-	testInit();
+	testInit(argc,argv);
 	startTests();
 
 	try
