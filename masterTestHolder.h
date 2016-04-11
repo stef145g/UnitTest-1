@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.h
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   4/11/2016
  * @brief  Library tests, masterTestHolder singleton
  * @bug No known bugs.
  *
@@ -80,6 +80,25 @@ namespace test
 		 * @return void
 		 */
 		void runTests() throw(os::smart_ptr<std::exception>);
+		/** @brief Runs on shutdown of the group
+		 *
+		 * Each library group calls this funciton as
+		 * it starts up, allowing groups to
+		 * define actions performed to setup
+		 * the group.
+		 *
+		 * @return void
+		 */
+		virtual void onSetup(){}
+		/** @brief Runs on teardown of the group
+		 *
+		 * Guranteed to run even if the group itself
+		 * fails.  A custom tear-down for the group
+		 * can re-impliment this class.
+		 *
+		 * @return void
+		 */
+		virtual void onTeardown(){}
 
 		/** @brief Logs the beginning of a library test
 		 *

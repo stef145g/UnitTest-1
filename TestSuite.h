@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.h
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   4/11/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -65,6 +65,25 @@ namespace test
 		 * @return void
 		 */
 		void runTests() throw(os::smart_ptr<std::exception>);
+		/** @brief Runs on shutdown
+		 *
+		 * Each suite calls this funciton as
+		 * it starts up, allowing suites to
+		 * define actions performed to setup
+		 * the suite.
+		 *
+		 * @return void
+		 */
+		virtual void onSetup(){}
+		/** @brief Runs on teardown of the suite
+		 *
+		 * Guranteed to run even if the suite itself
+		 * fails.  A custom tear-down for the suite
+		 * can re-impliment this class.
+		 *
+		 * @return void
+		 */
+		virtual void onTeardown(){}
 
 		/** @brief Logs the beginning of a suite test
 		 *

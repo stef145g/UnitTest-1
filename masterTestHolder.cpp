@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.cpp
  * @Author Jonathan Bedard
- * @date   2/12/2016
+ * @date   4/11/2016
  * @brief  Library tests, masterTestHolder singleton implementations
  * @bug No known bugs.
  *
@@ -51,6 +51,7 @@ using namespace test;
 			{
 				os::smart_ptr<exception> grabbed_exception;
 				it->getData()->logBegin();
+				it->getData()->onSetup();
 				try
 				{
 					it->getData()->runTests();
@@ -59,7 +60,8 @@ using namespace test;
 				catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
 				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
 				catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
-
+				
+				it->getData()->onTeardown();
 				if(it->getData()->logEnd(grabbed_exception))
 					suitesCompleted++;
 			}
@@ -140,6 +142,7 @@ using namespace test;
 			{
 				os::smart_ptr<exception> grabbed_exception;
 				it->getData()->logBegin();
+				it->getData()->onSetup();
 				try
 				{
 					it->getData()->runTests();
@@ -149,6 +152,7 @@ using namespace test;
 				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
 				catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
 
+				it->getData()->onTeardown();
 				if(it->getData()->logEnd(grabbed_exception))
 					libsCompleted++;
 			}
