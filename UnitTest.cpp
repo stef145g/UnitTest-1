@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.cpp
  * @author Jonathan Bedard
- * @date   2/4/2016
+ * @date   5/14/2016
  * @brief  Unit Test logging and global functions
  * @bug No known bugs.
  *
@@ -51,7 +51,7 @@ using namespace test;
 		#endif
 	}
 	//Ends tests, logging the error
-	void test::endTestsError(os::smart_ptr<std::exception> except)
+	void test::endTestsError(os::errorPointer except)
 	{
 		testout<<endl<<DIV_BLOCK<<endl;
 		testout<<"\tERROR"<<endl;

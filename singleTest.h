@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.h
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   5/14/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -71,7 +71,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-        virtual void setupTest() throw(os::smart_ptr<std::exception>) {}
+        virtual void setupTest() throw(os::errorPointer) {}
 		/** @brief Preforms core unit-test
 		 *
 		 * This function is designed to preform
@@ -82,7 +82,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-		virtual void test() throw(os::smart_ptr<std::exception>);
+		virtual void test() throw(os::errorPointer);
 		/** @brief Preforms any test tear-down
 		 *
 		 * This function is designed to preform
@@ -95,7 +95,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-        virtual void teardownTest() throw(os::smart_ptr<std::exception>) {}
+        virtual void teardownTest() throw(os::errorPointer) {}
         
 		/** @brief Prints out the name of the test
 		 * @return void
@@ -111,7 +111,7 @@ namespace test
 		 * @param [in] except Exception to be printed, NULL by default
 		 * @return True if except is NULL
 		 */
-		bool logEnd(os::smart_ptr<std::exception> except = NULL);
+		bool logEnd(os::errorPointer except = NULL);
 	};
 	/** @brief Single unit test from function
 	 *
@@ -149,7 +149,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-		void test() throw(os::smart_ptr<std::exception>);
+		void test() throw(os::errorPointer);
 	};
 }
 

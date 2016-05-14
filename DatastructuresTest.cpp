@@ -31,19 +31,19 @@ using namespace test;
 	void c_deletion(void *v){delete (int*)v;}
 	void c_str_deletin(void *v){delete (string*) v;}
 
-	void refCountTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	void refCountTest(smart_pointer_type typ) throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, refCountTest(smart_pointer_type typ), ";
 		if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::smart_ptr<std::exception>(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
 
 		smart_ptr<int> temp1,temp2;
 
 		//NULL pointer should have NULL ref count
 		if(temp1.getRefCount()!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
 
 		if(typ==shared_type_array) temp1 = smart_ptr<int>(new int[5],shared_type_array);
 		else if(typ==shared_type_dynamic_delete) temp1 = smart_ptr<int>(new int(1),&c_deletion);
@@ -51,61 +51,61 @@ using namespace test;
 
 		//Should have a reference count
 		if(temp1.getRefCount()==NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
 
 		//Reference count should be 1
 		if(*(temp1.getRefCount())!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 1",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 1",locString),shared_type);
 
 		//Reference count should be 2
 		temp2 = temp1;
 		if(*(temp1.getRefCount())!=2)
-			throw os::smart_ptr<std::exception>(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 2",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 2",locString),shared_type);
 
 		//Reference count should be 1
 		temp1=NULL;
 		if(*(temp2.getRefCount())!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp2.getRefCount()))+" expected 1",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp2.getRefCount()))+" expected 1",locString),shared_type);
 
 		//NULL pointer should have NULL ref count
 		if(temp1.getRefCount()!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
 
 		//Should have a reference count
 		if(temp2.getRefCount()==NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
 
 		//NULL pointer should have NULL ref count
 		temp2=NULL;
 		if(temp2.getRefCount()!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
 	}
-	void refCountTest_shared()throw(os::smart_ptr<std::exception>){refCountTest(shared_type);}
-	void refCountTest_array()throw(os::smart_ptr<std::exception>){refCountTest(shared_type_array);}
-	void refCountTest_dyndel()throw(os::smart_ptr<std::exception>){refCountTest(shared_type_dynamic_delete);}
+	void refCountTest_shared()throw(os::errorPointer){refCountTest(shared_type);}
+	void refCountTest_array()throw(os::errorPointer){refCountTest(shared_type_array);}
+	void refCountTest_dyndel()throw(os::errorPointer){refCountTest(shared_type_dynamic_delete);}
 	
-	void compareNULL_type(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	void compareNULL_type(smart_pointer_type typ) throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, compareNULL_type(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
 		else if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::smart_ptr<std::exception>(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
 		
 		smart_ptr<int> temp1;
 
 		//Ensure it is NULL
 		if(temp1.get()!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected initial NULL",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected initial NULL",locString),shared_type);
 
 		//Other methods of detecting NULL
 		if(temp1)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (cast int)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL comparison failed (cast int)",locString),shared_type);
 		if(temp1!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (comp null)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL comparison failed (comp null)",locString),shared_type);
 		if(temp1.constGet()!=NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (constGet)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL comparison failed (constGet)",locString),shared_type);
 
 		//Attempt different methods of NULL casting
 		int raw_val=1;
@@ -127,15 +127,15 @@ using namespace test;
 
 			//Ensure it isn't NULL
 			if(temp1.get()==NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("Expected instantiaze not NULL ("+cast_type+")",locString),shared_type);
+				throw os::errorPointer(new generalTestException("Expected instantiaze not NULL ("+cast_type+")",locString),shared_type);
 
 			//Other methods of detecting not NULL
 			if(!temp1)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (cast int, "+cast_type,locString+")"),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed (cast int, "+cast_type,locString+")"),shared_type);
 			if(temp1==NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (comp null, "+cast_type,locString+")"),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed (comp null, "+cast_type,locString+")"),shared_type);
 			if(temp1.constGet()==NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed (constGet, "+cast_type,locString+")"),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed (constGet, "+cast_type,locString+")"),shared_type);
 
 			//Set NULL (3 ways)
 			if(i==0) temp1=smart_ptr<int>();
@@ -144,23 +144,23 @@ using namespace test;
 
 			//Ensure it is NULL
 			if(temp1.get()!=NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("Expected NULL, "+cast_type,locString),shared_type);
+				throw os::errorPointer(new generalTestException("Expected NULL, "+cast_type,locString),shared_type);
 
 			//Other methods of detecting NULL
 			if(temp1)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed, "+cast_type+"(cast int)",locString),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(cast int)",locString),shared_type);
 			if(temp1!=NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed, "+cast_type+"(comp null)",locString),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(comp null)",locString),shared_type);
 			if(temp1.constGet()!=NULL)
-				throw os::smart_ptr<std::exception>(new generalTestException("NULL comparison failed, "+cast_type+"(constGet)",locString),shared_type);
+				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(constGet)",locString),shared_type);
 			}
 	}
-	void compareNULL_raw() throw(os::smart_ptr<std::exception>){compareNULL_type(raw_type);}
-	void compareNULL_shared() throw(os::smart_ptr<std::exception>){compareNULL_type(shared_type);}
-	void compareNULL_array() throw(os::smart_ptr<std::exception>){compareNULL_type(shared_type_array);}
-	void compareNULL_dyndel() throw(os::smart_ptr<std::exception>){compareNULL_type(shared_type_dynamic_delete);}
+	void compareNULL_raw() throw(os::errorPointer){compareNULL_type(raw_type);}
+	void compareNULL_shared() throw(os::errorPointer){compareNULL_type(shared_type);}
+	void compareNULL_array() throw(os::errorPointer){compareNULL_type(shared_type_array);}
+	void compareNULL_dyndel() throw(os::errorPointer){compareNULL_type(shared_type_dynamic_delete);}
 
-	void copyConstructor(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	void copyConstructor(smart_pointer_type typ) throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, copyConstructor(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -178,49 +178,49 @@ using namespace test;
 
 		//Compare type with declared type
 		if(master.getType()!=typ)
-			throw os::smart_ptr<std::exception>(new generalTestException("Type bound improperly",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Type bound improperly",locString),shared_type);
 
 		//Check if temp1 is NULL
 		if(temp1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected initial NULL",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected initial NULL",locString),shared_type);
 
 		//Set temp1 and master
 		temp1=master;
 
 		//Compare types
 		if(master.getType()!=temp1.getType())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity type mis-match (=)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity type mis-match (=)",locString),shared_type);
 		if(master.getRefCount()!=temp1.getRefCount())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity ref-count mis-match (=)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity ref-count mis-match (=)",locString),shared_type);
 		if(master.getFunc()!=temp1.getFunc())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity delete function mis-match (=)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity delete function mis-match (=)",locString),shared_type);
 		if(master.get()!=temp1.get())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity pointer mis-match (=)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity pointer mis-match (=)",locString),shared_type);
 		if(master!=temp1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity compare mis-match (=)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity compare mis-match (=)",locString),shared_type);
 
 		//Set temp1 and master
 		temp1=smart_ptr<int>(master);
 
 		//Compare types
 		if(master.getType()!=temp1.getType())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity type mis-match (copy)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity type mis-match (copy)",locString),shared_type);
 		if(master.getRefCount()!=temp1.getRefCount())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity ref-count mis-match (copy)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity ref-count mis-match (copy)",locString),shared_type);
 		if(master.getFunc()!=temp1.getFunc())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity delete function mis-match (copy)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity delete function mis-match (copy)",locString),shared_type);
 		if(master.get()!=temp1.get())
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity pointer mis-match (copy)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity pointer mis-match (copy)",locString),shared_type);
 		if(master!=temp1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Equalitity compare mis-match (copy)",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Equalitity compare mis-match (copy)",locString),shared_type);
 	}
-	void copyConstructor_null() throw(os::smart_ptr<std::exception>){copyConstructor(null_type);}
-	void copyConstructor_raw() throw(os::smart_ptr<std::exception>){copyConstructor(raw_type);}
-	void copyConstructor_shared() throw(os::smart_ptr<std::exception>){copyConstructor(shared_type);}
-	void copyConstructor_array() throw(os::smart_ptr<std::exception>){copyConstructor(shared_type_array);}
-	void copyConstructor_dyndel() throw(os::smart_ptr<std::exception>){copyConstructor(shared_type_dynamic_delete);}
+	void copyConstructor_null() throw(os::errorPointer){copyConstructor(null_type);}
+	void copyConstructor_raw() throw(os::errorPointer){copyConstructor(raw_type);}
+	void copyConstructor_shared() throw(os::errorPointer){copyConstructor(shared_type);}
+	void copyConstructor_array() throw(os::errorPointer){copyConstructor(shared_type_array);}
+	void copyConstructor_dyndel() throw(os::errorPointer){copyConstructor(shared_type_dynamic_delete);}
 
-	void comparisonTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	void comparisonTest(smart_pointer_type typ) throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, comparisonTest(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -238,9 +238,9 @@ using namespace test;
 
 		//Test with self first
 		if(master!=master)
-			throw os::smart_ptr<std::exception>(new generalTestException("!= with self returned unexpected value",locString),shared_type);
+			throw os::errorPointer(new generalTestException("!= with self returned unexpected value",locString),shared_type);
 		if(!(master==master))
-			throw os::smart_ptr<std::exception>(new generalTestException("== with self returned unexpected value",locString),shared_type);
+			throw os::errorPointer(new generalTestException("== with self returned unexpected value",locString),shared_type);
 
 		srand (time(NULL));
 
@@ -258,29 +258,29 @@ using namespace test;
 			bool v = (unsigned long)master.get()==cur_comp;
 			bool rv = cur_comp==(unsigned long)master.get();
 			if(v!=(master==cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master==ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master==comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp==master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp==master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			
 			//General != test
 			v = (unsigned long)master.get()!=cur_comp;
 			rv = cur_comp!=(unsigned long)master.get();
 			if(v!=(master!=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master!=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master!=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp!=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp!=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 
 			//General < test
 			v = (unsigned long)master.get()<cur_comp;
@@ -288,73 +288,73 @@ using namespace test;
             //cout<<v<<endl;
             //cout<<(master<cur_comp)<<endl;
 			if(v!=(master<cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master<ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master<comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 
 			//General > test
 			v = (unsigned long)master.get()>cur_comp;
 			rv = cur_comp>(unsigned long)master.get();
 			if(v!=(master>cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master>ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master>comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 
 			//General <= test
 			v = (unsigned long)master.get()<=cur_comp;
 			rv = cur_comp<=(unsigned long)master.get();
 			if(v!=(master<=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master<=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master<=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 
 			//General >= test
 			v = (unsigned long)master.get()>=cur_comp;
 			rv = cur_comp>=(unsigned long)master.get();
 			if(v!=(master>=cur_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master>=ptr_comp))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(v!=(master>=comp_ptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("long >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>=master))
-				throw os::smart_ptr<std::exception>(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 		}
 	}
-	void comparisonTest_null() throw(os::smart_ptr<std::exception>){comparisonTest(null_type);}
-	void comparisonTest_raw() throw(os::smart_ptr<std::exception>){comparisonTest(raw_type);}
-	void comparisonTest_shared() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type);}
-	void comparisonTest_array() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_array);}
-    void comparisonTest_dyndel() throw(os::smart_ptr<std::exception>){comparisonTest(shared_type_dynamic_delete);}
+	void comparisonTest_null() throw(os::errorPointer){comparisonTest(null_type);}
+	void comparisonTest_raw() throw(os::errorPointer){comparisonTest(raw_type);}
+	void comparisonTest_shared() throw(os::errorPointer){comparisonTest(shared_type);}
+	void comparisonTest_array() throw(os::errorPointer){comparisonTest(shared_type_array);}
+    void comparisonTest_dyndel() throw(os::errorPointer){comparisonTest(shared_type_dynamic_delete);}
 
-	void derefTest(smart_pointer_type typ) throw(os::smart_ptr<std::exception>)
+	void derefTest(smart_pointer_type typ) throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, derefTest(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
 		else if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::smart_ptr<std::exception>(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
 
 		smart_ptr<string> ptr;
 		string obj;
@@ -365,7 +365,7 @@ using namespace test;
 		else ptr = smart_ptr<string>(new string(""),shared_type);
 
 		if(!ptr)
-			throw os::smart_ptr<std::exception>(new generalTestException("Pointer unexpected NULL",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Pointer unexpected NULL",locString),shared_type);
 
 		for(int i = 0;i<3;i++)
 		{
@@ -387,20 +387,26 @@ using namespace test;
 			}
 
 			if(*ptr.get()!="test")
-				throw os::smart_ptr<std::exception>(new generalTestException("Error at raw deref"+lInfo,locString),shared_type);
+				throw os::errorPointer(new generalTestException("Error at raw deref"+lInfo,locString),shared_type);
 			if(*ptr!="test")
-				throw os::smart_ptr<std::exception>(new generalTestException("Error at operator deref"+lInfo,locString),shared_type);
+				throw os::errorPointer(new generalTestException("Error at operator deref"+lInfo,locString),shared_type);
 			if(ptr[0]!="test")
-				throw os::smart_ptr<std::exception>(new generalTestException("Error at array deref"+lInfo,locString),shared_type);
+				throw os::errorPointer(new generalTestException("Error at array deref"+lInfo,locString),shared_type);
 
 			if(ptr->substr(0,2)!="te")
-				throw os::smart_ptr<std::exception>(new generalTestException("Error at -> operator"+lInfo,locString),shared_type);
+				throw os::errorPointer(new generalTestException("Error at -> operator"+lInfo,locString),shared_type);
 		}
 	}
-	void derefTest_raw() throw(os::smart_ptr<std::exception>){derefTest(raw_type);}
-	void derefTest_shared() throw(os::smart_ptr<std::exception>){derefTest(shared_type);}
-	void derefTest_array() throw(os::smart_ptr<std::exception>){derefTest(shared_type_array);}
-	void derefTest_dyndel() throw(os::smart_ptr<std::exception>){derefTest(shared_type_dynamic_delete);}
+	void derefTest_raw() throw(os::errorPointer){derefTest(raw_type);}
+	void derefTest_shared() throw(os::errorPointer){derefTest(shared_type);}
+	void derefTest_array() throw(os::errorPointer){derefTest(shared_type_array);}
+	void derefTest_dyndel() throw(os::errorPointer){derefTest(shared_type_dynamic_delete);}
+
+/*================================================================
+	Lock Tests
+================================================================*/
+
+
 
 /*================================================================
 	ADS Tests
@@ -409,81 +415,81 @@ using namespace test;
 	#define GETBIT(d,p) ((d) & (1 << (p)))
 	#define SETBIT(d,p,t) (t==0 ? d = (d)&~(1<<(p)):d = (d)|(1<<(p)))
 
-	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleInsertion(...), "+ads_type;
 
 		if(!dataStruct->insert(intptr))
-			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
 		
 		//Attempt to re-insert (two cases)
 		if(GETBIT(id,0))
 		{
 			if(!dataStruct->insert(intptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("ADS re-insertion failed",locString),shared_type);
+				throw os::errorPointer(new generalTestException("ADS re-insertion failed",locString),shared_type);
 			if(!dataStruct->findDelete(intptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("ADS delete after re-insertion failed",locString),shared_type);
+				throw os::errorPointer(new generalTestException("ADS delete after re-insertion failed",locString),shared_type);
 		}
 		else
 		{
 			if(dataStruct->insert(intptr))
-				throw os::smart_ptr<std::exception>(new generalTestException("ADS re-insertion succeeded, it should not have",locString),shared_type);
+				throw os::errorPointer(new generalTestException("ADS re-insertion succeeded, it should not have",locString),shared_type);
 		}
 
 		//Check, there should be one element in the ADS
 		if(dataStruct->size()!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("ADS should have 1 element, it has "+to_string((long long unsigned int)dataStruct->size()),locString),shared_type);
+			throw os::errorPointer(new generalTestException("ADS should have 1 element, it has "+to_string((long long unsigned int)dataStruct->size()),locString),shared_type);
 
 		//Find
 		if(!dataStruct->find(intptr))
-			throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted element",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Could not find inserted element",locString),shared_type);
 		int comp = 5;
 		if(!dataStruct->find(&comp))
-			throw os::smart_ptr<std::exception>(new generalTestException("Could not find alias to inserted element",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Could not find alias to inserted element",locString),shared_type);
 
 		//Shouldn't be able to find "bad" elements
 		comp = 7;
 		if(dataStruct->find(&comp))
-			throw os::smart_ptr<std::exception>(new generalTestException("Found item that was not inserted",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Found item that was not inserted",locString),shared_type);
 	}
-	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleTestADSDeletion(...), "+ads_type;
 
 		if(intptr.getRefCount()==NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
 		if(*intptr.getRefCount()!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
 		if(!dataStruct->insert(intptr))
-			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
 		if(*intptr.getRefCount()!=2)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
 	}
-	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleTestDeletion(...), "+ads_type;
 
 		if(intptr.getRefCount()==NULL)
-			throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
 		if(*intptr.getRefCount()!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
 		if(!dataStruct->insert(intptr))
-			throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
 		if(*intptr.getRefCount()!=2)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
 		
 		//Find delete
 		if(!dataStruct->findDelete(intptr))
-			throw os::smart_ptr<std::exception>(new generalTestException("Could not find element to delete",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Could not find element to delete",locString),shared_type);
 
 		if(*intptr.getRefCount()!=1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
         dataStruct = NULL;
 	}
-	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) throw(os::smart_ptr<std::exception>)
+	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) throw(os::errorPointer)
 	{
 		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
 
@@ -497,7 +503,7 @@ using namespace test;
 			last = it;
 		}
 	}
-    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
     {
         string locString = "DatastructuresTest.cpp, randomInsertionTest(...), "+ads_type;
         srand(time(NULL));
@@ -508,17 +514,17 @@ using namespace test;
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
             if(intptr.getRefCount()==NULL)
-                throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+                throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
             if(*intptr.getRefCount()!=1)
-                throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+                throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
             
             //Attempt to insert
             if(!dataStruct->find(intptr))
             {
                 if(!dataStruct->insert(intptr))
-                    throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
                 if(!dataStruct->find(intptr))
-                    throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
                 
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
@@ -526,7 +532,7 @@ using namespace test;
                 i--;
         }
     }
-    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
     {
         string locString = "DatastructuresTest.cpp, randomInsertionDeletionTest(...), "+ads_type;
         srand(time(NULL));
@@ -537,17 +543,17 @@ using namespace test;
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
             if(intptr.getRefCount()==NULL)
-            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
             if(*intptr.getRefCount()!=1)
-            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
             
             //Attempt to insert
             if(!dataStruct->find(intptr))
             {
                 if(!dataStruct->insert(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
                 if(!dataStruct->find(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
                 
                 if(id&2) checkSorted(dataStruct,ads_type);
                 
@@ -555,7 +561,7 @@ using namespace test;
                 if(rand()%4)
                 {
                     if(!dataStruct->findDelete(intptr))
-                    throw os::smart_ptr<std::exception>(new generalTestException("ADS Deletion failed",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("ADS Deletion failed",locString),shared_type);
                     if(id&2) checkSorted(dataStruct,ads_type);
                 }
             }
@@ -563,7 +569,7 @@ using namespace test;
                 i--;
         }
     }
-    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
     {
         string locString = "DatastructuresTest.cpp, randomForwardTraverseTest(...), "+ads_type;
         srand(time(NULL));
@@ -574,17 +580,17 @@ using namespace test;
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
             if(intptr.getRefCount()==NULL)
-            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
             if(*intptr.getRefCount()!=1)
-            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
         
             //Attempt to insert
             if(!dataStruct->find(intptr))
             {
                 if(!dataStruct->insert(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
                 if(!dataStruct->find(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
             
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
@@ -598,12 +604,12 @@ using namespace test;
         {
             trace++;
             if(!it->getData())
-            throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
+            throw os::errorPointer(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string((long long unsigned int)dataStruct->size())+" but found "+std::to_string((long long unsigned int)trace),locString),shared_type);
+        throw os::errorPointer(new generalTestException("Traverse failed, expected "+std::to_string((long long unsigned int)dataStruct->size())+" but found "+std::to_string((long long unsigned int)trace),locString),shared_type);
     }
-    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::smart_ptr<std::exception>)
+    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
     {
         string locString = "DatastructuresTest.cpp, randomReverseTraverseTest(...), "+ads_type;
         srand(time(NULL));
@@ -614,17 +620,17 @@ using namespace test;
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
             if(intptr.getRefCount()==NULL)
-            throw os::smart_ptr<std::exception>(new generalTestException("NULL reference count",locString),shared_type);
+            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
             if(*intptr.getRefCount()!=1)
-            throw os::smart_ptr<std::exception>(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
+            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
         
             //Attempt to insert
             if(!dataStruct->find(intptr))
             {
                 if(!dataStruct->insert(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("ADS Insertion failed",locString),shared_type);
+                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
                 if(!dataStruct->find(intptr))
-                throw os::smart_ptr<std::exception>(new generalTestException("Could not find inserted node",locString),shared_type);
+                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
             
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
@@ -638,10 +644,10 @@ using namespace test;
         {
             trace++;
             if(!it->getData())
-            throw os::smart_ptr<std::exception>(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
+            throw os::errorPointer(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
         }
         if(trace!=dataStruct->size())
-        throw os::smart_ptr<std::exception>(new generalTestException("Traverse failed, expected "+std::to_string((long long int)dataStruct->size())+" but found "+std::to_string((long long int)trace),locString),shared_type);
+        throw os::errorPointer(new generalTestException("Traverse failed, expected "+std::to_string((long long int)dataStruct->size())+" but found "+std::to_string((long long int)trace),locString),shared_type);
 }
 
 	//adsSuite test
@@ -668,12 +674,12 @@ using namespace test;
         virtual ~adsTest(){}
         
 		//Run the specified test function
-		void test() throw(os::smart_ptr<std::exception>)
+		void test() throw(os::errorPointer)
 		{
 			if(adfunc!=NULL)
                 adfunc(newADS(),ads_name,_id);
 			else
-				throw os::smart_ptr<std::exception>(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
+				throw os::errorPointer(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
 		}
 	};
 	//adsSuite
@@ -743,7 +749,7 @@ using namespace test;
  ================================================================*/
 
     //Array access test
-    void matrixArrayAccessTest()throw(os::smart_ptr<std::exception>)
+    void matrixArrayAccessTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixArrayAccessTest()";
         
@@ -753,8 +759,8 @@ using namespace test;
         int compArray[16];
         
         //Check size
-        if(mat1.getWidth()!=4 || mat2.getWidth()!=4 || mat3.getWidth()!=4) throw os::smart_ptr<std::exception>(new generalTestException("Matrix width failure",locString),shared_type);
-        if(mat1.getHeight()!=4 || mat2.getHeight()!=4 || mat3.getHeight()!=4) throw os::smart_ptr<std::exception>(new generalTestException("Matrix height failure",locString),shared_type);
+        if(mat1.getWidth()!=4 || mat2.getWidth()!=4 || mat3.getWidth()!=4) throw os::errorPointer(new generalTestException("Matrix width failure",locString),shared_type);
+        if(mat1.getHeight()!=4 || mat2.getHeight()!=4 || mat3.getHeight()!=4) throw os::errorPointer(new generalTestException("Matrix height failure",locString),shared_type);
         
         //Random init
         srand(time(NULL));
@@ -773,25 +779,25 @@ using namespace test;
         for(int i = 0;i<16;i++)
         {
             if(compArray[i] != mat1.getArray()[i])
-                throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed",locString),shared_type);
+                throw os::errorPointer(new generalTestException("Matrix init failed",locString),shared_type);
         }
         
         //Compare mat1 and mat2 (raw array)
         for(int i = 0;i<16;i++)
         {
             if(mat1.getArray()[i] != mat2.getArray()[i])
-            throw os::smart_ptr<std::exception>(new generalTestException("Matrix direct compare failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("Matrix direct compare failed",locString),shared_type);
         }
         
         //Compare mat1 and mat3 (raw array)
         for(int i = 0;i<16;i++)
         {
             if(mat2.getArray()[i] != mat3.getArray()[i])
-            throw os::smart_ptr<std::exception>(new generalTestException("Matrix copy compare failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("Matrix copy compare failed",locString),shared_type);
         }
     }
     //Equality test
-    void matrixEqualityTest()throw(os::smart_ptr<std::exception>)
+    void matrixEqualityTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixEqualityTest()";
         matrix<int>mat1(4,4);
@@ -816,24 +822,24 @@ using namespace test;
         
         //Compare mat1 and 2
         if(!(mat1==mat2))
-        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (same init)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Equals failed (same init)",locString),shared_type);
         if(mat1!=mat2)
-        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (same init)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Not equals failed (same init)",locString),shared_type);
         
         //Compare mat2 and 4
         if(!(mat2==mat4))
-        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (copy constructor)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Equals failed (copy constructor)",locString),shared_type);
         if(mat2!=mat4)
-        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (copy constructor)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Not equals failed (copy constructor)",locString),shared_type);
         
         //Compare mat1 and 3
         if(mat1==mat3)
-        throw os::smart_ptr<std::exception>(new generalTestException("Equals failed (different mats)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Equals failed (different mats)",locString),shared_type);
         if(!(mat1!=mat3))
-        throw os::smart_ptr<std::exception>(new generalTestException("Not equals failed (different mats)",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Not equals failed (different mats)",locString),shared_type);
     }
     //Addition test
-    void matrixAdditionTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdditionTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdditionTest()";
         matrix<int> mat1(2,2);
@@ -854,13 +860,13 @@ using namespace test;
         
         out = mat1+mat2;
         if(out!=ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Addition failed!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Addition failed!",locString),shared_type);
         out = mat2+mat1;
         if(out!=ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Addition transitivity failed!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Addition transitivity failed!",locString),shared_type);
     }
     //Subtraction test
-    static void matrixSubtractionTest()throw(os::smart_ptr<std::exception>)
+    static void matrixSubtractionTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixSubtractionTest()";
         matrix<int> mat1(2,2);
@@ -881,13 +887,13 @@ using namespace test;
         
         out = mat2-mat1;
         if(out!=ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Subtraction failed!",locString),shared_type);
         out = mat1-mat2;
         if(out==ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Subtraction not respecting order!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Subtraction not respecting order!",locString),shared_type);
     }
     //Dot product test
-    void matrixDotProductTest()throw(os::smart_ptr<std::exception>)
+    void matrixDotProductTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixDotProductTest()";
         matrix<int> mat1(2,2);
@@ -908,13 +914,13 @@ using namespace test;
         
         out = mat1*mat2;
         if(out!=ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Dot Product failed!",locString),shared_type);
         out = mat2*mat1;
         if(out==ans)
-        throw os::smart_ptr<std::exception>(new generalTestException("Dot Product not respecting order!",locString),shared_type);
+        throw os::errorPointer(new generalTestException("Dot Product not respecting order!",locString),shared_type);
     }
     //Advanced construction test
-    void matrixAdvancedConstructionTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdvancedConstructionTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedConstructionTest()";
         
@@ -945,24 +951,24 @@ using namespace test;
             for(int i=0;i<100;i++)
             {
                 if(mast1.getArray()[i]!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed (direct matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix init failed (direct matrix)",locString),shared_type);
                 if(*(mast2.getArray()[i])!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix init failed (indirect matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix init failed (indirect matrix)",locString),shared_type);
                 
                 if(cop1.getArray()[i]!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix standard equals failed (direct matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix standard equals failed (direct matrix)",locString),shared_type);
                 if(*(cop2.getArray()[i])!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix standard equals failed (indirect matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix standard equals failed (indirect matrix)",locString),shared_type);
                 
                 if(bridge1.getArray()[i]!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix bridge equals failed (direct matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix bridge equals failed (direct matrix)",locString),shared_type);
                 if(*(bridge2.getArray()[i])!=compsrc[i])
-                    throw os::smart_ptr<std::exception>(new generalTestException("Matrix bridge equals failed (indirect matrix)",locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Matrix bridge equals failed (indirect matrix)",locString),shared_type);
             }
         }
     }
     //Advanced equality test
-    void matrixAdvancedEqualityTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdvancedEqualityTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedEqualityTest()";
         
@@ -990,32 +996,32 @@ using namespace test;
             cop2=mast2;
             
             //Standard to standard
-            if(!(mast1==cop1)) throw os::smart_ptr<std::exception>(new generalTestException("S-S equals failed",locString),shared_type);
-            if(!(cop1==mast1)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-S equals failed",locString),shared_type);
-            if(mast1!=cop1) throw os::smart_ptr<std::exception>(new generalTestException("S-S not equals failed",locString),shared_type);
-            if(cop1!=mast1) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-S not equals failed",locString),shared_type);
+            if(!(mast1==cop1)) throw os::errorPointer(new generalTestException("S-S equals failed",locString),shared_type);
+            if(!(cop1==mast1)) throw os::errorPointer(new generalTestException("Transitive S-S equals failed",locString),shared_type);
+            if(mast1!=cop1) throw os::errorPointer(new generalTestException("S-S not equals failed",locString),shared_type);
+            if(cop1!=mast1) throw os::errorPointer(new generalTestException("Transitive S-S not equals failed",locString),shared_type);
             
             //Indirect to indirect
-            if(!(mast2==cop2)) throw os::smart_ptr<std::exception>(new generalTestException("I-I equals failed",locString),shared_type);
-            if(!(cop2==mast2)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-I equals failed",locString),shared_type);
-            if(mast2!=cop2) throw os::smart_ptr<std::exception>(new generalTestException("I-I not equals failed",locString),shared_type);
-            if(cop2!=mast2) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-I not equals failed",locString),shared_type);
+            if(!(mast2==cop2)) throw os::errorPointer(new generalTestException("I-I equals failed",locString),shared_type);
+            if(!(cop2==mast2)) throw os::errorPointer(new generalTestException("Transitive I-I equals failed",locString),shared_type);
+            if(mast2!=cop2) throw os::errorPointer(new generalTestException("I-I not equals failed",locString),shared_type);
+            if(cop2!=mast2) throw os::errorPointer(new generalTestException("Transitive I-I not equals failed",locString),shared_type);
             
             //Standard to indirect
-            if(!(mast1==cop2)) throw os::smart_ptr<std::exception>(new generalTestException("S-I equals failed",locString),shared_type);
-            if(!(cop1==mast2)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-I equals failed",locString),shared_type);
-            if(mast1!=cop2) throw os::smart_ptr<std::exception>(new generalTestException("S-I not equals failed",locString),shared_type);
-            if(cop1!=mast2) throw os::smart_ptr<std::exception>(new generalTestException("Transitive S-I not equals failed",locString),shared_type);
+            if(!(mast1==cop2)) throw os::errorPointer(new generalTestException("S-I equals failed",locString),shared_type);
+            if(!(cop1==mast2)) throw os::errorPointer(new generalTestException("Transitive S-I equals failed",locString),shared_type);
+            if(mast1!=cop2) throw os::errorPointer(new generalTestException("S-I not equals failed",locString),shared_type);
+            if(cop1!=mast2) throw os::errorPointer(new generalTestException("Transitive S-I not equals failed",locString),shared_type);
             
             //Indirect to standard
-            if(!(mast2==cop1)) throw os::smart_ptr<std::exception>(new generalTestException("I-S equals failed",locString),shared_type);
-            if(!(cop2==mast1)) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-S equals failed",locString),shared_type);
-            if(mast2!=cop1) throw os::smart_ptr<std::exception>(new generalTestException("I-S not equals failed",locString),shared_type);
-            if(cop2!=mast1) throw os::smart_ptr<std::exception>(new generalTestException("Transitive I-S not equals failed",locString),shared_type);
+            if(!(mast2==cop1)) throw os::errorPointer(new generalTestException("I-S equals failed",locString),shared_type);
+            if(!(cop2==mast1)) throw os::errorPointer(new generalTestException("Transitive I-S equals failed",locString),shared_type);
+            if(mast2!=cop1) throw os::errorPointer(new generalTestException("I-S not equals failed",locString),shared_type);
+            if(cop2!=mast1) throw os::errorPointer(new generalTestException("Transitive I-S not equals failed",locString),shared_type);
         }
     }
     //Advanced addition test
-    void matrixAdvancedAdditionTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdvancedAdditionTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedAdditionTest()";
         
@@ -1037,24 +1043,24 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1+imat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+i2 != s1+s2",locString),shared_type);
-            if(imat2+imat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+i1 != s2+s1",locString),shared_type);
-            if(imat1+smat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+s2 != s1+s2",locString),shared_type);
-            if(imat2+smat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+s1 != s2+s1",locString),shared_type);
-            if(smat1+imat2 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s1+i2 != s1+s2",locString),shared_type);
-            if(smat2+imat1 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s2+i1 != s2+s1",locString),shared_type);
+            if(imat1+imat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i1+i2 != s1+s2",locString),shared_type);
+            if(imat2+imat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i2+i1 != s2+s1",locString),shared_type);
+            if(imat1+smat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i1+s2 != s1+s2",locString),shared_type);
+            if(imat2+smat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i2+s1 != s2+s1",locString),shared_type);
+            if(smat1+imat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: s1+i2 != s1+s2",locString),shared_type);
+            if(smat2+imat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: s2+i1 != s2+s1",locString),shared_type);
             
             //Transitive tests
-            if(imat1+imat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+i2 != s2+s1",locString),shared_type);
-            if(imat2+imat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+i1 != s1+s2",locString),shared_type);
-            if(imat1+smat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i1+s2 != s2+s1",locString),shared_type);
-            if(imat2+smat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: i2+s1 != s1+s2",locString),shared_type);
-            if(smat1+imat2 != smat2+smat1) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s1+i2 != s2+s1",locString),shared_type);
-            if(smat2+imat1 != smat1+smat2) throw os::smart_ptr<std::exception>(new generalTestException("Addition failed: s2+i1 != s1+s2",locString),shared_type);
+            if(imat1+imat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i1+i2 != s2+s1",locString),shared_type);
+            if(imat2+imat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i2+i1 != s1+s2",locString),shared_type);
+            if(imat1+smat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i1+s2 != s2+s1",locString),shared_type);
+            if(imat2+smat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i2+s1 != s1+s2",locString),shared_type);
+            if(smat1+imat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: s1+i2 != s2+s1",locString),shared_type);
+            if(smat2+imat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: s2+i1 != s1+s2",locString),shared_type);
         }
     }
     //Advanced subtraction test
-    void matrixAdvancedSubtractionTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdvancedSubtractionTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedSubtractionTest()";
         
@@ -1076,16 +1082,16 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1-imat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i1-i2 != s1-s2",locString),shared_type);
-            if(imat2-imat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i2-i1 != s2-s1",locString),shared_type);
-            if(imat1-smat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i1-s2 != s1-s2",locString),shared_type);
-            if(imat2-smat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: i2-s1 != s2-s1",locString),shared_type);
-            if(smat1-imat2 != smat1-smat2) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: s1-i2 != s1-s2",locString),shared_type);
-            if(smat2-imat1 != smat2-smat1) throw os::smart_ptr<std::exception>(new generalTestException("Subtraction failed: s2-i1 != s2-s1",locString),shared_type);
+            if(imat1-imat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: i1-i2 != s1-s2",locString),shared_type);
+            if(imat2-imat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: i2-i1 != s2-s1",locString),shared_type);
+            if(imat1-smat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: i1-s2 != s1-s2",locString),shared_type);
+            if(imat2-smat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: i2-s1 != s2-s1",locString),shared_type);
+            if(smat1-imat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: s1-i2 != s1-s2",locString),shared_type);
+            if(smat2-imat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: s2-i1 != s2-s1",locString),shared_type);
         }
     }
     //Advanced dot product test
-    void matrixAdvancedDotProductTest()throw(os::smart_ptr<std::exception>)
+    void matrixAdvancedDotProductTest()throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedDotProductTest()";
         
@@ -1107,12 +1113,12 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1*imat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i1*i2 != s1*s2",locString),shared_type);
-            if(imat2*imat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i2*i1 != s2*s1",locString),shared_type);
-            if(imat1*smat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i1*s2 != s1*s2",locString),shared_type);
-            if(imat2*smat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: i2*s1 != s2*s1",locString),shared_type);
-            if(smat1*imat2 != smat1*smat2) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: s1*i2 != s1*s2",locString),shared_type);
-            if(smat2*imat1 != smat2*smat1) throw os::smart_ptr<std::exception>(new generalTestException("Dot Product failed: s2*i1 != s2*s1",locString),shared_type);
+            if(imat1*imat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: i1*i2 != s1*s2",locString),shared_type);
+            if(imat2*imat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: i2*i1 != s2*s1",locString),shared_type);
+            if(imat1*smat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: i1*s2 != s1*s2",locString),shared_type);
+            if(imat2*smat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: i2*s1 != s2*s1",locString),shared_type);
+            if(smat1*imat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: s1*i2 != s1*s2",locString),shared_type);
+            if(smat2*imat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: s2*i1 != s2*s1",locString),shared_type);
         }
     }
 
@@ -1121,58 +1127,58 @@ using namespace test;
  ================================================================*/
 
 	//Tests the copy constructor and equality constructor
-    void vector2dConstructorTest()throw(os::smart_ptr<std::exception>)
+    void vector2dConstructorTest()throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dConstructorTest()";
 		vector2d_d v1;
 		
 		//Test default init values
 		if(v1.x!=0 || v1.y!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector default init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector default init failed",locString),shared_type);
 
 		//Tests the value init
 		vector2d_d v2(.5,1.5);
 		if(v2.x!=.5 || v2.y!=1.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector init failed",locString),shared_type);
 
 		//Tests the copy constructor
 		vector2d_d v3(v2);
 		if(v3.x!=.5 || v3.y!=1.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
 		v1=v3;
 		if(v1.x!=.5 || v1.y!=1.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
 	}
-    void vector3dConstructorTest()throw(os::smart_ptr<std::exception>)
+    void vector3dConstructorTest()throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dConstructorTest()";
 		vector3d_d v1;
 		
 		//Test default init values
 		if(v1.x!=0 || v1.y!=0 || v1.z!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector default init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector default init failed",locString),shared_type);
 
 		//Tests the value init
 		vector3d_d v2(.5,1.5,2.5);
 		if(v2.x!=.5 || v2.y!=1.5 || v2.z!=2.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector init failed",locString),shared_type);
 
 		//Tests the copy constructor
 		vector3d_d v3(v2);
 		if(v3.x!=.5 || v3.y!=1.5 || v3.z!=2.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector copy init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
 		v1=v3;
 		if(v1.x!=.5 || v1.y!=1.5 || v1.z!=2.5)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector equals init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector equals init failed",locString),shared_type);
 
 		//Tests the 2d constructor
 		vector2d_d t(1,2);
 		vector3d_d v4(t);
 		if(v4.x!=1 || v4.y!=2 || v4.z !=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Vector 2d init failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Vector 2d init failed",locString),shared_type);
 	}
 	//Tests equality functions
-    void vector2dEqualityTest() throw(os::smart_ptr<std::exception>)
+    void vector2dEqualityTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dEqualityTest()";
 
@@ -1193,18 +1199,18 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::smart_ptr<std::exception>(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::smart_ptr<std::exception>(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::smart_ptr<std::exception>(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
 		}
 	}
-    void vector3dEqualityTest() throw(os::smart_ptr<std::exception>)
+    void vector3dEqualityTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dEqualityTest()";
 
@@ -1225,19 +1231,19 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::smart_ptr<std::exception>(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::smart_ptr<std::exception>(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::smart_ptr<std::exception>(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::smart_ptr<std::exception>(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::smart_ptr<std::exception>(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
 		}
 	}
 	//Addition
-    void vector2dAdditionTest() throw(os::smart_ptr<std::exception>)
+    void vector2dAdditionTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dAdditionTest()";
 
@@ -1247,36 +1253,36 @@ using namespace test;
 		vector2d_d ans(10,11);
 
 		if(v1.add(v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple addition failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple addition failed",locString),shared_type);
 		if(v1+v2!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple + failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple + failed",locString),shared_type);
 		if(v2+v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("+ reverse failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("+ reverse failed",locString),shared_type);
 		if((v1+=v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple += failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple += failed",locString),shared_type);
 		if(v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("+= after failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("+= after failed",locString),shared_type);
 
 		//Increment and decrement
 		vector2d_d raw(0,1);
 		raw++;
 		if(raw.x!=0 && raw.y!=2)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		++raw;
 		if(raw.x!=0 && raw.y!=3)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
 		if(5.1>raw.length()>4.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		raw++;
 		if(6.1>raw.length()>5.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
 		raw++;
 		if(7.1>raw.length()>6.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
-    void vector3dAdditionTest() throw(os::smart_ptr<std::exception>)
+    void vector3dAdditionTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dAdditionTest()";
 
@@ -1286,38 +1292,38 @@ using namespace test;
 		vector3d_d ans(10,11,5);
 
 		if(v1.add(v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple addition failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple addition failed",locString),shared_type);
 		if(v1+v2!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple + failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple + failed",locString),shared_type);
 		if(v2+v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("+ reverse failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("+ reverse failed",locString),shared_type);
 		if((v1+=v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple += failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple += failed",locString),shared_type);
 		if(v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("+= after failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("+= after failed",locString),shared_type);
 
 		//Increment and decrement
 		vector3d_d raw(0,1,0);
 		raw++;
 		if(raw.x!=0 || raw.y!=2 || raw.z!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		++raw;
 		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
 		
 		raw=vector3d_d(1,1,1);
 		if(raw.length()!=sqrt(3))
-			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		raw++;
 
 		if(raw.length() < sqrt(3)+.9 || raw.length() > sqrt(3)+1.1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
 		raw++;
 		if(raw.length() < sqrt(3)+1.9 || raw.length() > sqrt(3)+2.1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex increment (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
 	//Subtraction
-    void vector2dSubtractionTest() throw(os::smart_ptr<std::exception>)
+    void vector2dSubtractionTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dSubtractionTest()";
 
@@ -1327,36 +1333,36 @@ using namespace test;
 		vector2d_d ans(-4,7);
 
 		if(v1.subtract(v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple subtract failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple subtract failed",locString),shared_type);
 		if(v1-v2!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple - failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple - failed",locString),shared_type);
 		if((v2-v1) != (-ans))
-			throw os::smart_ptr<std::exception>(new generalTestException("- reverse failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("- reverse failed",locString),shared_type);
 		if((v1-=v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple -= failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple -= failed",locString),shared_type);
 		if(v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("-= after failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("-= after failed",locString),shared_type);
 
 		//Increment and decrement
 		vector2d_d raw(0,5);
 		raw--;
 		if(raw.x!=0 && raw.y!=4)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple decrement failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple decrement failed",locString),shared_type);
 		--raw;
 		if(raw.x!=0 && raw.y!=3)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple decrement (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple decrement (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
 		if(5.1>raw.length()>4.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		raw--;
 		if(4.1>raw.length()>3.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
 		raw--;
 		if(3.1>raw.length()>2.9)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
-    void vector3dSubtractionTest() throw(os::smart_ptr<std::exception>)
+    void vector3dSubtractionTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dSubtractionTest()";
 
@@ -1366,65 +1372,65 @@ using namespace test;
 		vector3d_d ans(-4,7,3);
 
 		if(v1.subtract(v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple subtraction failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple subtraction failed",locString),shared_type);
 		if(v1-v2!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple - failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple - failed",locString),shared_type);
 		if((v2-v1)!=(-ans))
-			throw os::smart_ptr<std::exception>(new generalTestException("- reverse failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("- reverse failed",locString),shared_type);
 		if((v1-=v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple -= failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple -= failed",locString),shared_type);
 		if(v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("-= after failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("-= after failed",locString),shared_type);
 
 		//Increment and decrement
 		vector3d_d raw(0,5,0);
 		raw--;
 		if(raw.x!=0 || raw.y!=4 || raw.z!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		--raw;
 		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
 		
 		raw=vector3d_d(4,4,4);
 		if(raw.length()!=sqrt(3*16))
-			throw os::smart_ptr<std::exception>(new generalTestException("Length failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		raw--;
 
 		if(raw.length() > sqrt(3*16)-.9 || raw.length() < sqrt(3*16)-1.1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
 		raw--;
 		if(raw.length() > sqrt(3*16)-1.9 || raw.length() < sqrt(3*16)-2.1)
-			throw os::smart_ptr<std::exception>(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
 	//Dot product
-    void vector2dDotProductTest() throw(os::smart_ptr<std::exception>)
+    void vector2dDotProductTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dDotProductTest()";
 		vector2d_d v1(4,8);
 		vector2d_d v2(-3,10);
 
 		if(v1.dotProduct(v2)!=68)
-			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Initial dot-product failed!",locString),shared_type);
 		v1(0,1);
 		v2(1,0);
 		if(v1.dotProduct(v2)!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
-    void vector3dDotProductTest() throw(os::smart_ptr<std::exception>)
+    void vector3dDotProductTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dDotProductTest()";
 		vector3d_d v1(4,8,3);
 		vector3d_d v2(-3,10,-4);
 
 		if(v1.dotProduct(v2)!=56)
-			throw os::smart_ptr<std::exception>(new generalTestException("Initial dot-product failed!",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Initial dot-product failed!",locString),shared_type);
 		v1(0,1,0);
 		v2(0,0,1);
 		if(v1.dotProduct(v2)!=0)
-			throw os::smart_ptr<std::exception>(new generalTestException("Dot-product zero failed!",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
 	//Cross product
-    void vector3dCrossProductTest() throw(os::smart_ptr<std::exception>)
+    void vector3dCrossProductTest() throw(os::errorPointer)
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
 		vector3d_d v1(-1,7,4);
@@ -1432,20 +1438,20 @@ using namespace test;
 		vector3d_d ans(-4,-16,27);
 
 		if(v1.crossProduct(v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple cross-product failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple cross-product failed",locString),shared_type);
 		if(v1*v2!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple * failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple * failed",locString),shared_type);
 		if((v2*v1)!=(-ans))
-			throw os::smart_ptr<std::exception>(new generalTestException("* reverse failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("* reverse failed",locString),shared_type);
 		if((v1*=v2)!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("Simple *= failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Simple *= failed",locString),shared_type);
 		if(v1!=ans)
-			throw os::smart_ptr<std::exception>(new generalTestException("*= after failed",locString),shared_type);
+			throw os::errorPointer(new generalTestException("*= after failed",locString),shared_type);
 
 	}
 
     //Rotation test
-    void vector2dRotationTest() throw(os::smart_ptr<std::exception>)
+    void vector2dRotationTest() throw(os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
         vector2d_d v1(4,5);
@@ -1454,25 +1460,25 @@ using namespace test;
         vector2d_d ans=v1.rotate(rotate);
         vector2d_d comp=v1;
         if(ans!=comp)
-            throw os::smart_ptr<std::exception>(new generalTestException("No rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("No rotation failed",locString),shared_type);
         
         rotate(0,1);
         comp(-5,4);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::smart_ptr<std::exception>(new generalTestException("90 degree rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("90 degree rotation failed",locString),shared_type);
         
         rotate(-1,0);
         comp(-4,-5);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::smart_ptr<std::exception>(new generalTestException("180 degree rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("180 degree rotation failed",locString),shared_type);
 
         rotate(0,-1);
         comp(5,-4);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::smart_ptr<std::exception>(new generalTestException("270 degree rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("270 degree rotation failed",locString),shared_type);
 
         v1(4,4);
         rotate(1,1);
@@ -1480,7 +1486,7 @@ using namespace test;
         ans=v1.rotate(rotate);
         if(!(ans.y>5.6 && ans.y<5.7 &&
            ans.x>-.1 && ans.x<.1))
-            throw os::smart_ptr<std::exception>(new generalTestException("45 degree rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("45 degree rotation failed",locString),shared_type);
         
         v1(4,4);
         rotate(1,-1);
@@ -1488,7 +1494,7 @@ using namespace test;
         ans=v1.rotate(rotate);
         if(!(ans.x>5.6 && ans.x<5.7 &&
              ans.y>-.1 && ans.y<.1))
-            throw os::smart_ptr<std::exception>(new generalTestException("45 degree rotation failed",locString),shared_type);
+            throw os::errorPointer(new generalTestException("45 degree rotation failed",locString),shared_type);
     }
 
 /*================================================================
@@ -1511,7 +1517,7 @@ using namespace test;
     }
 
     //Basic quicksort test
-    void quicksortArrayTest() throw (os::smart_ptr<std::exception>)
+    void quicksortArrayTest() throw (os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, quicksortArrayTest()";
         int array[100];
@@ -1525,13 +1531,13 @@ using namespace test;
             {
                 if(array[i2]>array[i2+1])
                 {
-                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
                 }
             }
         }
     }
     //Reverse quicksort test
-    void reverseQuicksortArrayTest() throw (os::smart_ptr<std::exception>)
+    void reverseQuicksortArrayTest() throw (os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, reverseQuicksortArrayTest()";
         int array[100];
@@ -1545,13 +1551,13 @@ using namespace test;
             {
                 if(array[i2]<array[i2+1])
                 {
-                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
                 }
             }
         }
     }
     //Pointer quicksort
-    void pointerQuicksortTest() throw (os::smart_ptr<std::exception>)
+    void pointerQuicksortTest() throw (os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
         os::smart_ptr<os::smart_ptr<int> > array(new os::smart_ptr<int>[100],os::shared_type_array);
@@ -1565,7 +1571,7 @@ using namespace test;
             {
                 if(*(array[i2])>*(array[i2+1]))
                 {
-                    throw os::smart_ptr<std::exception>(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)*array[i2])+" vs "+std::to_string((long long unsigned int)*array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)*array[i2])+" vs "+std::to_string((long long unsigned int)*array[i2+1]),locString),shared_type);
                 }
             }
         }
@@ -1602,6 +1608,10 @@ using namespace test;
 			trc->pushTest("Dereference: Shared",&derefTest_shared);
 			trc->pushTest("Dereference: Array",&derefTest_array);
 			trc->pushTest("Dereference: Dynamic Delete",&derefTest_dyndel);
+		pushSuite(trc);
+
+		//Lock tests
+		trc = smart_ptr<testSuite>(new testSuite("Locks"),shared_type);
 		pushSuite(trc);
 
 		//ADS Test Suite

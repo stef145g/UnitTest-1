@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExe/UnitTestMain.cpp
  * @author Jonathan Bedard
- * @date   4/2/2016
+ * @date   5/14/2016
  * @brief  UnitTest entry point
  * @bug No known bugs.
  *
@@ -40,19 +40,19 @@ int main(int argc,char** argv)
 
 	}
 	//Exception Catching
-	catch (os::smart_ptr<exception> e1)
+	catch (os::errorPointer e1)
 	{
 		endTestsError(e1);
 		return -1;
 	}
 	catch (exception& e2)
 	{
-		endTestsError(os::smart_ptr<exception>(&e2));
+		endTestsError(os::errorPointer(&e2));
 		return -1;
 	}
 	catch (...)
 	{
-		endTestsError(os::smart_ptr<exception>(new test::unknownException("UnitTestMain.cpp, 55"),shared_type));
+		endTestsError(os::errorPointer(new test::unknownException("UnitTestMain.cpp, 55"),shared_type));
 		return -1;
 	}
 	endTestsSuccess();
