@@ -18,6 +18,8 @@
 #include "DatastructuresTest.h"
 #include <string>
 #include <list>
+#include <chrono>
+#include <thread>
 
 using namespace os;
 using namespace std;
@@ -406,7 +408,96 @@ using namespace test;
 	Lock Tests
 ================================================================*/
 
+	void multithreadLock(os::lockable* lck)
+	{
+		lck->lock();
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		lck->unlock();
+	}
+		
+	void basicLockTest() throw (os::errorPointer)
+	{
+		std::string locString = "DatastructuresTest.cpp, basicLockTest()";
+		os::basicLock lck;
 
+		//Single thread case
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, never locked",locString),shared_type);
+		if(!lck.attemptLock())
+			throw os::errorPointer(new generalTestException("Expected lock to succeed",locString),shared_type);
+		if(lck.attemptLock())
+			throw os::errorPointer(new generalTestException("Expected lock to fail",locString),shared_type);
+		if(!lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be locked",locString),shared_type);
+		lck.unlock();
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, finished locking",locString),shared_type);
+
+		//Multiple thread case
+		std::thread thr(multithreadLock,&lck);
+		try
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+			lck.lock();
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+			lck.unlock();
+		} catch(os::errorPointer erp)
+		{
+			thr.join();
+			throw erp;
+		}
+		catch(...){
+			thr.join();
+			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+		}
+		thr.join();
+	}
+	void threadLockTest() throw (os::errorPointer)
+	{
+		std::string locString = "DatastructuresTest.cpp, threadLockTest()";
+		os::threadLock lck;
+
+		//Single thread case
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, never locked",locString),shared_type);
+		if(!lck.attemptLock())
+			throw os::errorPointer(new generalTestException("Expected lock to succeed",locString),shared_type);
+		if(!lck.attemptLock())
+			throw os::errorPointer(new generalTestException("Expected lock to succeed again",locString),shared_type);
+		if(!lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be locked",locString),shared_type);
+		lck.unlock();
+		if(!lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be locked, single unlock case",locString),shared_type);
+		lck.unlock();
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, finished locking",locString),shared_type);
+
+		//Multiple thread case
+		std::thread thr(multithreadLock,&lck);
+		try
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+			lck.lock();
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+			lck.unlock();
+		} catch(os::errorPointer erp)
+		{
+			thr.join();
+			throw erp;
+		}
+		catch(...){
+			thr.join();
+			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+		}
+		thr.join();
+	}
 
 /*================================================================
 	ADS Tests
@@ -1612,6 +1703,8 @@ using namespace test;
 
 		//Lock tests
 		trc = smart_ptr<testSuite>(new testSuite("Locks"),shared_type);
+			trc->pushTest("Basic Lock",&basicLockTest);
+			trc->pushTest("Thread Lock",&threadLockTest);
 		pushSuite(trc);
 
 		//ADS Test Suite
