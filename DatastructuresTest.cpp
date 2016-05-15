@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   4/18/2016
+ * @date   5/15/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -33,7 +33,7 @@ using namespace test;
 	void c_deletion(void *v){delete (int*)v;}
 	void c_str_deletin(void *v){delete (string*) v;}
 
-	void refCountTest(smart_pointer_type typ) throw(os::errorPointer)
+	void refCountTest(smart_pointer_type typ) 
 	{
 		std::string locString = "DatastructuresTest.cpp, refCountTest(smart_pointer_type typ), ";
 		if(typ==shared_type) locString+="shared_type";
@@ -82,11 +82,11 @@ using namespace test;
 		if(temp2.getRefCount()!=NULL)
 			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
 	}
-	void refCountTest_shared()throw(os::errorPointer){refCountTest(shared_type);}
-	void refCountTest_array()throw(os::errorPointer){refCountTest(shared_type_array);}
-	void refCountTest_dyndel()throw(os::errorPointer){refCountTest(shared_type_dynamic_delete);}
+	void refCountTest_shared(){refCountTest(shared_type);}
+	void refCountTest_array(){refCountTest(shared_type_array);}
+	void refCountTest_dyndel(){refCountTest(shared_type_dynamic_delete);}
 	
-	void compareNULL_type(smart_pointer_type typ) throw(os::errorPointer)
+	void compareNULL_type(smart_pointer_type typ) 
 	{
 		std::string locString = "DatastructuresTest.cpp, compareNULL_type(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -157,12 +157,12 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(constGet)",locString),shared_type);
 			}
 	}
-	void compareNULL_raw() throw(os::errorPointer){compareNULL_type(raw_type);}
-	void compareNULL_shared() throw(os::errorPointer){compareNULL_type(shared_type);}
-	void compareNULL_array() throw(os::errorPointer){compareNULL_type(shared_type_array);}
-	void compareNULL_dyndel() throw(os::errorPointer){compareNULL_type(shared_type_dynamic_delete);}
+	void compareNULL_raw() {compareNULL_type(raw_type);}
+	void compareNULL_shared() {compareNULL_type(shared_type);}
+	void compareNULL_array() {compareNULL_type(shared_type_array);}
+	void compareNULL_dyndel() {compareNULL_type(shared_type_dynamic_delete);}
 
-	void copyConstructor(smart_pointer_type typ) throw(os::errorPointer)
+	void copyConstructor(smart_pointer_type typ) 
 	{
 		std::string locString = "DatastructuresTest.cpp, copyConstructor(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -216,13 +216,13 @@ using namespace test;
 		if(master!=temp1)
 			throw os::errorPointer(new generalTestException("Equalitity compare mis-match (copy)",locString),shared_type);
 	}
-	void copyConstructor_null() throw(os::errorPointer){copyConstructor(null_type);}
-	void copyConstructor_raw() throw(os::errorPointer){copyConstructor(raw_type);}
-	void copyConstructor_shared() throw(os::errorPointer){copyConstructor(shared_type);}
-	void copyConstructor_array() throw(os::errorPointer){copyConstructor(shared_type_array);}
-	void copyConstructor_dyndel() throw(os::errorPointer){copyConstructor(shared_type_dynamic_delete);}
+	void copyConstructor_null() {copyConstructor(null_type);}
+	void copyConstructor_raw() {copyConstructor(raw_type);}
+	void copyConstructor_shared() {copyConstructor(shared_type);}
+	void copyConstructor_array() {copyConstructor(shared_type_array);}
+	void copyConstructor_dyndel() {copyConstructor(shared_type_dynamic_delete);}
 
-	void comparisonTest(smart_pointer_type typ) throw(os::errorPointer)
+	void comparisonTest(smart_pointer_type typ) 
 	{
 		std::string locString = "DatastructuresTest.cpp, comparisonTest(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -343,13 +343,13 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
 		}
 	}
-	void comparisonTest_null() throw(os::errorPointer){comparisonTest(null_type);}
-	void comparisonTest_raw() throw(os::errorPointer){comparisonTest(raw_type);}
-	void comparisonTest_shared() throw(os::errorPointer){comparisonTest(shared_type);}
-	void comparisonTest_array() throw(os::errorPointer){comparisonTest(shared_type_array);}
-    void comparisonTest_dyndel() throw(os::errorPointer){comparisonTest(shared_type_dynamic_delete);}
+	void comparisonTest_null() {comparisonTest(null_type);}
+	void comparisonTest_raw() {comparisonTest(raw_type);}
+	void comparisonTest_shared() {comparisonTest(shared_type);}
+	void comparisonTest_array() {comparisonTest(shared_type_array);}
+    void comparisonTest_dyndel() {comparisonTest(shared_type_dynamic_delete);}
 
-	void derefTest(smart_pointer_type typ) throw(os::errorPointer)
+	void derefTest(smart_pointer_type typ) 
 	{
 		std::string locString = "DatastructuresTest.cpp, derefTest(smart_pointer_type typ), ";
 		if(typ==raw_type) locString+="raw_type";
@@ -399,14 +399,67 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Error at -> operator"+lInfo,locString),shared_type);
 		}
 	}
-	void derefTest_raw() throw(os::errorPointer){derefTest(raw_type);}
-	void derefTest_shared() throw(os::errorPointer){derefTest(shared_type);}
-	void derefTest_array() throw(os::errorPointer){derefTest(shared_type_array);}
-	void derefTest_dyndel() throw(os::errorPointer){derefTest(shared_type_dynamic_delete);}
+	void derefTest_raw() {derefTest(raw_type);}
+	void derefTest_shared() {derefTest(shared_type);}
+	void derefTest_array() {derefTest(shared_type_array);}
+	void derefTest_dyndel() {derefTest(shared_type_dynamic_delete);}
+
+/*================================================================
+	Simple Hash
+  ================================================================*/
+
+	void basicHashInsertionTest() 
+	{
+		std::string locString = "DatastructuresTest.cpp, basicHashInsertionTest()";
+		os::simpleHash<int> hashTable;
+
+		//Basic insertion
+		if(hashTable.exists(4))
+			throw os::errorPointer(new generalTestException("Integer inserted unexpectedly",locString),shared_type);
+		hashTable.insert(4);
+		if(!hashTable.exists(4))
+			throw os::errorPointer(new generalTestException("Integer failed to insert",locString),shared_type);
+		hashTable.remove(4);
+		if(hashTable.exists(4))
+			throw os::errorPointer(new generalTestException("Integer failed to remove",locString),shared_type);
+	}
+	void emptyHashTest() 
+	{
+		std::string locString = "DatastructuresTest.cpp, emptyHashTest()";
+		os::simpleHash<int> hashTable;
+
+		//Insert
+		if(hashTable.exists(4)||hashTable.exists(8))
+			throw os::errorPointer(new generalTestException("Integer inserted unexpectedly",locString),shared_type);
+		hashTable.insert(4);
+		hashTable.insert(8);
+		if(!hashTable.exists(4)||!hashTable.exists(8))
+			throw os::errorPointer(new generalTestException("Integer failed to insert",locString),shared_type);
+
+		hashTable.empty();
+		if(hashTable.exists(4)||hashTable.exists(8))
+			throw os::errorPointer(new generalTestException("Empty failed",locString),shared_type);
+	}
+	void conflictHashTest() 
+	{
+		std::string locString = "DatastructuresTest.cpp, conflictHashTest()";
+		os::simpleHash<int> hashTable;
+		hashTable.setSize(10);
+	}
+	void resizeHashTest() 
+	{
+		std::string locString = "DatastructuresTest.cpp, resizeHashTest()";
+		os::simpleHash<int> hashTable;
+		try
+		{
+		} catch(std::exception e)
+		{
+		}
+	}
 
 /*================================================================
 	Lock Tests
-================================================================*/
+  ================================================================*/
 
 	void multithreadLock(os::lockable* lck)
 	{
@@ -501,12 +554,12 @@ using namespace test;
 
 /*================================================================
 	ADS Tests
-================================================================*/
+  ================================================================*/
 
 	#define GETBIT(d,p) ((d) & (1 << (p)))
 	#define SETBIT(d,p,t) (t==0 ? d = (d)&~(1<<(p)):d = (d)|(1<<(p)))
 
-	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleInsertion(...), "+ads_type;
@@ -544,7 +597,7 @@ using namespace test;
 		if(dataStruct->find(&comp))
 			throw os::errorPointer(new generalTestException("Found item that was not inserted",locString),shared_type);
 	}
-	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleTestADSDeletion(...), "+ads_type;
@@ -558,7 +611,7 @@ using namespace test;
 		if(*intptr.getRefCount()!=2)
 			throw os::errorPointer(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
 	}
-	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
 	{
 		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
 		string locString = "DatastructuresTest.cpp, singleTestDeletion(...), "+ads_type;
@@ -580,7 +633,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
         dataStruct = NULL;
 	}
-	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) throw(os::errorPointer)
+	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) 
 	{
 		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
 
@@ -594,7 +647,7 @@ using namespace test;
 			last = it;
 		}
 	}
-    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
     {
         string locString = "DatastructuresTest.cpp, randomInsertionTest(...), "+ads_type;
         srand(time(NULL));
@@ -623,7 +676,7 @@ using namespace test;
                 i--;
         }
     }
-    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
     {
         string locString = "DatastructuresTest.cpp, randomInsertionDeletionTest(...), "+ads_type;
         srand(time(NULL));
@@ -660,7 +713,7 @@ using namespace test;
                 i--;
         }
     }
-    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
     {
         string locString = "DatastructuresTest.cpp, randomForwardTraverseTest(...), "+ads_type;
         srand(time(NULL));
@@ -700,7 +753,7 @@ using namespace test;
         if(trace!=dataStruct->size())
         throw os::errorPointer(new generalTestException("Traverse failed, expected "+std::to_string((long long unsigned int)dataStruct->size())+" but found "+std::to_string((long long unsigned int)trace),locString),shared_type);
     }
-    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) throw(os::errorPointer)
+    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
     {
         string locString = "DatastructuresTest.cpp, randomReverseTraverseTest(...), "+ads_type;
         srand(time(NULL));
@@ -765,7 +818,7 @@ using namespace test;
         virtual ~adsTest(){}
         
 		//Run the specified test function
-		void test() throw(os::errorPointer)
+		void test() 
 		{
 			if(adfunc!=NULL)
                 adfunc(newADS(),ads_name,_id);
@@ -840,7 +893,7 @@ using namespace test;
  ================================================================*/
 
     //Array access test
-    void matrixArrayAccessTest()throw(os::errorPointer)
+    void matrixArrayAccessTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixArrayAccessTest()";
         
@@ -850,8 +903,8 @@ using namespace test;
         int compArray[16];
         
         //Check size
-        if(mat1.getWidth()!=4 || mat2.getWidth()!=4 || mat3.getWidth()!=4) throw os::errorPointer(new generalTestException("Matrix width failure",locString),shared_type);
-        if(mat1.getHeight()!=4 || mat2.getHeight()!=4 || mat3.getHeight()!=4) throw os::errorPointer(new generalTestException("Matrix height failure",locString),shared_type);
+        if(mat1.width()!=4 || mat2.width()!=4 || mat3.width()!=4) throw os::errorPointer(new generalTestException("Matrix width failure",locString),shared_type);
+        if(mat1.height()!=4 || mat2.height()!=4 || mat3.height()!=4) throw os::errorPointer(new generalTestException("Matrix height failure",locString),shared_type);
         
         //Random init
         srand(time(NULL));
@@ -888,7 +941,7 @@ using namespace test;
         }
     }
     //Equality test
-    void matrixEqualityTest()throw(os::errorPointer)
+    void matrixEqualityTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixEqualityTest()";
         matrix<int>mat1(4,4);
@@ -930,7 +983,7 @@ using namespace test;
         throw os::errorPointer(new generalTestException("Not equals failed (different mats)",locString),shared_type);
     }
     //Addition test
-    void matrixAdditionTest()throw(os::errorPointer)
+    void matrixAdditionTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdditionTest()";
         matrix<int> mat1(2,2);
@@ -957,7 +1010,7 @@ using namespace test;
         throw os::errorPointer(new generalTestException("Addition transitivity failed!",locString),shared_type);
     }
     //Subtraction test
-    static void matrixSubtractionTest()throw(os::errorPointer)
+    static void matrixSubtractionTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixSubtractionTest()";
         matrix<int> mat1(2,2);
@@ -984,7 +1037,7 @@ using namespace test;
         throw os::errorPointer(new generalTestException("Subtraction not respecting order!",locString),shared_type);
     }
     //Dot product test
-    void matrixDotProductTest()throw(os::errorPointer)
+    void matrixDotProductTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixDotProductTest()";
         matrix<int> mat1(2,2);
@@ -1011,7 +1064,7 @@ using namespace test;
         throw os::errorPointer(new generalTestException("Dot Product not respecting order!",locString),shared_type);
     }
     //Advanced construction test
-    void matrixAdvancedConstructionTest()throw(os::errorPointer)
+    void matrixAdvancedConstructionTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedConstructionTest()";
         
@@ -1059,7 +1112,7 @@ using namespace test;
         }
     }
     //Advanced equality test
-    void matrixAdvancedEqualityTest()throw(os::errorPointer)
+    void matrixAdvancedEqualityTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedEqualityTest()";
         
@@ -1112,7 +1165,7 @@ using namespace test;
         }
     }
     //Advanced addition test
-    void matrixAdvancedAdditionTest()throw(os::errorPointer)
+    void matrixAdvancedAdditionTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedAdditionTest()";
         
@@ -1151,7 +1204,7 @@ using namespace test;
         }
     }
     //Advanced subtraction test
-    void matrixAdvancedSubtractionTest()throw(os::errorPointer)
+    void matrixAdvancedSubtractionTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedSubtractionTest()";
         
@@ -1182,7 +1235,7 @@ using namespace test;
         }
     }
     //Advanced dot product test
-    void matrixAdvancedDotProductTest()throw(os::errorPointer)
+    void matrixAdvancedDotProductTest()
     {
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedDotProductTest()";
         
@@ -1218,7 +1271,7 @@ using namespace test;
  ================================================================*/
 
 	//Tests the copy constructor and equality constructor
-    void vector2dConstructorTest()throw(os::errorPointer)
+    void vector2dConstructorTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dConstructorTest()";
 		vector2d_d v1;
@@ -1240,7 +1293,7 @@ using namespace test;
 		if(v1.x!=.5 || v1.y!=1.5)
 			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
 	}
-    void vector3dConstructorTest()throw(os::errorPointer)
+    void vector3dConstructorTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dConstructorTest()";
 		vector3d_d v1;
@@ -1269,7 +1322,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Vector 2d init failed",locString),shared_type);
 	}
 	//Tests equality functions
-    void vector2dEqualityTest() throw(os::errorPointer)
+    void vector2dEqualityTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dEqualityTest()";
 
@@ -1301,7 +1354,7 @@ using namespace test;
 			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
 		}
 	}
-    void vector3dEqualityTest() throw(os::errorPointer)
+    void vector3dEqualityTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dEqualityTest()";
 
@@ -1334,7 +1387,7 @@ using namespace test;
 		}
 	}
 	//Addition
-    void vector2dAdditionTest() throw(os::errorPointer)
+    void vector2dAdditionTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dAdditionTest()";
 
@@ -1373,7 +1426,7 @@ using namespace test;
 		if(7.1>raw.length()>6.9)
 			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
-    void vector3dAdditionTest() throw(os::errorPointer)
+    void vector3dAdditionTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dAdditionTest()";
 
@@ -1414,7 +1467,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
 	//Subtraction
-    void vector2dSubtractionTest() throw(os::errorPointer)
+    void vector2dSubtractionTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dSubtractionTest()";
 
@@ -1453,7 +1506,7 @@ using namespace test;
 		if(3.1>raw.length()>2.9)
 			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
-    void vector3dSubtractionTest() throw(os::errorPointer)
+    void vector3dSubtractionTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dSubtractionTest()";
 
@@ -1494,7 +1547,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
 	//Dot product
-    void vector2dDotProductTest() throw(os::errorPointer)
+    void vector2dDotProductTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dDotProductTest()";
 		vector2d_d v1(4,8);
@@ -1507,7 +1560,7 @@ using namespace test;
 		if(v1.dotProduct(v2)!=0)
 			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
-    void vector3dDotProductTest() throw(os::errorPointer)
+    void vector3dDotProductTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dDotProductTest()";
 		vector3d_d v1(4,8,3);
@@ -1521,7 +1574,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
 	}
 	//Cross product
-    void vector3dCrossProductTest() throw(os::errorPointer)
+    void vector3dCrossProductTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
 		vector3d_d v1(-1,7,4);
@@ -1542,7 +1595,7 @@ using namespace test;
 	}
 
     //Rotation test
-    void vector2dRotationTest() throw(os::errorPointer)
+    void vector2dRotationTest() 
     {
         std::string locString = "DatastructuresTest.cpp, vector3dCrossProductTest()";
         vector2d_d v1(4,5);
@@ -1701,10 +1754,19 @@ using namespace test;
 			trc->pushTest("Dereference: Dynamic Delete",&derefTest_dyndel);
 		pushSuite(trc);
 
+		//Simple Hash tests
+		trc = smart_ptr<testSuite>(new testSuite("Simple Hash"),shared_type);
+			trc->pushTest("Basic Insertion",&basicHashInsertionTest);
+			trc->pushTest("Empty",&emptyHashTest);
+			trc->pushTest("Conflict",&conflictHashTest);
+			trc->pushTest("Resize",&resizeHashTest);
+		pushSuite(trc);
+
 		//Lock tests
 		trc = smart_ptr<testSuite>(new testSuite("Locks"),shared_type);
 			trc->pushTest("Basic Lock",&basicLockTest);
 			trc->pushTest("Thread Lock",&threadLockTest);
+			
 		pushSuite(trc);
 
 		//ADS Test Suite
