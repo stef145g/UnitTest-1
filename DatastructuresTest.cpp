@@ -445,6 +445,22 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, conflictHashTest()";
 		os::simpleHash<int> hashTable;
 		hashTable.setSize(10);
+
+		hashTable.insert(2);
+		hashTable.insert(22);
+		if(!hashTable.exists(2))
+			throw os::errorPointer(new generalTestException("Initial insertion failed",locString),shared_type);
+		if(!hashTable.exists(22))
+			throw os::errorPointer(new generalTestException("Secondary insertion failed",locString),shared_type);
+
+		hashTable.remove(2);
+		if(hashTable.exists(2))
+			throw os::errorPointer(new generalTestException("Initial deletion failed",locString),shared_type);
+		if(!hashTable.exists(22))
+			throw os::errorPointer(new generalTestException("Secondary find after deletion failed",locString),shared_type);
+		hashTable.remove(22);
+		if(hashTable.exists(22))
+			throw os::errorPointer(new generalTestException("Secondary deletion failed",locString),shared_type);
 	}
 	void resizeHashTest() 
 	{
@@ -452,9 +468,55 @@ using namespace test;
 		os::simpleHash<int> hashTable;
 		try
 		{
+			hashTable.setSize(0);
+			throw -1;
 		} catch(std::exception e)
-		{
-		}
+		{}
+		catch(...)
+		{throw os::errorPointer(new generalTestException("Failed to throw error when setting illegal size",locString),shared_type);}
+
+		hashTable.insert(2);
+		hashTable.insert(12);
+		hashTable.insert(22);
+
+		hashTable.setSize(10);
+
+		if(hashTable.size()!=10)
+			throw os::errorPointer(new generalTestException("Failed to set size",locString),shared_type);
+
+		if(!hashTable.exists(2))
+			throw os::errorPointer(new generalTestException("Basic insertion failed",locString),shared_type);
+		if(!hashTable.exists(22))
+			throw os::errorPointer(new generalTestException("Overlap insertsion failed",locString),shared_type);
+		hashTable.remove(12);
+		if(hashTable.exists(12))
+			throw os::errorPointer(new generalTestException("Remove failed",locString),shared_type);
+		if(!hashTable.exists(2))
+			throw os::errorPointer(new generalTestException("Basic find failed after remove",locString),shared_type);
+		if(!hashTable.exists(22))
+			throw os::errorPointer(new generalTestException("Overlap find failed after remove",locString),shared_type);
+	}
+	void rawAccessTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, rawAccessTest()";
+		os::simpleHash<int> hashTable;
+		hashTable.setSize(10);
+
+		hashTable.insert(4);
+		hashTable.insert(5);
+		hashTable.insert(14);
+
+		if(hashTable.atPosition(3))
+			throw os::errorPointer(new generalTestException("Position 3 has no data, should disallow access",locString),shared_type);
+		if(!hashTable.atPosition(4))
+			throw os::errorPointer(new generalTestException("Position 4 should have data",locString),shared_type);
+
+		if(hashTable[4]!=4)
+			throw os::errorPointer(new generalTestException("Expected 4 in position 4",locString),shared_type);
+		if(hashTable[5]!=5)
+			throw os::errorPointer(new generalTestException("Expected 5 in position 5",locString),shared_type);
+		if(hashTable[6]!=14)
+			throw os::errorPointer(new generalTestException("Expected 14 in position 6",locString),shared_type);
 	}
 
 /*================================================================
@@ -468,7 +530,7 @@ using namespace test;
 		lck->unlock();
 	}
 		
-	void basicLockTest() throw (os::errorPointer)
+	void basicLockTest() 
 	{
 		std::string locString = "DatastructuresTest.cpp, basicLockTest()";
 		os::basicLock lck;
@@ -508,7 +570,7 @@ using namespace test;
 		}
 		thr.join();
 	}
-	void threadLockTest() throw (os::errorPointer)
+	void threadLockTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, threadLockTest()";
 		os::threadLock lck;
@@ -550,6 +612,34 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
 		}
 		thr.join();
+	}
+	void threadCounterTest() 
+	{
+		std::string locString = "DatastructuresTest.cpp, threadCounterTest()";
+		os::threadCounter thrcnt(std::this_thread::get_id());
+		os::threadCounter thrcnt2(thrcnt);
+
+		if(thrcnt!=thrcnt2)
+			throw os::errorPointer(new generalTestException("Thread comparisons do not match",locString),shared_type);
+		if((size_t) thrcnt!=(size_t) thrcnt2)
+			throw os::errorPointer(new generalTestException("Thread hashes do not match",locString),shared_type);
+
+		if(thrcnt.count()!=0)
+			throw os::errorPointer(new generalTestException("Thread initialized with the wrong count",locString),shared_type);
+		thrcnt++;
+		if(thrcnt.count()!=1)
+			throw os::errorPointer(new generalTestException("Thread failed to increment",locString),shared_type);
+		thrcnt--;
+		if(thrcnt.count()!=0)
+			throw os::errorPointer(new generalTestException("Thread failed to decrement",locString),shared_type);
+
+		try
+		{
+			thrcnt--;
+		} catch(std::exception e)
+		{}
+		catch(...)
+		{throw os::errorPointer(new generalTestException("Failed to throw error when illegally decrementing",locString),shared_type);}
 	}
 
 /*================================================================
@@ -1760,13 +1850,14 @@ using namespace test;
 			trc->pushTest("Empty",&emptyHashTest);
 			trc->pushTest("Conflict",&conflictHashTest);
 			trc->pushTest("Resize",&resizeHashTest);
+			trc->pushTest("Hash-Table",&rawAccessTest);
 		pushSuite(trc);
 
 		//Lock tests
 		trc = smart_ptr<testSuite>(new testSuite("Locks"),shared_type);
 			trc->pushTest("Basic Lock",&basicLockTest);
 			trc->pushTest("Thread Lock",&threadLockTest);
-			
+			trc->pushTest("Thread Counter",&threadCounterTest);
 		pushSuite(trc);
 
 		//ADS Test Suite
