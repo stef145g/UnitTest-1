@@ -641,6 +641,36 @@ using namespace test;
 		catch(...)
 		{throw os::errorPointer(new generalTestException("Failed to throw error when illegally decrementing",locString),shared_type);}
 	}
+	void basicMultiLockTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, basicMultiLockTest()";
+		os::readWriteLock lck;
+
+		lck.lock();
+		if(!lck.locked())
+			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
+		if(lck.try_lock())
+			throw os::errorPointer(new generalTestException("Double-lock unexpectantly succeeded",locString),shared_type);
+		lck.unlock();
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+	}
+	void threadMultiLockTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, threadMultiLockTest()";
+		os::readWriteLock lck(os::readWriteLock::RECURSIVE);
+
+		lck.lock();
+		if(!lck.locked())
+			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
+		if(!lck.try_lock())
+			throw os::errorPointer(new generalTestException("Double-lock failed",locString),shared_type);
+		lck.unlock();
+		lck.unlock();
+		if(lck.locked())
+			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+	}
+
 
 /*================================================================
 	ADS Tests
@@ -1858,6 +1888,8 @@ using namespace test;
 			trc->pushTest("Basic Lock",&basicLockTest);
 			trc->pushTest("Thread Lock",&threadLockTest);
 			trc->pushTest("Thread Counter",&threadCounterTest);
+			trc->pushTest("Read-Write",&basicMultiLockTest);
+			trc->pushTest("Threaded Read-Write",&threadMultiLockTest);
 		pushSuite(trc);
 
 		//ADS Test Suite
