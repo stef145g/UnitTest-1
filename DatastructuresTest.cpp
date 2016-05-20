@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   5/15/2016
+ * @date   5/20/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -646,6 +646,7 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, basicMultiLockTest()";
 		os::readWriteLock lck;
 
+		//Locking
 		lck.lock();
 		if(!lck.locked())
 			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
@@ -654,12 +655,56 @@ using namespace test;
 		lck.unlock();
 		if(lck.locked())
 			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+
+		//Increment
+		lck++;
+		if(lck.numReaders()!=1)
+			throw os::errorPointer(new generalTestException("Number of readers failed (1st time)",locString),shared_type);
+		if(lck.counter()!=1)
+			throw os::errorPointer(new generalTestException("Number of counters failed (1st time)",locString),shared_type);
+		if(!lck.try_increment())
+			throw os::errorPointer(new generalTestException("Double increment fialed",locString),shared_type);
+		if(lck.numReaders()!=2)
+			throw os::errorPointer(new generalTestException("Number of readers failed (2nd time)",locString),shared_type);
+		if(lck.counter()!=2)
+			throw os::errorPointer(new generalTestException("Number of counters failed (2nd time)",locString),shared_type);
+		if(lck.try_lock())
+			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
+		lck--;
+		lck--;
+		if(lck.numReaders()!=0)
+			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
+		if(lck.counter()!=0)
+			throw os::errorPointer(new generalTestException("Failed on last counter query",locString),shared_type);
+
+		//Multiple thread case (first)
+		std::thread thr(multithreadLock,&lck);
+		try
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+			lck.lock();
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+			lck.unlock();
+		} catch(os::errorPointer erp)
+		{
+			thr.join();
+			throw erp;
+		}
+		catch(...){
+			thr.join();
+			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+		}
+		thr.join();
 	}
 	void threadMultiLockTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, threadMultiLockTest()";
 		os::readWriteLock lck(os::readWriteLock::RECURSIVE);
 
+		//Locking
 		lck.lock();
 		if(!lck.locked())
 			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
@@ -669,6 +714,50 @@ using namespace test;
 		lck.unlock();
 		if(lck.locked())
 			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+
+		//Increment
+		lck++;
+		if(lck.numReaders()!=1)
+			throw os::errorPointer(new generalTestException("Number of readers failed (1st time)",locString),shared_type);
+		if(lck.counter()!=1)
+			throw os::errorPointer(new generalTestException("Number of counters failed (1st time)",locString),shared_type);
+		if(!lck.try_increment())
+			throw os::errorPointer(new generalTestException("Double increment fialed",locString),shared_type);
+		if(lck.numReaders()!=1)
+			throw os::errorPointer(new generalTestException("Number of readers failed (2nd time)",locString),shared_type);
+		if(lck.counter()!=2)
+			throw os::errorPointer(new generalTestException("Number of counters failed (2nd time)",locString),shared_type);
+		if(!lck.try_lock())
+			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
+		lck.unlock();
+		lck--;
+		lck--;
+		if(lck.numReaders()!=0)
+			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
+		if(lck.counter()!=0)
+			throw os::errorPointer(new generalTestException("Failed on last counter query",locString),shared_type);
+
+		//Multiple thread case (first)
+		std::thread thr(multithreadLock,&lck);
+		try
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(250));
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+			lck.lock();
+			if(!lck.locked())
+				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+			lck.unlock();
+		} catch(os::errorPointer erp)
+		{
+			thr.join();
+			throw erp;
+		}
+		catch(...){
+			thr.join();
+			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+		}
+		thr.join();
 	}
 
 
