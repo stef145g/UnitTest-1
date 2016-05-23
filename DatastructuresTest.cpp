@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   5/20/2016
+ * @date   5/23/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -760,6 +760,80 @@ using namespace test;
 		thr.join();
 	}
 
+/*================================================================
+	Node Testing
+  ================================================================*/
+
+	void objectNodeTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, objectNodeTest()";
+		os::objectNode<int> nd1(1);
+		os::objectNode<int> nd2(3);
+		if(!nd1 || !nd2)
+			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+		if(nd1>=nd2)
+			throw os::errorPointer(new generalTestException("Node 2 should be greater than node 1",locString),shared_type);
+		if((size_t)nd1 != 1)
+			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+		if((size_t)nd2 != 3)
+			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+	}
+	struct dummyInt
+	{
+		int data;
+		inline int compare(const dummyInt& di) const {return data-di.data;}
+		inline operator size_t() const {return (size_t) data;}
+
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS dummyInt
+		COMPARE_OPERATORS
+	};
+	void pointerNodeTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, pointerNodeTest()";
+		os::pointerNode<dummyInt> nd1;
+		os::pointerNode<dummyInt> nd2;
+		if(nd1 || nd2)
+			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+		if(nd1!=nd2)
+			throw os::errorPointer(new generalTestException("Nodes should be equal",locString),shared_type);
+
+		dummyInt arr[2];
+		arr[0].data=3;
+		arr[1].data=1;
+
+		nd1=os::pointerNode<dummyInt>(arr);
+		nd2=os::pointerNode<dummyInt>(arr+1);
+		if(nd1<=nd2)
+			throw os::errorPointer(new generalTestException("Node 1 should be greater than node 2",locString),shared_type);
+		if((size_t)nd1 != 3)
+			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+		if((size_t)nd2 != 1)
+			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+	}
+	void rawPointerNodeTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, rawPointerNodeTest()";
+		os::rawPointerNode<int> nd1;
+		os::rawPointerNode<int> nd2;
+		if(nd1 || nd2)
+			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+		if(nd1!=nd2)
+			throw os::errorPointer(new generalTestException("Nodes should be equal",locString),shared_type);
+
+		int arr[2];
+		arr[0]=3;
+		arr[1]=1;
+		nd1=os::rawPointerNode<int>(arr);
+		nd2=os::rawPointerNode<int>(arr+1);
+
+		if(nd1>=nd2)
+			throw os::errorPointer(new generalTestException("Node 2 should be greater than node 1",locString),shared_type);
+		if((size_t)nd1 != (size_t)arr)
+			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+		if((size_t)nd2 != (size_t)(arr+1))
+			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+	}
 
 /*================================================================
 	ADS Tests
@@ -1961,6 +2035,13 @@ using namespace test;
 			trc->pushTest("Dereference: Shared",&derefTest_shared);
 			trc->pushTest("Dereference: Array",&derefTest_array);
 			trc->pushTest("Dereference: Dynamic Delete",&derefTest_dyndel);
+		pushSuite(trc);
+
+		//Node frame test
+		trc = smart_ptr<testSuite>(new testSuite("Node Frame"),shared_type);
+			trc->pushTest("Object Node",&objectNodeTest);
+			trc->pushTest("Pointer Node",&pointerNodeTest);
+			trc->pushTest("Raw-pointer Node",&rawPointerNodeTest);
 		pushSuite(trc);
 
 		//Simple Hash tests
