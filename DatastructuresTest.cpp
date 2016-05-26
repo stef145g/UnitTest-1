@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   5/23/2016
+ * @date   5/25/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -111,7 +111,7 @@ using namespace test;
 
 		//Attempt different methods of NULL casting
 		int raw_val=1;
-		for(int i=0;i<3;i++)
+		for(int i=0;i<3;++i)
 		{
 			std::string cast_type;
 			if(i==0)
@@ -247,7 +247,7 @@ using namespace test;
 		srand (time(NULL));
 
 		//Preform 20 iterations to test
-		for(int i=0;i<20;i++)
+		for(int i=0;i<20;++i)
 		{
 			unsigned long cur_comp = rand();
 			void* ptr_comp = (void*) cur_comp;
@@ -369,7 +369,7 @@ using namespace test;
 		if(!ptr)
 			throw os::errorPointer(new generalTestException("Pointer unexpected NULL",locString),shared_type);
 
-		for(int i = 0;i<3;i++)
+		for(int i = 0;i<3;++i)
 		{
 			string lInfo=", init with ";
 			if(i==1)
@@ -626,16 +626,16 @@ using namespace test;
 
 		if(thrcnt.count()!=0)
 			throw os::errorPointer(new generalTestException("Thread initialized with the wrong count",locString),shared_type);
-		thrcnt++;
+		++thrcnt;
 		if(thrcnt.count()!=1)
 			throw os::errorPointer(new generalTestException("Thread failed to increment",locString),shared_type);
-		thrcnt--;
+		--thrcnt;
 		if(thrcnt.count()!=0)
 			throw os::errorPointer(new generalTestException("Thread failed to decrement",locString),shared_type);
 
 		try
 		{
-			thrcnt--;
+			--thrcnt;
 		} catch(std::exception e)
 		{}
 		catch(...)
@@ -657,7 +657,7 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
 
 		//Increment
-		lck++;
+		++lck;
 		if(lck.numReaders()!=1)
 			throw os::errorPointer(new generalTestException("Number of readers failed (1st time)",locString),shared_type);
 		if(lck.counter()!=1)
@@ -670,8 +670,8 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Number of counters failed (2nd time)",locString),shared_type);
 		if(lck.try_lock())
 			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
-		lck--;
-		lck--;
+		--lck;
+		--lck;
 		if(lck.numReaders()!=0)
 			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
 		if(lck.counter()!=0)
@@ -730,8 +730,8 @@ using namespace test;
 		if(!lck.try_lock())
 			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
 		lck.unlock();
-		lck--;
-		lck--;
+		--lck;
+		--lck;
 		if(lck.numReaders()!=0)
 			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
 		if(lck.counter()!=0)
@@ -936,7 +936,7 @@ using namespace test;
         srand(time(NULL));
 
         //Insert 100 elements
-        for(int i = 0; i<100;i++)
+        for(int i = 0; i<100;++i)
         {
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
@@ -956,7 +956,7 @@ using namespace test;
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
             else
-                i--;
+                --i;
         }
     }
     void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
@@ -965,7 +965,7 @@ using namespace test;
         srand(time(NULL));
         
         //Insert 100 elements
-        for(int i = 0; i<100;i++)
+        for(int i = 0; i<100;++i)
         {
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
@@ -993,7 +993,7 @@ using namespace test;
                 }
             }
             else
-                i--;
+                --i;
         }
     }
     void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
@@ -1002,7 +1002,7 @@ using namespace test;
         srand(time(NULL));
     
         //Insert 100 elements
-        for(int i = 0; i<100;i++)
+        for(int i = 0; i<100;++i)
         {
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
@@ -1022,7 +1022,7 @@ using namespace test;
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
             else
-            i--;
+            --i;
         }
         
         //Iterate through
@@ -1042,7 +1042,7 @@ using namespace test;
         srand(time(NULL));
     
         //Insert 100 elements
-        for(int i = 0; i<100;i++)
+        for(int i = 0; i<100;++i)
         {
             //Create insertion pointer
             smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
@@ -1062,7 +1062,7 @@ using namespace test;
                 if(id&2) checkSorted(dataStruct,ads_type);
             }
             else
-            i--;
+            --i;
         }
     
         //Iterate through
@@ -1153,7 +1153,7 @@ using namespace test;
         setSuite():
             testSuite("Smart Set")
         {
-            for(int i = 0;i<=sorted_set;i++)
+            for(int i = 0;i<=sorted_set;++i)
             {
                 string addition=": ";
                 if(i==small_set) addition+="Small Set";
@@ -1203,21 +1203,21 @@ using namespace test;
         mat3 = mat1;
         
         //Compare mat1 with comp array
-        for(int i = 0;i<16;i++)
+        for(int i = 0;i<16;++i)
         {
             if(compArray[i] != mat1.getArray()[i])
                 throw os::errorPointer(new generalTestException("Matrix init failed",locString),shared_type);
         }
         
         //Compare mat1 and mat2 (raw array)
-        for(int i = 0;i<16;i++)
+        for(int i = 0;i<16;++i)
         {
             if(mat1.getArray()[i] != mat2.getArray()[i])
             throw os::errorPointer(new generalTestException("Matrix direct compare failed",locString),shared_type);
         }
         
         //Compare mat1 and mat3 (raw array)
-        for(int i = 0;i<16;i++)
+        for(int i = 0;i<16;++i)
         {
             if(mat2.getArray()[i] != mat3.getArray()[i])
             throw os::errorPointer(new generalTestException("Matrix copy compare failed",locString),shared_type);
@@ -1353,7 +1353,7 @@ using namespace test;
         
         //Preform this test 10 times
         srand(time(NULL));
-        for(int i=0;i<10;i++)
+        for(int i=0;i<10;++i)
         {
             matrix<int> mast1(10,10);
             matrix<int> cop1;
@@ -1363,7 +1363,7 @@ using namespace test;
             indirectMatrix<int> bridge2;
             int compsrc[100];
             
-            for(int i=0;i<100;i++)
+            for(int i=0;i<100;++i)
             {
                 compsrc[i]=rand();
                 mast1.getArray()[i]=compsrc[i];
@@ -1375,7 +1375,7 @@ using namespace test;
             bridge2=mast1;
             
             //Compare everyone to comp
-            for(int i=0;i<100;i++)
+            for(int i=0;i<100;++i)
             {
                 if(mast1.getArray()[i]!=compsrc[i])
                     throw os::errorPointer(new generalTestException("Matrix init failed (direct matrix)",locString),shared_type);
@@ -1401,7 +1401,7 @@ using namespace test;
         
         //Preform this test 10 times
         srand(time(NULL));
-        for(int i=0;i<10;i++)
+        for(int i=0;i<10;++i)
         {
             matrix<int> mast1(10,10);
             matrix<int> wrong1(10,10);
@@ -1411,7 +1411,7 @@ using namespace test;
             indirectMatrix<int> cop2;
             int compsrc[100];
             
-            for(int i=0;i<100;i++)
+            for(int i=0;i<100;++i)
             {
                 compsrc[i]=rand();
                 mast1.getArray()[i]=compsrc[i];
@@ -1454,7 +1454,7 @@ using namespace test;
         
         //Preform this test 10 times
         srand(time(NULL));
-        for(int i=0;i<10;i++)
+        for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
             matrix<int> smat2(10,10);
@@ -1493,7 +1493,7 @@ using namespace test;
         
         //Preform this test 10 times
         srand(time(NULL));
-        for(int i=0;i<10;i++)
+        for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
             matrix<int> smat2(10,10);
@@ -1524,7 +1524,7 @@ using namespace test;
         
         //Preform this test 10 times
         srand(time(NULL));
-        for(int i=0;i<10;i++)
+        for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
             matrix<int> smat2(10,10);
@@ -1609,7 +1609,7 @@ using namespace test;
 	{
 		std::string locString = "DatastructuresTest.cpp, vector2dEqualityTest()";
 
-		for(int i=0;i<30;i++)
+		for(int i=0;i<30;++i)
 		{
 			vector2d_16 v1(rand(),rand());
 			vector2d_16 v2(rand(),rand());
@@ -1641,7 +1641,7 @@ using namespace test;
 	{
 		std::string locString = "DatastructuresTest.cpp, vector3dEqualityTest()";
 
-		for(int i=0;i<30;i++)
+		for(int i=0;i<30;++i)
 		{
 			vector3d_16 v1(rand(),rand(),rand());
 			vector3d_16 v2(rand(),rand(),rand());
@@ -1692,7 +1692,7 @@ using namespace test;
 
 		//Increment and decrement
 		vector2d_d raw(0,1);
-		raw++;
+		++raw;
 		if(raw.x!=0 && raw.y!=2)
 			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		++raw;
@@ -1702,10 +1702,10 @@ using namespace test;
 		raw=vector2d_d(3,4);
 		if(5.1>raw.length()>4.9)
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
-		raw++;
+		++raw;
 		if(6.1>raw.length()>5.9)
 			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
-		raw++;
+		++raw;
 		if(7.1>raw.length()>6.9)
 			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
@@ -1731,7 +1731,7 @@ using namespace test;
 
 		//Increment and decrement
 		vector3d_d raw(0,1,0);
-		raw++;
+		++raw;
 		if(raw.x!=0 || raw.y!=2 || raw.z!=0)
 			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		++raw;
@@ -1741,11 +1741,11 @@ using namespace test;
 		raw=vector3d_d(1,1,1);
 		if(raw.length()!=sqrt(3))
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
-		raw++;
+		++raw;
 
 		if(raw.length() < sqrt(3)+.9 || raw.length() > sqrt(3)+1.1)
 			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
-		raw++;
+		++raw;
 		if(raw.length() < sqrt(3)+1.9 || raw.length() > sqrt(3)+2.1)
 			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
@@ -1772,7 +1772,7 @@ using namespace test;
 
 		//Increment and decrement
 		vector2d_d raw(0,5);
-		raw--;
+		--raw;
 		if(raw.x!=0 && raw.y!=4)
 			throw os::errorPointer(new generalTestException("Simple decrement failed",locString),shared_type);
 		--raw;
@@ -1782,10 +1782,10 @@ using namespace test;
 		raw=vector2d_d(3,4);
 		if(5.1>raw.length()>4.9)
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
-		raw--;
+		--raw;
 		if(4.1>raw.length()>3.9)
 			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
-		raw--;
+		--raw;
 		if(3.1>raw.length()>2.9)
 			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
@@ -1811,7 +1811,7 @@ using namespace test;
 
 		//Increment and decrement
 		vector3d_d raw(0,5,0);
-		raw--;
+		--raw;
 		if(raw.x!=0 || raw.y!=4 || raw.z!=0)
 			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
 		--raw;
@@ -1821,11 +1821,11 @@ using namespace test;
 		raw=vector3d_d(4,4,4);
 		if(raw.length()!=sqrt(3*16))
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
-		raw--;
+		--raw;
 
 		if(raw.length() > sqrt(3*16)-.9 || raw.length() < sqrt(3*16)-1.1)
 			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
-		raw--;
+		--raw;
 		if(raw.length() > sqrt(3*16)-1.9 || raw.length() < sqrt(3*16)-2.1)
 			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
@@ -1949,12 +1949,12 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, quicksortArrayTest()";
         int array[100];
         srand(time(NULL));
-        for(int i1=0;i1<15;i1++)
+        for(int i1=0;i1<15;++i1)
         {
-            for(int i2=0;i2<100;i2++)
+            for(int i2=0;i2<100;++i2)
                 array[i2]=rand()%100;
             os::quicksort(array, 100);
-            for(int i2=0;i2<99;i2++)
+            for(int i2=0;i2<99;++i2)
             {
                 if(array[i2]>array[i2+1])
                 {
@@ -1969,12 +1969,12 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, reverseQuicksortArrayTest()";
         int array[100];
         srand(time(NULL));
-        for(int i1=0;i1<15;i1++)
+        for(int i1=0;i1<15;++i1)
         {
-            for(int i2=0;i2<100;i2++)
+            for(int i2=0;i2<100;++i2)
                 array[i2]=rand()%100;
             os::quicksort(array, 100,&reverseCompare);
-            for(int i2=0;i2<99;i2++)
+            for(int i2=0;i2<99;++i2)
             {
                 if(array[i2]<array[i2+1])
                 {
@@ -1989,12 +1989,12 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
         os::smart_ptr<os::smart_ptr<int> > array(new os::smart_ptr<int>[100],os::shared_type_array);
         srand(time(NULL));
-        for(int i1=0;i1<15;i1++)
+        for(int i1=0;i1<15;++i1)
         {
-            for(int i2=0;i2<100;i2++)
+            for(int i2=0;i2<100;++i2)
                 array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
             os::pointerQuicksort(array,100,&pointerCompareSort);
-            for(int i2=0;i2<99;i2++)
+            for(int i2=0;i2<99;++i2)
             {
                 if(*(array[i2])>*(array[i2+1]))
                 {
