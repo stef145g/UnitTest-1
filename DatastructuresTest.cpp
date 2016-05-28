@@ -848,8 +848,9 @@ using namespace test;
 		std::cout<<*vec[2]<<std::endl;
 		std::cout<<vec.size()<<std::endl;
 		vec.outstandingIterator();
-		os::iterator<int> it=vec.first();
-		std::cout<<*it<<std::endl;
+		for(os::iterator<int> it=vec.last();it;--it)
+			std::cout<<*it<<std::endl;
+		
 
 		/*os::smart_ptr<int> temp(new int(5),os::shared_type);
 		os::smart_ptr<int> temp1(new int(5),os::shared_type);
