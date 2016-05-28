@@ -835,6 +835,33 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
 	}
 
+	void vectorTest()
+	{
+		std::string locString = "DatastructuresTest.cpp, vectorTest()";
+
+		os::pointerVector<int> vec;
+		vec.insert(os::smart_ptr<int>(new int(11),os::shared_type));
+		vec.insert(os::smart_ptr<int>(new int(12),os::shared_type));
+		vec.insert(os::smart_ptr<int>(new int(13),os::shared_type));
+		std::cout<<*vec[0]<<std::endl;
+		std::cout<<*vec[1]<<std::endl;
+		std::cout<<*vec[2]<<std::endl;
+		std::cout<<vec.size()<<std::endl;
+		vec.outstandingIterator();
+		os::iterator<int> it=vec.first();
+		std::cout<<*it<<std::endl;
+
+		/*os::smart_ptr<int> temp(new int(5),os::shared_type);
+		os::smart_ptr<int> temp1(new int(5),os::shared_type);
+		os::rawPointerVector<int> vec;
+
+		vec.insert(temp);
+		std::cout<<vec.find(temp)<<std::endl;
+		std::cout<<*vec.access(temp)<<std::endl;
+		vec.remove(temp1);
+		std::cout<<vec.find(temp1)<<std::endl;*/
+	}
+	
 /*================================================================
 	ADS Tests
   ================================================================*/
@@ -2042,6 +2069,7 @@ using namespace test;
 			trc->pushTest("Object Node",&objectNodeTest);
 			trc->pushTest("Pointer Node",&pointerNodeTest);
 			trc->pushTest("Raw-pointer Node",&rawPointerNodeTest);
+			trc->pushTest("Vemp Vector Test",&vectorTest);
 		pushSuite(trc);
 
 		//Simple Hash tests
