@@ -764,6 +764,29 @@ using namespace test;
 	Node Testing
   ================================================================*/
 
+	struct dummyInt
+	{
+		int data;
+		dummyInt(int d=0){data=d;}
+		dummyInt(const dummyInt& d){data=d.data;}
+		dummyInt& operator=(int d)
+		{
+			data=d;
+			return *this;
+		}
+		dummyInt& operator=(const dummyInt d)
+		{
+			data=d.data;
+			return *this;
+		}
+		inline int compare(const dummyInt& di) const {return data-di.data;}
+		inline operator size_t() const {return (size_t) data;}
+
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS dummyInt
+		COMPARE_OPERATORS
+	};
+
 	void objectNodeTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, objectNodeTest()";
@@ -778,16 +801,6 @@ using namespace test;
 		if((size_t)nd2 != 3)
 			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
 	}
-	struct dummyInt
-	{
-		int data;
-		inline int compare(const dummyInt& di) const {return data-di.data;}
-		inline operator size_t() const {return (size_t) data;}
-
-		#undef CURRENT_CLASS
-		#define CURRENT_CLASS dummyInt
-		COMPARE_OPERATORS
-	};
 	void pointerNodeTest()
 	{
 		std::string locString = "DatastructuresTest.cpp, pointerNodeTest()";
@@ -835,34 +848,194 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
 	}
 
-	void vectorTest()
+/*================================================================
+	New ADS Tests
+  ================================================================*/
+
+	template<class datastruct>
+	void singleInsertionNodeTest(std::string className)
 	{
-		std::string locString = "DatastructuresTest.cpp, vectorTest()";
+		std::string locString = "DatastructuresTest.cpp, singleInsertionNodeTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
 
-		os::pointerVector<int> vec;
-		vec.insert(os::smart_ptr<int>(new int(11),os::shared_type));
-		vec.insert(os::smart_ptr<int>(new int(12),os::shared_type));
-		vec.insert(os::smart_ptr<int>(new int(13),os::shared_type));
-		std::cout<<*vec[0]<<std::endl;
-		std::cout<<*vec[1]<<std::endl;
-		std::cout<<*vec[2]<<std::endl;
-		std::cout<<vec.size()<<std::endl;
-		vec.outstandingIterator();
-		for(os::iterator<int> it=vec.last();it;--it)
-			std::cout<<*it<<std::endl;
-		
+		if(!ds.insert(4))
+			throw os::errorPointer(new generalTestException("Cannot insert element",locString),shared_type);
+		if(!ds.find(4))
+			throw os::errorPointer(new generalTestException("Cannot find inserted element",locString),shared_type);
 
-		/*os::smart_ptr<int> temp(new int(5),os::shared_type);
-		os::smart_ptr<int> temp1(new int(5),os::shared_type);
-		os::rawPointerVector<int> vec;
-
-		vec.insert(temp);
-		std::cout<<vec.find(temp)<<std::endl;
-		std::cout<<*vec.access(temp)<<std::endl;
-		vec.remove(temp1);
-		std::cout<<vec.find(temp1)<<std::endl;*/
+		if(ds.find(5))
+			throw os::errorPointer(new generalTestException("Found element which was not inserted",locString),shared_type);
+		if(!ds.insert(5))
+			throw os::errorPointer(new generalTestException("Cannot insert element (2)",locString),shared_type);
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
 	}
+	template<class datastruct>
+	void singleInsertionPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, singleInsertionPointerTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+
+		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
+		if(!ds.insert(ptr))
+			throw os::errorPointer(new generalTestException("Cannot insert element",locString),shared_type);
+		if(!ds.find(ptr))
+			throw os::errorPointer(new generalTestException("Cannot find inserted element",locString),shared_type);
+
+		if(ds.find(os::smart_ptr<dummyInt>(new dummyInt(5),shared_type)))
+			throw os::errorPointer(new generalTestException("Found element which was not inserted",locString),shared_type);
+		if(!ds.insert(os::smart_ptr<dummyInt>(new dummyInt(5),shared_type)))
+			throw os::errorPointer(new generalTestException("Cannot insert element (2)",locString),shared_type);
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+	}
+
+	template<class datastruct>
+	void singleDeletionNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, singleDeletionNodeTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+
+		ds.insert(4);
+		ds.insert(5);
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+		if(!ds.remove(4))
+			throw os::errorPointer(new generalTestException("Failure to remove",locString),shared_type);
+		if(ds.find(4))
+			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+		if(ds.size()!=1)
+			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+		if(ds.remove(6))
+			throw os::errorPointer(new generalTestException("Move succeded with uninserted node",locString),shared_type);
+
+		os::iterator<dummyInt> fst=ds.first();
+		if(*fst!=dummyInt(5))
+			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+	}
+	template<class datastruct>
+	void singleDeletionPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, singleDeletionPointerTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+
+		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
+
+		ds.insert(ptr);
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(5),shared_type));
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+		if(!ds.remove(ptr))
+			throw os::errorPointer(new generalTestException("Failure to remove",locString),shared_type);
+		if(ds.find(ptr))
+			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+		if(ds.size()!=1)
+			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+		if(ds.remove(smart_ptr<dummyInt>(new dummyInt(6),shared_type)))
+			throw os::errorPointer(new generalTestException("Move succeded with uninserted node",locString),shared_type);
+
+		os::iterator<dummyInt> fst=ds.first();
+		if(*fst!=dummyInt(5))
+			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+	}
+
+	template<class datastruct>
+	void simpleIteratorNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, simpleIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		ds.insert(1);
+		ds.insert(2);
+		ds.insert(3);
+		os::iterator<dummyInt> fst=ds.first();
+		os::iterator<dummyInt> lst=ds.last();
+
+		if(!fst)
+			throw std::exception("No first node defined");
+		if(!lst)
+			throw std::exception("No last node defined");
+		if(fst==lst)
+			throw std::exception("First and last illegally match");
+		os::iterator<dummyInt> fst1=ds.first();
+		if(fst!=fst1)
+			throw std::exception("New and old first do not match");
+	}
+	template<class datastruct>
+	void simpleIteratorPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, simpleIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(1),shared_type));
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(2),shared_type));
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(3),shared_type));
+		os::iterator<dummyInt> fst=ds.first();
+		os::iterator<dummyInt> lst=ds.last();
+
+		if(!fst)
+			throw std::exception("No first node defined");
+		if(!lst)
+			throw std::exception("No last node defined");
+	}
+
+	//Testing structure
+	typedef void (*datastructureTestFunction)(std::string cname);
+
+	class datastructureTest: public singleTest
+	{
+		std::string className;
+		datastructureTestFunction func;
+	public:
+		datastructureTest(std::string tn, std::string cname="NULL", datastructureTestFunction testfunc=NULL):
+			singleTest(tn)
+		{
+			className=cname;
+			func=testfunc;
+		}
+		virtual ~datastructureTest(){}
+        
+		//Run the specified test function
+		void test() 
+		{
+			if(func!=NULL) func(className);
+			else throw os::errorPointer(new nullFunctionException("DatastructuresTest.cpp, datastructureTest::test()"),shared_type);
+		}
+	};
 	
+	template <class datastruct>
+	class datastructureNodeSuite: public testSuite
+	{
+	public:
+		datastructureNodeSuite(string className):
+			testSuite(className)
+		{
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionNodeTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionNodeTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&simpleIteratorNodeTest<datastruct>),shared_type));
+		}
+		virtual ~datastructureNodeSuite(){}
+	};
+	template <class datastruct>
+	class datastructurePointerSuite: public testSuite
+	{
+	public:
+		datastructurePointerSuite(string className):
+			testSuite(className)
+		{
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&simpleIteratorPointerTest<datastruct>),shared_type));
+		}
+		virtual ~datastructurePointerSuite(){}
+	};
+
 /*================================================================
 	ADS Tests
   ================================================================*/
@@ -2070,7 +2243,6 @@ using namespace test;
 			trc->pushTest("Object Node",&objectNodeTest);
 			trc->pushTest("Pointer Node",&pointerNodeTest);
 			trc->pushTest("Raw-pointer Node",&rawPointerNodeTest);
-			trc->pushTest("Vemp Vector Test",&vectorTest);
 		pushSuite(trc);
 
 		//Simple Hash tests
@@ -2091,14 +2263,22 @@ using namespace test;
 			trc->pushTest("Threaded Read-Write",&threadMultiLockTest);
 		pushSuite(trc);
 
-		//ADS Test Suite
+		//Data structure test suite
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectVectorThreadSafe<dummyInt> >("objectVectorThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectVector<dummyInt> >("objectVector"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerVectorThreadSafe<dummyInt> >("pointerVectorThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerVector<dummyInt> >("pointerVector"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerVectorThreadSafe<dummyInt> >("rawPointerVectorThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerVector<dummyInt> >("rawPointerVector"),shared_type));
+
+		/*//ADS Test Suite
 			//Unique element, unsorted
 		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
 			//Unique element, sorted
 		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
         pushSuite(smart_ptr<testSuite>(new adsSuite<asyncAVLTree<int>,asyncAVLNode<int> >("Async AVL Tree",2),shared_type));
 			//Unique element, unsorted, set
-		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));
+		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));*/
         
         //Matrix Test Suite
         trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
