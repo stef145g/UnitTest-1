@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   5/25/2016
+ * @date   5/29/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -985,6 +985,419 @@ using namespace test;
 			throw std::exception("No last node defined");
 	}
 
+	//Iteration tests
+	template<class datastruct>
+	void noIteratorNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, noIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		ds.insert(4);
+		ds.insert(2);
+		ds.insert(5);
+
+		os::iterator<dummyInt> it=ds.first();
+
+		bool except=false;
+		try{++it;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (++it)");
+
+		except=false;
+		try{it++;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it++)");
+
+		except=false;
+		try{it+=1;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it+=1)");
+
+		except=false;
+		try{it=it+1;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it+1)");
+	}
+	template<class datastruct>
+	void noIteratorPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, noIteratorPointerTest<"+className+">()";
+		datastruct ds;
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(4),os::shared_type));
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(5),os::shared_type));
+
+		os::iterator<dummyInt> it=ds.first();
+
+		bool except=false;
+		try{++it;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (++it)");
+
+		except=false;
+		try{it++;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it++)");
+
+		except=false;
+		try{it+=1;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it+=1)");
+
+		except=false;
+		try{it=it+1;}
+		catch(std::exception e)
+		{except=true;}
+		if(!except)
+			throw std::exception("Unexpected iteration success (it+1)");
+	}
+
+	template<class datastruct>
+	void basicIteratorNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, basicIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		ds.insert(4);
+		ds.insert(5);
+		ds.insert(3);
+
+		os::iterator<dummyInt> it=ds.first();
+		int cnt=0;
+		while(it && cnt<3)
+		{
+			++it;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("++it iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it++;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("it++ iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it+=1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("+= iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it=it+1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("+ iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			--it;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("--it iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it--;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("it-- iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it-=1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("-= iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it=it-1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("- iteration failed");
+	}
+	template<class datastruct>
+	void basicIteratorPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, basicIteratorPointerTest<"+className+">()";
+		datastruct ds;
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(4),os::shared_type));
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
+		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(5),os::shared_type));
+
+		os::iterator<dummyInt> it=ds.first();
+		int cnt=0;
+		while(it && cnt<3)
+		{
+			++it;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("++it iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it++;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("it++ iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it+=1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("+= iteration failed");
+
+		cnt=0;
+		it=ds.first();
+		while(it && cnt<3)
+		{
+			it=it+1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("+ iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			--it;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("--it iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it--;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("it-- iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it-=1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("-= iteration failed");
+
+		cnt=0;
+		it=ds.last();
+		while(it && cnt<3)
+		{
+			it=it-1;
+			++cnt;
+		}
+		if(it || cnt<3)
+			throw std::exception("- iteration failed");
+	}
+
+	template<class datastruct>
+	void randomIteratorNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		bool found[100];
+		memset(found,0,100*sizeof(bool));
+		srand(time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(dat[i]);
+		
+		for(os::iterator<dummyInt> it=ds.first();it;++it)
+		{
+			bool fnd=false;
+			for(size_t i=0;i<100 && !fnd;++i)
+			{
+				if(dat[i]==*it)
+				{
+					fnd=true;
+					found[i]=true;
+				}
+			}
+		}
+		for(size_t i=0;i<100;i++)
+		{
+			if(!found[i])
+				throw std::exception("Inserted element not found");
+		}
+	}
+	template<class datastruct>
+	void randomIteratorPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomIteratorPointerTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		bool found[100];
+		memset(found,0,100*sizeof(bool));
+		srand(time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(dat[i]),os::shared_type));
+		
+		for(os::iterator<dummyInt> it=ds.first();it;++it)
+		{
+			bool fnd=false;
+			for(size_t i=0;i<100 && !fnd;++i)
+			{
+				if(dat[i]==*it)
+				{
+					fnd=true;
+					found[i]=true;
+				}
+			}
+		}
+		for(size_t i=0;i<100;i++)
+		{
+			if(!found[i])
+				throw std::exception("Inserted element not found");
+		}
+	}
+
+	template<class datastruct>
+	void randomSortedNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomSortedNodeTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		srand(time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(dat[i]);
+
+		os::iterator<dummyInt> it1=ds.first();
+		os::iterator<dummyInt> it2;
+		while(it1)
+		{
+			if(it2 && it2>it1)
+				throw std::exception("Datastructure unsorted");
+			it2=it1;
+			++it1;
+		}
+	}
+	template<class datastruct>
+	void randomSortedPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomSortedPointerTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		srand(time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(dat[i]),os::shared_type));
+
+		os::iterator<dummyInt> it1=ds.first();
+		os::iterator<dummyInt> it2;
+		while(it1)
+		{
+			if(it2 && it2>it1)
+				throw std::exception("Datastructure unsorted");
+			it2=it1;
+			++it1;
+		}
+	}
+
 	//Testing structure
 	typedef void (*datastructureTestFunction)(std::string cname);
 
@@ -1013,12 +1426,21 @@ using namespace test;
 	class datastructureNodeSuite: public testSuite
 	{
 	public:
-		datastructureNodeSuite(string className):
+		datastructureNodeSuite(string className, bool sorted=false):
 			testSuite(className)
 		{
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionNodeTest<datastruct>),shared_type));
-			pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&simpleIteratorNodeTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorNodeTest<datastruct>),shared_type));
+			
+			//Unique tests
+			if(datastruct::ITERABLE)
+			{
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorNodeTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorNodeTest<datastruct>),shared_type));
+				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedNodeTest<datastruct>),shared_type));
+			}
+			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorNodeTest<datastruct>),shared_type));
 		}
 		virtual ~datastructureNodeSuite(){}
 	};
@@ -1026,12 +1448,21 @@ using namespace test;
 	class datastructurePointerSuite: public testSuite
 	{
 	public:
-		datastructurePointerSuite(string className):
+		datastructurePointerSuite(string className, bool sorted=false):
 			testSuite(className)
 		{
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionPointerTest<datastruct>),shared_type));
-			pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&simpleIteratorPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorPointerTest<datastruct>),shared_type));
+
+			//Unique tests
+			if(datastruct::ITERABLE)
+			{
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorPointerTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorPointerTest<datastruct>),shared_type));
+				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedPointerTest<datastruct>),shared_type));
+			}
+			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorPointerTest<datastruct>),shared_type));
 		}
 		virtual ~datastructurePointerSuite(){}
 	};
