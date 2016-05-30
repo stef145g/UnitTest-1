@@ -1064,7 +1064,6 @@ using namespace test;
 		if(!except)
 			throw std::exception("Unexpected iteration success (it+1)");
 	}
-
 	template<class datastruct>
 	void basicIteratorNodeTest(std::string className)
 	{
@@ -1243,7 +1242,6 @@ using namespace test;
 		if(it || cnt<3)
 			throw std::exception("- iteration failed");
 	}
-
 	template<class datastruct>
 	void randomIteratorNodeTest(std::string className)
 	{
@@ -1330,7 +1328,6 @@ using namespace test;
 				throw std::exception("Inserted element not found");
 		}
 	}
-
 	template<class datastruct>
 	void randomSortedNodeTest(std::string className)
 	{
@@ -1398,6 +1395,8 @@ using namespace test;
 		}
 	}
 
+	//
+
 	//Testing structure
 	typedef void (*datastructureTestFunction)(std::string cname);
 
@@ -1433,7 +1432,7 @@ using namespace test;
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorNodeTest<datastruct>),shared_type));
 			
-			//Unique tests
+			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorNodeTest<datastruct>),shared_type));
@@ -1441,6 +1440,8 @@ using namespace test;
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedNodeTest<datastruct>),shared_type));
 			}
 			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorNodeTest<datastruct>),shared_type));
+
+
 		}
 		virtual ~datastructureNodeSuite(){}
 	};
@@ -1455,7 +1456,7 @@ using namespace test;
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorPointerTest<datastruct>),shared_type));
 
-			//Unique tests
+			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorPointerTest<datastruct>),shared_type));
