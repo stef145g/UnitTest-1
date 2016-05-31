@@ -959,14 +959,14 @@ using namespace test;
 		os::iterator<dummyInt> lst=ds.last();
 
 		if(!fst)
-			throw std::exception("No first node defined");
+			throw os::errorPointer(new generalTestException("No first node defined",locString),shared_type);
 		if(!lst)
-			throw std::exception("No last node defined");
+			throw os::errorPointer(new generalTestException("No last node defined",locString),shared_type);
 		if(fst==lst)
-			throw std::exception("First and last illegally match");
+			throw os::errorPointer(new generalTestException("First and last illegally match",locString),shared_type);
 		os::iterator<dummyInt> fst1=ds.first();
 		if(fst!=fst1)
-			throw std::exception("New and old first do not match");
+			throw os::errorPointer(new generalTestException("New and old first do not match",locString),shared_type);
 	}
 	template<class datastruct>
 	void simpleIteratorPointerTest(std::string className)
@@ -980,9 +980,9 @@ using namespace test;
 		os::iterator<dummyInt> lst=ds.last();
 
 		if(!fst)
-			throw std::exception("No first node defined");
+			throw os::errorPointer(new generalTestException("No first node defined",locString),shared_type);
 		if(!lst)
-			throw std::exception("No last node defined");
+			throw os::errorPointer(new generalTestException("No last node defined",locString),shared_type);
 	}
 
 	//Iteration tests
@@ -1002,28 +1002,28 @@ using namespace test;
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (++it)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (++it)",locString),shared_type);
 
 		except=false;
 		try{it++;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it++)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it++)",locString),shared_type);
 
 		except=false;
 		try{it+=1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it+=1)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+=1)",locString),shared_type);
 
 		except=false;
 		try{it=it+1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it+1)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+1)",locString),shared_type);
 	}
 	template<class datastruct>
 	void noIteratorPointerTest(std::string className)
@@ -1041,28 +1041,28 @@ using namespace test;
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (++it)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (++it)",locString),shared_type);
 
 		except=false;
 		try{it++;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it++)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it++)",locString),shared_type);
 
 		except=false;
 		try{it+=1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it+=1)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+=1)",locString),shared_type);
 
 		except=false;
 		try{it=it+1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw std::exception("Unexpected iteration success (it+1)");
+			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+1)",locString),shared_type);
 	}
 	template<class datastruct>
 	void basicIteratorNodeTest(std::string className)
@@ -1081,7 +1081,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("++it iteration failed");
+			throw os::errorPointer(new generalTestException("++it iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1091,7 +1091,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("it++ iteration failed");
+			throw os::errorPointer(new generalTestException("it++ iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1101,7 +1101,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("+= iteration failed");
+			throw os::errorPointer(new generalTestException("+= iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1111,7 +1111,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("+ iteration failed");
+			throw os::errorPointer(new generalTestException("+ iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1121,7 +1121,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("--it iteration failed");
+			throw os::errorPointer(new generalTestException("--it iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1131,7 +1131,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("it-- iteration failed");
+			throw os::errorPointer(new generalTestException("it-- iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1141,7 +1141,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("-= iteration failed");
+			throw os::errorPointer(new generalTestException("-= iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1151,7 +1151,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("- iteration failed");
+			throw os::errorPointer(new generalTestException("- iteration failed",locString),shared_type);
 	}
 	template<class datastruct>
 	void basicIteratorPointerTest(std::string className)
@@ -1170,7 +1170,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("++it iteration failed");
+			throw os::errorPointer(new generalTestException("++it iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1180,7 +1180,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("it++ iteration failed");
+			throw os::errorPointer(new generalTestException("it++ iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1190,7 +1190,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("+= iteration failed");
+			throw os::errorPointer(new generalTestException("+= iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.first();
@@ -1200,7 +1200,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("+ iteration failed");
+			throw os::errorPointer(new generalTestException("+ iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1210,7 +1210,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("--it iteration failed");
+			throw os::errorPointer(new generalTestException("--it iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1220,7 +1220,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("it-- iteration failed");
+			throw os::errorPointer(new generalTestException("it-- iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1230,7 +1230,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("-= iteration failed");
+			throw os::errorPointer(new generalTestException("-= iteration failed",locString),shared_type);
 
 		cnt=0;
 		it=ds.last();
@@ -1240,7 +1240,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw std::exception("- iteration failed");
+			throw os::errorPointer(new generalTestException("- iteration failed",locString),shared_type);
 	}
 	template<class datastruct>
 	void randomIteratorNodeTest(std::string className)
@@ -1282,7 +1282,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw std::exception("Inserted element not found");
+				throw os::errorPointer(new generalTestException("Inserted element not found",locString),shared_type);
 		}
 	}
 	template<class datastruct>
@@ -1325,7 +1325,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw std::exception("Inserted element not found");
+				throw os::errorPointer(new generalTestException("Inserted element not found",locString),shared_type);
 		}
 	}
 	template<class datastruct>
@@ -1356,7 +1356,7 @@ using namespace test;
 		while(it1)
 		{
 			if(it2 && it2>it1)
-				throw std::exception("Datastructure unsorted");
+				throw os::errorPointer(new generalTestException("Datastructure unsorted",locString),shared_type);
 			it2=it1;
 			++it1;
 		}
@@ -1389,7 +1389,7 @@ using namespace test;
 		while(it1)
 		{
 			if(it2 && it2>it1)
-				throw std::exception("Datastructure unsorted");
+				throw os::errorPointer(new generalTestException("Datastructure unsorted",locString),shared_type);
 			it2=it1;
 			++it1;
 		}

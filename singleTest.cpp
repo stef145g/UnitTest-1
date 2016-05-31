@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.cpp
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   5/31/2016
  * @brief  Single test class implementation
  * @bug No known bugs.
  *
@@ -31,7 +31,7 @@ using namespace test;
 		testName = tn;
 	}
 	//Run test
-	void singleTest::test() throw(os::errorPointer){}
+	void singleTest::test() {}
 	//Log begining
 	void singleTest::logBegin()
 	{

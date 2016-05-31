@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.h
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   5/31/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -71,7 +71,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-        virtual void setupTest() throw(os::errorPointer) {}
+        virtual void setupTest() {}
 		/** @brief Preforms core unit-test
 		 *
 		 * This function is designed to preform
@@ -82,7 +82,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-		virtual void test() throw(os::errorPointer);
+		virtual void test();
 		/** @brief Preforms any test tear-down
 		 *
 		 * This function is designed to preform
@@ -95,7 +95,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-        virtual void teardownTest() throw(os::errorPointer) {}
+        virtual void teardownTest() {}
         
 		/** @brief Prints out the name of the test
 		 * @return void
