@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   5/29/2016
+ * @date   6/1/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1073,7 +1073,7 @@ using namespace test;
 		ds.insert(5);
 		ds.insert(3);
 
-		os::iterator<dummyInt> it=ds.first();
+		os::constIterator<dummyInt> it=ds.first();
 		int cnt=0;
 		while(it && cnt<3)
 		{
@@ -1162,7 +1162,7 @@ using namespace test;
 		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
 		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(5),os::shared_type));
 
-		os::iterator<dummyInt> it=ds.first();
+		os::constIterator<dummyInt> it=ds.first();
 		int cnt=0;
 		while(it && cnt<3)
 		{
@@ -1395,7 +1395,98 @@ using namespace test;
 		}
 	}
 
-	//
+	//Random access tests
+    template<class datastruct>
+    void noRandomAccessObjectTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, noRandomAccessObjectTest<"+className+">()";
+        datastruct ds;
+        ds.insert(1);
+        
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown=true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
+        thrown=false;
+        
+        ds.insert(2);
+        ds.insert(3);
+    }
+    template<class datastruct>
+    void noRandomAccessPointerTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, noRandomAccessPointerTest<"+className+">()";
+        datastruct ds;
+        ds.insert(os::smart_ptr<dummyInt>(new dummyInt(1),os::shared_type));
+        
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown=true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
+        thrown=false;
+        
+        ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
+        ds.insert(os::smart_ptr<dummyInt>(new dummyInt(3),os::shared_type));
+    }
+    template<class datastruct>
+    void basicRandomAccessObjectTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, basicRandomAccessObjectTest<"+className+">()";
+        datastruct ds;
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown = true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+            
+        srand(time(NULL));
+        
+        for(size_t i=0;i<100;++i)
+            ds.insert(i);
+        dummyInt d;
+        
+        for(size_t i=0;i<10;++i)
+        {
+            size_t r=rand()%98+1;
+            d=ds[r];
+            if(d!=ds[r])
+                throw os::errorPointer(new generalTestException("Random access failed",locString),shared_type);
+            if(d==ds[r-1])
+                throw os::errorPointer(new generalTestException("- 1 random access failed",locString),shared_type);
+            if(d==ds[r+1])
+                throw os::errorPointer(new generalTestException("+ 1 random access failed",locString),shared_type);
+        }
+    }
+    template<class datastruct>
+    void basicRandomAccessPointerTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, basicRandomAccessPointerTest<"+className+">()";
+        datastruct ds;
+        srand(time(NULL));
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown = true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+    
+        for(size_t i=0;i<100;++i)
+            ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
+        os::smart_ptr<dummyInt> d;
+    
+        for(size_t i=0;i<10;++i)
+        {
+            size_t r=rand()%98+1;
+            d=ds[r];
+            if(*d!=*ds[r])
+                throw os::errorPointer(new generalTestException("Random access failed",locString),shared_type);
+            if(*d==*ds[r-1])
+                throw os::errorPointer(new generalTestException("- 1 random access failed",locString),shared_type);
+            if(*d==*ds[r+1])
+                throw os::errorPointer(new generalTestException("+ 1 random access failed",locString),shared_type);
+        }
+    }
 
 	//Testing structure
 	typedef void (*datastructureTestFunction)(std::string cname);
@@ -1441,6 +1532,12 @@ using namespace test;
 			}
 			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorNodeTest<datastruct>),shared_type));
 
+            //Random access
+            if(datastruct::RANDOM_ACCESS)
+            {
+                pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Random Access",className,&basicRandomAccessObjectTest<datastruct>),shared_type));
+                
+            } else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessObjectTest<datastruct>),shared_type));
 
 		}
 		virtual ~datastructureNodeSuite(){}
@@ -1464,6 +1561,13 @@ using namespace test;
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedPointerTest<datastruct>),shared_type));
 			}
 			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorPointerTest<datastruct>),shared_type));
+            
+            //Random access
+            if(datastruct::RANDOM_ACCESS)
+            {
+                pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Random Access",className,&basicRandomAccessPointerTest<datastruct>),shared_type));
+                
+            } else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessPointerTest<datastruct>),shared_type));
 		}
 		virtual ~datastructurePointerSuite(){}
 	};
