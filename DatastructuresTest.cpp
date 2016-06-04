@@ -2669,18 +2669,18 @@ using namespace test;
     void pointerQuicksortTest() throw (os::errorPointer)
     {
         std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
-        os::smart_ptr<os::smart_ptr<int> > array(new os::smart_ptr<int>[100],os::shared_type_array);
+        os::smart_ptr<os::smart_ptr<int> > _array(new os::smart_ptr<int>[100],os::shared_type_array);
         srand(time(NULL));
         for(int i1=0;i1<15;++i1)
         {
             for(int i2=0;i2<100;++i2)
-                array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
-            os::pointerQuicksort(array,100,&pointerCompare);
+                _array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
+            os::pointerQuicksort(_array,100);
             for(int i2=0;i2<99;++i2)
             {
-                if(*(array[i2])>*(array[i2+1]))
+                if(*(_array[i2])>*(_array[i2+1]))
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)*array[i2])+" vs "+std::to_string((long long unsigned int)*array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)*_array[i2])+" vs "+std::to_string((long long unsigned int)*_array[i2+1]),locString),shared_type);
                 }
             }
         }
