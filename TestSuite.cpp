@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.cpp
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   6/3/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -55,6 +55,7 @@ using namespace test;
                     it->getData()->setupTest();
                 }
                 catch (os::errorPointer e1){grabbed_exception = e1;}
+				catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
                 catch (exception& e2){grabbed_exception = os::errorPointer(new exception(e2),os::shared_type);}
                 catch (...){grabbed_exception = os::errorPointer(new test::unknownException("TestSuite.cpp, testSuite::runTests() (setup)"),shared_type);}
                 
@@ -67,6 +68,7 @@ using namespace test;
                         it->getData()->test();
                     }
                     catch (os::errorPointer e1){grabbed_exception = e1;}
+					catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
                     catch (exception& e2){grabbed_exception = os::errorPointer(new exception(e2),os::shared_type);}
                     catch (...){grabbed_exception = os::errorPointer(new test::unknownException("TestSuite.cpp, testSuite::runTests() (test)"),shared_type);}
                 
@@ -78,6 +80,7 @@ using namespace test;
                             it->getData()->teardownTest();
                         }
                         catch (os::errorPointer e1){grabbed_exception = e1;}
+						catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
                         catch (exception& e2){grabbed_exception = os::errorPointer(new exception(e2),os::shared_type);}
                         catch (...){grabbed_exception = os::errorPointer(new test::unknownException("TestSuite.cpp, testSuite::runTests() (teardown)"),shared_type);}
                     }
@@ -96,6 +99,7 @@ using namespace test;
 			}
 		}
 		catch (os::errorPointer e1){throw e1;}
+		catch (os::descriptiveException& de){throw os::errorPointer(new os::descriptiveException(de),os::shared_type);}
         catch (exception& e2){throw os::errorPointer(new exception(e2),os::shared_type);}
 		catch (...){throw os::errorPointer(new test::unknownException("TestSuite.cpp, testSuite::runTests()"),shared_type);}
 	}

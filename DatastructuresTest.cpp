@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/1/2016
+ * @date   6/3/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -849,7 +849,16 @@ using namespace test;
 	}
 
 /*================================================================
-	New ADS Tests
+	Custom Tests
+  ================================================================*/
+
+	template<class datastruct>
+	void customADSTest(std::string className)
+	{
+	}
+
+/*================================================================
+	ADS Tests
   ================================================================*/
 
 	template<class datastruct>
@@ -971,7 +980,7 @@ using namespace test;
 	template<class datastruct>
 	void simpleIteratorPointerTest(std::string className)
 	{
-		std::string locString = "DatastructuresTest.cpp, simpleIteratorNodeTest<"+className+">()";
+		std::string locString = "DatastructuresTest.cpp, simpleIteratorPointerTest<"+className+">()";
 		datastruct ds;
 		ds.insert(smart_ptr<dummyInt>(new dummyInt(1),shared_type));
 		ds.insert(smart_ptr<dummyInt>(new dummyInt(2),shared_type));
@@ -983,6 +992,47 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("No first node defined",locString),shared_type);
 		if(!lst)
 			throw os::errorPointer(new generalTestException("No last node defined",locString),shared_type);
+	}
+
+	template<class datastruct>
+	void searchNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, searchNodeTest<"+className+">()";
+		datastruct ds;
+		ds.insert(1);
+		ds.insert(2);
+		ds.insert(3);
+		os::iterator<dummyInt> fnd=ds.search(dummyInt(2));
+
+		if(!fnd || *fnd!=dummyInt(2))
+			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
+		fnd=ds.search(dummyInt(0));
+		if(fnd)
+			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+		fnd=ds.search(dummyInt(1));
+		if(!fnd || *fnd!=dummyInt(1))
+			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
+	}
+	template<class datastruct>
+	void searchPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, searchPointerTest<"+className+">()";
+		datastruct ds;
+		smart_ptr<dummyInt> d1(new dummyInt(1),shared_type);
+		smart_ptr<dummyInt> d2(new dummyInt(2),shared_type);
+		ds.insert(d1);
+		ds.insert(d2);
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(3),shared_type));
+		os::iterator<dummyInt> fnd=ds.search(d2);
+
+		if(!fnd || *fnd!=dummyInt(2))
+			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
+		fnd=ds.search(dummyInt(0));
+		if(fnd)
+			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+		fnd=ds.search(d1);
+		if(!fnd || *fnd!=dummyInt(1))
+			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
 	}
 
 	//Iteration tests
@@ -1256,7 +1306,7 @@ using namespace test;
 		{
 			dummyInt temp=rand()%1000;
 			bool tfnd=false;
-			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			for(size_t cnt=0;cnt<i && !tfnd;++cnt)
 			{
 				if(dat[cnt]==temp) tfnd=true;
 			}
@@ -1282,7 +1332,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element not found",locString),shared_type);
+				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
 		}
 	}
 	template<class datastruct>
@@ -1299,7 +1349,7 @@ using namespace test;
 		{
 			dummyInt temp=rand()%1000;
 			bool tfnd=false;
-			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
+			for(size_t cnt=0;cnt<i && !tfnd;++cnt)
 			{
 				if(dat[cnt]==temp) tfnd=true;
 			}
@@ -1325,7 +1375,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element not found",locString),shared_type);
+				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
 		}
 	}
 	template<class datastruct>
@@ -1394,6 +1444,49 @@ using namespace test;
 			++it1;
 		}
 	}
+	template<class datastruct>
+	void wholeInsertionNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, wholeInsertionNodeTest<"+className+">()";
+		datastruct ds1;
+		datastruct ds2;
+
+		ds1.insert(1);
+		ds1.insert(4);
+		ds1.insert(6);
+
+		ds2.insert(3);
+		ds2.insert(8);
+		ds2.insert(9);
+
+		if(ds1.find(3))
+			throw os::errorPointer(new generalTestException("Unexpectadly found 3",locString),shared_type);
+		ds1.insertStructure(ds2);
+		if(!ds1.find(3))
+			throw os::errorPointer(new generalTestException("Could not find 3",locString),shared_type);
+	}
+	template<class datastruct>
+	void wholeInsertionPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, wholeInsertionPointerTest<"+className+">()";
+		datastruct ds1;
+		datastruct ds2;
+		os::smart_ptr<dummyInt> i3(new dummyInt(3),os::shared_type);
+
+		ds1.insert(os::smart_ptr<dummyInt>(new dummyInt(1),os::shared_type));
+		ds1.insert(os::smart_ptr<dummyInt>(new dummyInt(4),os::shared_type));
+		ds1.insert(os::smart_ptr<dummyInt>(new dummyInt(6),os::shared_type));
+
+		ds2.insert(i3);
+		ds2.insert(os::smart_ptr<dummyInt>(new dummyInt(8),os::shared_type));
+		ds2.insert(os::smart_ptr<dummyInt>(new dummyInt(9),os::shared_type));
+
+		if(ds1.find(i3))
+			throw os::errorPointer(new generalTestException("Unexpectadly found 3",locString),shared_type);
+		ds1.insertStructure(ds2);
+		if(!ds1.find(i3))
+			throw os::errorPointer(new generalTestException("Could not find 3",locString),shared_type);
+	}
 
 	//Random access tests
     template<class datastruct>
@@ -1412,6 +1505,27 @@ using namespace test;
         
         ds.insert(2);
         ds.insert(3);
+
+		if(datastruct::ITERABLE)
+		{
+			os::iterator<dummyInt> it=ds.first();
+			if(it+1!=++it)
+				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
+
+			try{it+=2;}
+			catch(...){thrown=true;}
+			if(!thrown)
+				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
+
+			it=ds.last();
+			if(it-1!=--it)
+				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
+
+			try{it-=2;}
+			catch(...){thrown=true;}
+			if(!thrown)
+				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
+		}
     }
     template<class datastruct>
     void noRandomAccessPointerTest(std::string className)
@@ -1429,24 +1543,44 @@ using namespace test;
         
         ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
         ds.insert(os::smart_ptr<dummyInt>(new dummyInt(3),os::shared_type));
+
+		if(datastruct::ITERABLE)
+		{
+			os::iterator<dummyInt> it=ds.first();
+			if(it+1!=++it)
+				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
+
+			try{it+=2;}
+			catch(...){thrown=true;}
+			if(!thrown)
+				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
+
+			it=ds.last();
+			if(it-1!=--it)
+				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
+
+			try{it-=2;}
+			catch(...){thrown=true;}
+			if(!thrown)
+				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
+		}
     }
     template<class datastruct>
     void basicRandomAccessObjectTest(std::string className)
     {
         std::string locString = "DatastructuresTest.cpp, basicRandomAccessObjectTest<"+className+">()";
         datastruct ds;
+		 srand(time(NULL));
         bool thrown=false;
         try{ds[0];}
         catch(...){thrown = true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
-            
-        srand(time(NULL));
         
         for(size_t i=0;i<100;++i)
             ds.insert(i);
         dummyInt d;
-        
+
         for(size_t i=0;i<10;++i)
         {
             size_t r=rand()%98+1;
@@ -1487,7 +1621,71 @@ using namespace test;
                 throw os::errorPointer(new generalTestException("+ 1 random access failed",locString),shared_type);
         }
     }
-
+	template<class datastruct>
+    void iteratorRandomAccessObjectTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, iteratorRandomAccessObjectTest<"+className+">()";
+        datastruct ds;
+		srand(time(NULL));
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown = true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+        
+        for(size_t i=0;i<100;++i)
+            ds.insert(i);
+        dummyInt d;
+        
+        for(size_t i=0;i<10;++i)
+        {
+            size_t r=rand()%98+1;
+            d=ds[r];
+            os::iterator<dummyInt> it=ds.first();
+			if(*(it+r)!=d)
+				throw os::errorPointer(new generalTestException("Iterator increasing random-access failed",locString),shared_type);
+			it=ds.last();
+			if(*(it-(99-r))!=d)
+				throw os::errorPointer(new generalTestException("Iterator decreasing random-access failed",locString),shared_type);
+        }
+		if(ds.last()+2)
+			throw os::errorPointer(new generalTestException("Expected out of bounds (high)",locString),shared_type);
+		if(ds.first()-2)
+			throw os::errorPointer(new generalTestException("Expected out of bounds (low)",locString),shared_type);
+    }
+    template<class datastruct>
+    void iteratorRandomAccessPointerTest(std::string className)
+    {
+        std::string locString = "DatastructuresTest.cpp, iteratorRandomAccessPointerTest<"+className+">()";
+        datastruct ds;
+		srand(time(NULL));
+        bool thrown=false;
+        try{ds[0];}
+        catch(...){thrown = true;}
+        if(!thrown)
+            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+        
+        for(size_t i=0;i<100;++i)
+			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
+        os::smart_ptr<dummyInt> d;
+        
+        for(size_t i=0;i<10;++i)
+        {
+            size_t r=rand()%98+1;
+            d=ds[r];
+			os::iterator<dummyInt> it=ds.first();
+			if(&(it+r)!=d)
+				throw os::errorPointer(new generalTestException("Iterator increasing random-access failed",locString),shared_type);
+			it=ds.last();
+			if(&(it-(99-r))!=d)
+				throw os::errorPointer(new generalTestException("Iterator decreasing random-access failed",locString),shared_type);
+        }
+		if(ds.last()+2)
+			throw os::errorPointer(new generalTestException("Expected out of bounds (high)",locString),shared_type);
+		if(ds.first()-2)
+			throw os::errorPointer(new generalTestException("Expected out of bounds (low)",locString),shared_type);
+    }
+	
 	//Testing structure
 	typedef void (*datastructureTestFunction)(std::string cname);
 
@@ -1522,12 +1720,14 @@ using namespace test;
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorNodeTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Search Node",className,&searchNodeTest<datastruct>),shared_type));
 			
 			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorNodeTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorNodeTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Whole Insertion",className,&wholeInsertionNodeTest<datastruct>),shared_type));
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedNodeTest<datastruct>),shared_type));
 			}
 			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorNodeTest<datastruct>),shared_type));
@@ -1536,9 +1736,10 @@ using namespace test;
             if(datastruct::RANDOM_ACCESS)
             {
                 pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Random Access",className,&basicRandomAccessObjectTest<datastruct>),shared_type));
-                
-            } else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessObjectTest<datastruct>),shared_type));
-
+                pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Random Access",className,&iteratorRandomAccessObjectTest<datastruct>),shared_type));
+            }
+			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessObjectTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Custom Test",className,&customADSTest<datastruct>),shared_type));
 		}
 		virtual ~datastructureNodeSuite(){}
 	};
@@ -1552,12 +1753,14 @@ using namespace test;
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Search Node",className,&searchPointerTest<datastruct>),shared_type));
 
 			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorPointerTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Whole Insertion",className,&wholeInsertionPointerTest<datastruct>),shared_type));
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedPointerTest<datastruct>),shared_type));
 			}
 			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Iteration",className,&noIteratorPointerTest<datastruct>),shared_type));
@@ -1566,347 +1769,13 @@ using namespace test;
             if(datastruct::RANDOM_ACCESS)
             {
                 pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Random Access",className,&basicRandomAccessPointerTest<datastruct>),shared_type));
-                
-            } else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessPointerTest<datastruct>),shared_type));
+                pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Random Access",className,&iteratorRandomAccessPointerTest<datastruct>),shared_type));
+            }
+			else pushTest(smart_ptr<singleTest>(new datastructureTest("No Random Access",className,&noRandomAccessPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Custom Test",className,&customADSTest<datastruct>),shared_type));
 		}
 		virtual ~datastructurePointerSuite(){}
 	};
-
-/*================================================================
-	ADS Tests
-  ================================================================*/
-
-	#define GETBIT(d,p) ((d) & (1 << (p)))
-	#define SETBIT(d,p,t) (t==0 ? d = (d)&~(1<<(p)):d = (d)|(1<<(p)))
-
-	void singleInsertion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-	{
-		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
-		string locString = "DatastructuresTest.cpp, singleInsertion(...), "+ads_type;
-
-		if(!dataStruct->insert(intptr))
-			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-		
-		//Attempt to re-insert (two cases)
-		if(GETBIT(id,0))
-		{
-			if(!dataStruct->insert(intptr))
-				throw os::errorPointer(new generalTestException("ADS re-insertion failed",locString),shared_type);
-			if(!dataStruct->findDelete(intptr))
-				throw os::errorPointer(new generalTestException("ADS delete after re-insertion failed",locString),shared_type);
-		}
-		else
-		{
-			if(dataStruct->insert(intptr))
-				throw os::errorPointer(new generalTestException("ADS re-insertion succeeded, it should not have",locString),shared_type);
-		}
-
-		//Check, there should be one element in the ADS
-		if(dataStruct->size()!=1)
-			throw os::errorPointer(new generalTestException("ADS should have 1 element, it has "+to_string((long long unsigned int)dataStruct->size()),locString),shared_type);
-
-		//Find
-		if(!dataStruct->find(intptr))
-			throw os::errorPointer(new generalTestException("Could not find inserted element",locString),shared_type);
-		int comp = 5;
-		if(!dataStruct->find(&comp))
-			throw os::errorPointer(new generalTestException("Could not find alias to inserted element",locString),shared_type);
-
-		//Shouldn't be able to find "bad" elements
-		comp = 7;
-		if(dataStruct->find(&comp))
-			throw os::errorPointer(new generalTestException("Found item that was not inserted",locString),shared_type);
-	}
-	void singleTestADSDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-	{
-		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
-		string locString = "DatastructuresTest.cpp, singleTestADSDeletion(...), "+ads_type;
-
-		if(intptr.getRefCount()==NULL)
-			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-		if(*intptr.getRefCount()!=1)
-			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-		if(!dataStruct->insert(intptr))
-			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-		if(*intptr.getRefCount()!=2)
-			throw os::errorPointer(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-	}
-	void singleTestDeletion(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-	{
-		smart_ptr<int> intptr = smart_ptr<int>(new int(5),shared_type);
-		string locString = "DatastructuresTest.cpp, singleTestDeletion(...), "+ads_type;
-
-		if(intptr.getRefCount()==NULL)
-			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-		if(*intptr.getRefCount()!=1)
-			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-		if(!dataStruct->insert(intptr))
-			throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-		if(*intptr.getRefCount()!=2)
-			throw os::errorPointer(new generalTestException("Expected reference count of 2, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-		
-		//Find delete
-		if(!dataStruct->findDelete(intptr))
-			throw os::errorPointer(new generalTestException("Could not find element to delete",locString),shared_type);
-
-		if(*intptr.getRefCount()!=1)
-			throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount())+" after ADS deletion",locString),shared_type);
-        dataStruct = NULL;
-	}
-	void checkSorted(smart_ptr<ads<int> > dataStruct, string ads_type) 
-	{
-		string locString = "DatastructuresTest.cpp, checkSorted(...), "+ads_type;
-
-		auto last = dataStruct->getFirst();
-		for(auto it = dataStruct->getFirst();it;it=it->getNext())
-		{
-            
-            
-			if(*(it->getData())<*(last->getData()))
-				throw smart_ptr<std::exception>(new generalTestException("ADS is out of order",locString),shared_type);
-			last = it;
-		}
-	}
-    void randomInsertionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-    {
-        string locString = "DatastructuresTest.cpp, randomInsertionTest(...), "+ads_type;
-        srand(time(NULL));
-
-        //Insert 100 elements
-        for(int i = 0; i<100;++i)
-        {
-            //Create insertion pointer
-            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
-            if(intptr.getRefCount()==NULL)
-                throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-            if(*intptr.getRefCount()!=1)
-                throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-            
-            //Attempt to insert
-            if(!dataStruct->find(intptr))
-            {
-                if(!dataStruct->insert(intptr))
-                    throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-                if(!dataStruct->find(intptr))
-                    throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
-                
-                if(id&2) checkSorted(dataStruct,ads_type);
-            }
-            else
-                --i;
-        }
-    }
-    void randomInsertionDeletionTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-    {
-        string locString = "DatastructuresTest.cpp, randomInsertionDeletionTest(...), "+ads_type;
-        srand(time(NULL));
-        
-        //Insert 100 elements
-        for(int i = 0; i<100;++i)
-        {
-            //Create insertion pointer
-            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
-            if(intptr.getRefCount()==NULL)
-            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-            if(*intptr.getRefCount()!=1)
-            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-            
-            //Attempt to insert
-            if(!dataStruct->find(intptr))
-            {
-                if(!dataStruct->insert(intptr))
-                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-                if(!dataStruct->find(intptr))
-                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
-                
-                if(id&2) checkSorted(dataStruct,ads_type);
-                
-                //Every so often, delete what we just inserted
-                if(rand()%4)
-                {
-                    if(!dataStruct->findDelete(intptr))
-                    throw os::errorPointer(new generalTestException("ADS Deletion failed",locString),shared_type);
-                    if(id&2) checkSorted(dataStruct,ads_type);
-                }
-            }
-            else
-                --i;
-        }
-    }
-    void randomForwardTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-    {
-        string locString = "DatastructuresTest.cpp, randomForwardTraverseTest(...), "+ads_type;
-        srand(time(NULL));
-    
-        //Insert 100 elements
-        for(int i = 0; i<100;++i)
-        {
-            //Create insertion pointer
-            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
-            if(intptr.getRefCount()==NULL)
-            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-            if(*intptr.getRefCount()!=1)
-            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-        
-            //Attempt to insert
-            if(!dataStruct->find(intptr))
-            {
-                if(!dataStruct->insert(intptr))
-                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-                if(!dataStruct->find(intptr))
-                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
-            
-                if(id&2) checkSorted(dataStruct,ads_type);
-            }
-            else
-            --i;
-        }
-        
-        //Iterate through
-        int trace = 0;
-        for(auto it = dataStruct->getFirst();it;it=it->getNext())
-        {
-            trace++;
-            if(!it->getData())
-            throw os::errorPointer(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
-        }
-        if(trace!=dataStruct->size())
-        throw os::errorPointer(new generalTestException("Traverse failed, expected "+std::to_string((long long unsigned int)dataStruct->size())+" but found "+std::to_string((long long unsigned int)trace),locString),shared_type);
-    }
-    void randomReverseTraverseTest(smart_ptr<ads<int> > dataStruct, string ads_type, int id) 
-    {
-        string locString = "DatastructuresTest.cpp, randomReverseTraverseTest(...), "+ads_type;
-        srand(time(NULL));
-    
-        //Insert 100 elements
-        for(int i = 0; i<100;++i)
-        {
-            //Create insertion pointer
-            smart_ptr<int> intptr = smart_ptr<int>(new int(rand()%1000),shared_type);
-            if(intptr.getRefCount()==NULL)
-            throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
-            if(*intptr.getRefCount()!=1)
-            throw os::errorPointer(new generalTestException("Expected reference count of 1, but found "+to_string((long long unsigned int)*intptr.getRefCount()),locString),shared_type);
-        
-            //Attempt to insert
-            if(!dataStruct->find(intptr))
-            {
-                if(!dataStruct->insert(intptr))
-                throw os::errorPointer(new generalTestException("ADS Insertion failed",locString),shared_type);
-                if(!dataStruct->find(intptr))
-                throw os::errorPointer(new generalTestException("Could not find inserted node",locString),shared_type);
-            
-                if(id&2) checkSorted(dataStruct,ads_type);
-            }
-            else
-            --i;
-        }
-    
-        //Iterate through
-        int trace = 0;
-        for(auto it = dataStruct->getLast();it;it=it->getPrev())
-        {
-            trace++;
-            if(!it->getData())
-            throw os::errorPointer(new generalTestException("Could not find node "+to_string((long long int)trace),locString),shared_type);
-        }
-        if(trace!=dataStruct->size())
-        throw os::errorPointer(new generalTestException("Traverse failed, expected "+std::to_string((long long int)dataStruct->size())+" but found "+std::to_string((long long int)trace),locString),shared_type);
-}
-
-	//adsSuite test
-	typedef void (*adsTestFunc)(smart_ptr<ads<int> > dataStruct, string ads_type, int id);
-	template <class adsType, class nodeType>
-	class adsTest:public singleTest
-	{
-	private:
-		string ads_name;
-		adsTestFunc adfunc;
-		int _id;
-        
-    protected:
-        virtual smart_ptr<ads<int> > newADS(){return smart_ptr<ads<int> >(new adsType(),shared_type);}
-        void setID(int id){_id=id;};
-	public:
-		adsTest(std::string tn,std::string ads_n,adsTestFunc func, int id):
-			singleTest(tn)
-		{
-			ads_name = ads_n;
-			adfunc = func;
-            _id = id;
-		}
-        virtual ~adsTest(){}
-        
-		//Run the specified test function
-		void test() 
-		{
-			if(adfunc!=NULL)
-                adfunc(newADS(),ads_name,_id);
-			else
-				throw os::errorPointer(new nullFunctionException("DatastructuresTest.cpp, adsTest::test()"),shared_type);
-		}
-	};
-	//adsSuite
-	template <class adsType, class nodeType>
-	class adsSuite:public testSuite
-	{
-	public:
-		adsSuite(string adst, int id):
-			testSuite(adst)
-		{
-            //Bind the tests
-			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Insertion Test",adst,&singleTestDeletion,id),shared_type));
-			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Deletion Test",adst,&singleTestDeletion,id),shared_type));
-			pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("ADS Deletion Test",adst,&singleTestADSDeletion,id),shared_type));
-            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion Test",adst,&randomInsertionTest,id),shared_type));
-            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Random Insertion/Deletion Test",adst,&randomInsertionDeletionTest,id),shared_type));
-            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Forward Traverse Test",adst,&randomForwardTraverseTest,id),shared_type));
-            pushTest(smart_ptr<singleTest>(new adsTest<adsType,nodeType>("Reverse Traverse Test",adst,&randomReverseTraverseTest,id),shared_type));
-		}
-        virtual ~adsSuite(){}
-	};
-    //Set Test
-    class setTest: public adsTest<smartSet<int>,adnode<int> >
-    {
-        setTypes set_type;
-    protected:
-        virtual smart_ptr<ads<int> > newADS(){return smart_ptr<ads<int> >(new smartSet<int>(set_type),shared_type);}
-    public:
-        setTest(string testName,setTypes st, adsTestFunc func):
-            adsTest<smartSet<int>,adnode<int> >(testName,"Smart Set",func, 0)
-        {
-            set_type = st;
-            int temp_id = 0;
-            if(st==sorted_set) temp_id = temp_id | 2;
-            
-            setID(temp_id);
-        }
-        virtual ~setTest(){}
-    };
-    //Set suite
-    class setSuite: public testSuite
-    {
-    public:
-        setSuite():
-            testSuite("Smart Set")
-        {
-            for(int i = 0;i<=sorted_set;++i)
-            {
-                string addition=": ";
-                if(i==small_set) addition+="Small Set";
-                else if(i==sorted_set) addition+="Sorted Set";
-                else addition+="Default Set";
-                pushTest(smart_ptr<singleTest>(new setTest("Insertion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Deletion Test"+addition,(setTypes)i,&singleTestDeletion),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("ADS Deletetion Test"+addition,(setTypes)i,&singleTestADSDeletion),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Random Insertion Test"+addition,(setTypes)i,&randomInsertionTest),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Random Insertion/Deletion Test"+addition,(setTypes)i,&randomInsertionDeletionTest),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Forward Traverse Test"+addition,(setTypes)i,&randomForwardTraverseTest),shared_type));
-                pushTest(smart_ptr<singleTest>(new setTest("Reverse Traverse Test"+addition,(setTypes)i,&randomReverseTraverseTest),shared_type));
-            }
-        }
-        virtual ~setSuite(){}
-    };
 
 /*================================================================
 	MatrixTest
