@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/3/2016
+ * @date   6/4/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -852,9 +852,85 @@ using namespace test;
 	Custom Tests
   ================================================================*/
 
+    template<class datastruct>
+    void customTest(std::string className,datastruct& ds)
+    {}
+
+    //Vector object test
+    template<class datastruct>
+    void vectorObjectTest(std::string className,datastruct& ds)
+    {
+        std::string locString = "DatastructuresTest.cpp, vectorObjectTest<"+className+">()";
+        for(size_t i=0;i<100;++i)
+            ds.insert(100-i);
+        
+        bool sorted=true;
+        for(size_t i=0;i<99 && sorted;++i)
+        {
+            if(ds[i]>ds[i+1])
+                sorted=false;
+        }
+        if(sorted)
+            throw os::errorPointer(new generalTestException("Unexpectantly sorted",locString),shared_type);
+        
+        ds.sort();
+        sorted=true;
+        for(size_t i=0;i<99 && sorted;++i)
+        {
+            if(ds[i]>ds[i+1])
+                sorted=false;
+        }
+        if(!sorted)
+            throw os::errorPointer(new generalTestException("Unsorted vector error",locString),shared_type);
+    }
+    //Vector pointer test
+    template<class datastruct>
+    void vectorPointerTest(std::string className,datastruct& ds)
+    {
+        std::string locString = "DatastructuresTest.cpp, vectorPointerTest<"+className+">()";
+        os::smart_ptr<dummyInt> arr[100];
+        dummyInt rawArr[100];
+        for(size_t i=100;i>0;--i)
+        {
+            rawArr[i-1]=i-1;
+            arr[100-i]=os::smart_ptr<dummyInt>(rawArr+(i-1));
+        }
+        for(size_t i=0;i<100;++i)
+            ds.insert(arr[i]);
+        
+        bool sorted=true;
+        for(size_t i=0;i<99 && sorted;++i)
+        {
+            if(ds[i]>ds[i+1])
+                sorted=false;
+        }
+        if(sorted)
+            throw os::errorPointer(new generalTestException("Unexpectantly sorted",locString),shared_type);
+        
+        ds.sort();
+        sorted=true;
+        for(size_t i=0;i<99;++i)
+        {
+            if(ds[i]>ds[i+1])
+                sorted=false;
+        }
+        if(!sorted)
+            throw os::errorPointer(new generalTestException("Unsorted vector error",locString),shared_type);
+        
+    }
+    //Vector tests
+    void customTest(std::string className, objectVectorThreadSafe<dummyInt>& ds){vectorObjectTest<objectVectorThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, objectVector<dummyInt>& ds){vectorObjectTest<objectVector<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerVectorThreadSafe<dummyInt>& ds){vectorPointerTest<pointerVectorThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerVector<dummyInt>& ds){vectorPointerTest<pointerVector<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerVectorThreadSafe<dummyInt>& ds){vectorPointerTest<rawPointerVectorThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerVector<dummyInt>& ds){vectorPointerTest<rawPointerVector<dummyInt> >(className,ds);}
+
 	template<class datastruct>
 	void customADSTest(std::string className)
 	{
+        datastruct ds;
+        customTest(className,ds);
 	}
 
 /*================================================================
@@ -2599,7 +2675,7 @@ using namespace test;
         {
             for(int i2=0;i2<100;++i2)
                 array[i2]=os::smart_ptr<int>(new int(rand()%100),os::shared_type);
-            os::pointerQuicksort(array,100,&pointerCompareSort);
+            os::pointerQuicksort(array,100,&pointerCompare);
             for(int i2=0;i2<99;++i2)
             {
                 if(*(array[i2])>*(array[i2+1]))
