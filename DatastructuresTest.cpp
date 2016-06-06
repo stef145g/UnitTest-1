@@ -1031,6 +1031,54 @@ using namespace test;
 		if(*fst!=dummyInt(5))
 			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
 	}
+	template<class datastruct>
+	void iteratorDeletionNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, singleDeletionNodeTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+
+		ds.insert(4);
+		ds.insert(5);
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+		os::iterator<dummyInt> fst=ds.search(dummyInt(4));
+		fst.remove();
+		if(ds.find(4))
+			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+		if(ds.size()!=1)
+			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+
+		fst=ds.first();
+		if(*fst!=dummyInt(5))
+			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+	}
+	template<class datastruct>
+	void iteratorDeletionPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, singleDeletionPointerTest<"+className+">()";
+		datastruct ds;
+		if(ds.size()!=0)
+			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+
+		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
+
+		ds.insert(ptr);
+		ds.insert(smart_ptr<dummyInt>(new dummyInt(5),shared_type));
+		if(ds.size()!=2)
+			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+		os::iterator<dummyInt> fst=ds.search(ptr);
+		fst.remove();
+		if(ds.find(ptr))
+			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+		if(ds.size()!=1)
+			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+
+		fst=ds.first();
+		if(*fst!=dummyInt(5))
+			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+	}
 
 	template<class datastruct>
 	void simpleIteratorNodeTest(std::string className)
@@ -1795,6 +1843,7 @@ using namespace test;
 		{
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionNodeTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Deletion",className,&iteratorDeletionNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorNodeTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Search Node",className,&searchNodeTest<datastruct>),shared_type));
 			
@@ -1828,6 +1877,7 @@ using namespace test;
 		{
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Insertion",className,&singleInsertionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Single Deletion",className,&singleDeletionPointerTest<datastruct>),shared_type));
+			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Deletion",className,&iteratorDeletionPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Iterator Instantiation",className,&simpleIteratorPointerTest<datastruct>),shared_type));
 			pushTest(smart_ptr<singleTest>(new datastructureTest("Search Node",className,&searchPointerTest<datastruct>),shared_type));
 
