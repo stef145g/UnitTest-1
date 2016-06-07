@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/4/2016
+ * @date   6/6/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -2809,6 +2809,13 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerUnsortedList<dummyInt> >("pointerUnsortedList"),shared_type));
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerUnsortedListThreadSafe<dummyInt> >("rawPointerListThreadSafe"),shared_type));
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerUnsortedList<dummyInt> >("rawPointerList"),shared_type));
+
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectSortedListThreadSafe<dummyInt> >("objectSortedListThreadSafe",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectSortedList<dummyInt> >("objectSortedList",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerSortedListThreadSafe<dummyInt> >("pointerSortedListThreadSafe",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerSortedList<dummyInt> >("pointerSortedList",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSortedListThreadSafe<dummyInt> >("rawPointerSortedListThreadSafe",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSortedList<dummyInt> >("rawPointerSortedList",true),shared_type));
 
 		/*//ADS Test Suite
 			//Unique element, unsorted
