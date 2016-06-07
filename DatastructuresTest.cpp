@@ -2802,6 +2802,14 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerVectorThreadSafe<dummyInt> >("rawPointerVectorThreadSafe"),shared_type));
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerVector<dummyInt> >("rawPointerVector"),shared_type));
 
+		//List suite
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectUnsortedListThreadSafe<dummyInt> >("objectUnsortedListThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectUnsortedList<dummyInt> >("objectUnsortedList"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerUnsortedListThreadSafe<dummyInt> >("pointerUnsortedListThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerUnsortedList<dummyInt> >("pointerUnsortedList"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerUnsortedListThreadSafe<dummyInt> >("rawPointerListThreadSafe"),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerUnsortedList<dummyInt> >("rawPointerList"),shared_type));
+
 		/*//ADS Test Suite
 			//Unique element, unsorted
 		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
