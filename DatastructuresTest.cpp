@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/6/2016
+ * @date   6/8/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -472,7 +472,7 @@ using namespace test;
 			throw -1;
 		} catch(std::exception e)
 		{}
-		catch(...)
+		catch(descriptiveException de)
 		{throw os::errorPointer(new generalTestException("Failed to throw error when setting illegal size",locString),shared_type);}
 
 		hashTable.insert(2);
@@ -564,7 +564,7 @@ using namespace test;
 			thr.join();
 			throw erp;
 		}
-		catch(...){
+		catch(descriptiveException de){
 			thr.join();
 			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
 		}
@@ -607,7 +607,7 @@ using namespace test;
 			thr.join();
 			throw erp;
 		}
-		catch(...){
+		catch(descriptiveException de){
 			thr.join();
 			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
 		}
@@ -638,7 +638,7 @@ using namespace test;
 			--thrcnt;
 		} catch(std::exception e)
 		{}
-		catch(...)
+		catch(descriptiveException de)
 		{throw os::errorPointer(new generalTestException("Failed to throw error when illegally decrementing",locString),shared_type);}
 	}
 	void basicMultiLockTest()
@@ -693,7 +693,7 @@ using namespace test;
 			thr.join();
 			throw erp;
 		}
-		catch(...){
+		catch(descriptiveException de){
 			thr.join();
 			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
 		}
@@ -753,7 +753,7 @@ using namespace test;
 			thr.join();
 			throw erp;
 		}
-		catch(...){
+		catch(descriptiveException de){
 			thr.join();
 			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
 		}
@@ -1622,7 +1622,7 @@ using namespace test;
         
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown=true;}
+        catch(descriptiveException de){thrown=true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
         thrown=false;
@@ -1637,7 +1637,7 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
 
 			try{it+=2;}
-			catch(...){thrown=true;}
+			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
 				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
 
@@ -1646,7 +1646,7 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
 
 			try{it-=2;}
-			catch(...){thrown=true;}
+			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
 				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
 		}
@@ -1660,7 +1660,7 @@ using namespace test;
         
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown=true;}
+        catch(descriptiveException de){thrown=true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
         thrown=false;
@@ -1675,7 +1675,7 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
 
 			try{it+=2;}
-			catch(...){thrown=true;}
+			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
 				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
 
@@ -1684,7 +1684,7 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
 
 			try{it-=2;}
-			catch(...){thrown=true;}
+			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
 				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
 		}
@@ -1697,7 +1697,7 @@ using namespace test;
 		 srand(time(NULL));
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown = true;}
+        catch(descriptiveException de){thrown = true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
@@ -1725,7 +1725,7 @@ using namespace test;
         srand(time(NULL));
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown = true;}
+        catch(descriptiveException de){thrown = true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
     
@@ -1753,7 +1753,7 @@ using namespace test;
 		srand(time(NULL));
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown = true;}
+        catch(descriptiveException de){thrown = true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
@@ -1785,7 +1785,7 @@ using namespace test;
 		srand(time(NULL));
         bool thrown=false;
         try{ds[0];}
-        catch(...){thrown = true;}
+        catch(descriptiveException){thrown = true;}
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
