@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/8/2016
+ * @date   6/15/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1737,7 +1737,7 @@ using namespace test;
         {
             size_t r=rand()%98+1;
             d=ds[r];
-            if(*d!=*ds[r])
+            if(!d || !ds[r] || *d!=*ds[r])
                 throw os::errorPointer(new generalTestException("Random access failed",locString),shared_type);
             if(*d==*ds[r-1])
                 throw os::errorPointer(new generalTestException("- 1 random access failed",locString),shared_type);
@@ -2817,14 +2817,12 @@ using namespace test;
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSortedListThreadSafe<dummyInt> >("rawPointerSortedListThreadSafe",true),shared_type));
 		pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSortedList<dummyInt> >("rawPointerSortedList",true),shared_type));
 
-		/*//ADS Test Suite
-			//Unique element, unsorted
-		pushSuite(smart_ptr<testSuite>(new adsSuite<unsortedList<int>,unsortedListNode<int> >("list",0),shared_type));
-			//Unique element, sorted
-		pushSuite(smart_ptr<testSuite>(new adsSuite<AVLTree<int>,AVLNode<int> >("AVL Tree",2),shared_type));
-        pushSuite(smart_ptr<testSuite>(new adsSuite<asyncAVLTree<int>,asyncAVLNode<int> >("Async AVL Tree",2),shared_type));
-			//Unique element, unsorted, set
-		pushSuite(smart_ptr<testSuite>(new setSuite(),shared_type));*/
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectAVLTreeThreadSafe<dummyInt> >("objectAVLTreeThreadSafe",true),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectAVLTree<dummyInt> >("objectAVLTree",true),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerAVLTree<dummyInt> >("pointerAVLTree",true),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerAVLTreeThreadSafe<dummyInt> >("pointerAVLTreeThreadSafe",true),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerAVLTree<dummyInt> >("rawPointerAVLTree",true),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerAVLTreeThreadSafe<dummyInt> >("rawPointerAVLTreeThreadSafe",true),shared_type));
         
         //Matrix Test Suite
         trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
