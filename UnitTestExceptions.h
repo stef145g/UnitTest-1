@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExceptions.h
  * @Author Jonathan Bedard
- * @date   2/19/2016
+ * @date   5/14/2016
  * @brief  Common exceptions thrown by unit tests
  * @bug No known bugs.
  *
@@ -117,7 +117,6 @@ namespace test
 		 */
 		 virtual ~unknownException() throw(){}
 	};
-
 	/** @brief NULL function exception class
 	 *
 	 * This class defines the common exception
@@ -147,6 +146,8 @@ namespace test
 		 */
 		virtual ~nullFunctionException() throw(){}
 	};
+
+	
 }
 
 #endif

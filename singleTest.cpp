@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.cpp
  * @Author Jonathan Bedard
- * @date   2/6/2016
+ * @date   5/31/2016
  * @brief  Single test class implementation
  * @bug No known bugs.
  *
@@ -31,14 +31,14 @@ using namespace test;
 		testName = tn;
 	}
 	//Run test
-	void singleTest::test() throw(os::smart_ptr<std::exception>){}
+	void singleTest::test() {}
 	//Log begining
 	void singleTest::logBegin()
 	{
 		testout<<"\t\t\t"<<testName<<endl;
 	}
 	//Log ending
-	bool singleTest::logEnd(os::smart_ptr<std::exception> except)
+	bool singleTest::logEnd(os::errorPointer except)
 	{
 		if(except)
 		{
@@ -61,9 +61,9 @@ using namespace test;
 		func = f;
 	}
 	//Run test
-	void singleFunctionTest::test() throw(os::smart_ptr<std::exception>)
+	void singleFunctionTest::test() throw(os::errorPointer)
 	{
-		if(func==NULL) throw os::smart_ptr<std::exception>(new nullFunctionException("singleTest.cpp, 55"),shared_type);
+		if(func==NULL) throw os::errorPointer(new nullFunctionException("singleTest.cpp, 55"),shared_type);
 		else func();
 	}
 

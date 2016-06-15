@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.cpp
  * @Author Jonathan Bedard
- * @date   4/11/2016
+ * @date   5/14/2016
  * @brief  Library tests, masterTestHolder singleton implementations
  * @bug No known bugs.
  *
@@ -39,7 +39,7 @@ using namespace test;
 		suitesRun=0;
 	}
 	//Run the test battery
-	void libraryTests::runTests() throw(os::smart_ptr<std::exception>)
+	void libraryTests::runTests() throw(os::errorPointer)
 	{
 		suitesCompleted=0;
 		suitesRun=0;
@@ -49,7 +49,7 @@ using namespace test;
 		{
 			for(auto it = suiteList.getFirst();it;it=it->getNext())
 			{
-				os::smart_ptr<exception> grabbed_exception;
+				os::errorPointer grabbed_exception;
 				it->getData()->logBegin();
 				it->getData()->onSetup();
 				try
@@ -57,18 +57,18 @@ using namespace test;
 					it->getData()->runTests();
 					suitesRun++;
 				}
-				catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
-				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
-				catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
+				catch (os::errorPointer e1){grabbed_exception = e1;}
+				catch (exception& e2){grabbed_exception = os::errorPointer(&e2);}
+				catch (...){grabbed_exception = os::errorPointer(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
 				
 				it->getData()->onTeardown();
 				if(it->getData()->logEnd(grabbed_exception))
 					suitesCompleted++;
 			}
 		}
-		catch (os::smart_ptr<exception> e1){throw e1;}
-		catch (exception& e2){throw os::smart_ptr<exception>(&e2);}
-		catch (...){throw os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
+		catch (os::errorPointer e1){throw e1;}
+		catch (exception& e2){throw os::errorPointer(&e2);}
+		catch (...){throw os::errorPointer(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
 	}
 	//Begin the library tests
 	void libraryTests::logBegin()
@@ -78,7 +78,7 @@ using namespace test;
 		testout<<LIB_DIV<<endl<<endl;
 	}
 	//End and log end of library tests
-	bool libraryTests::logEnd(os::smart_ptr<std::exception> except)
+	bool libraryTests::logEnd(os::errorPointer except)
 	{
 		int state=0;
 		if(getNumSuites()-getNumSuccess()>0) state = 1;
@@ -130,7 +130,7 @@ using namespace test;
 		return self;
 	}
 	//Runs all tests
-	bool masterTestHolder::runTests() throw(os::smart_ptr<std::exception>)
+	bool masterTestHolder::runTests() throw(os::errorPointer)
 	{
 		libsCompleted = 0;
 		libsRun = 0;
@@ -140,7 +140,7 @@ using namespace test;
 		{
 			for(auto it = libraryList.getFirst();it;it=it->getNext())
 			{
-				os::smart_ptr<exception> grabbed_exception;
+				os::errorPointer grabbed_exception;
 				it->getData()->logBegin();
 				it->getData()->onSetup();
 				try
@@ -148,18 +148,18 @@ using namespace test;
 					it->getData()->runTests();
 					libsRun++;
 				}
-				catch (os::smart_ptr<exception> e1){grabbed_exception = e1;}
-				catch (exception& e2){grabbed_exception = os::smart_ptr<exception>(&e2);}
-				catch (...){grabbed_exception = os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
+				catch (os::errorPointer e1){grabbed_exception = e1;}
+				catch (exception& e2){grabbed_exception = os::errorPointer(&e2);}
+				catch (...){grabbed_exception = os::errorPointer(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
 
 				it->getData()->onTeardown();
 				if(it->getData()->logEnd(grabbed_exception))
 					libsCompleted++;
 			}
 		}
-		catch (os::smart_ptr<exception> e1){throw e1;}
-		catch (exception& e2){throw os::smart_ptr<exception>(&e2);}
-		catch (...){throw os::smart_ptr<exception>(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
+		catch (os::errorPointer e1){throw e1;}
+		catch (exception& e2){throw os::errorPointer(&e2);}
+		catch (...){throw os::errorPointer(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
 
 		return !(libsCompleted-libraryList.size());
 	}

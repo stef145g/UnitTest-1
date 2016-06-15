@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.h
  * @Author Jonathan Bedard
- * @date   4/11/2016
+ * @date   5/14/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -64,7 +64,7 @@ namespace test
 		 *
 		 * @return void
 		 */
-		void runTests() throw(os::smart_ptr<std::exception>);
+		void runTests() throw(os::errorPointer);
 		/** @brief Runs on shutdown
 		 *
 		 * Each suite calls this funciton as
@@ -101,7 +101,7 @@ namespace test
 		 *
 		 * @return True if all tests successful, else false 
 		 */
-		bool logEnd(os::smart_ptr<std::exception> except = NULL);
+		bool logEnd(os::errorPointer except = NULL);
 
 		/** @brief Number of tests in the set
 		 * @return test::testSuite::testList.size()

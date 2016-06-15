@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.h
  * @author Jonathan Bedard
- * @date   4/2/2016
+ * @date   5/14/2016
  * @brief  Unit Test header file
  * @bug No known bugs.
  *
@@ -43,7 +43,7 @@ namespace test
 	 * @param [in] except Exception which caused the error
 	 * @return void
 	 */
-	void endTestsError(os::smart_ptr<std::exception> except);
+	void endTestsError(os::errorPointer except);
 	/** @brief End tests successfully
 	 *
 	 * Prints out a global division block line of

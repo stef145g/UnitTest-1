@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.h
  * @Author Jonathan Bedard
- * @date   4/11/2016
+ * @date   5/14/2016
  * @brief  Library tests, masterTestHolder singleton
  * @bug No known bugs.
  *
@@ -75,11 +75,11 @@ namespace test
 		 * Each suite should manage its own errors,
 		 * but it is possible that this function
 		 * will throw an error of type
-		 * os::smart_ptr<std::exception>.
+		 * os::errorPointer.
 		 *
 		 * @return void
 		 */
-		void runTests() throw(os::smart_ptr<std::exception>);
+		void runTests() throw(os::errorPointer);
 		/** @brief Runs on shutdown of the group
 		 *
 		 * Each library group calls this funciton as
@@ -116,7 +116,7 @@ namespace test
 		 *
 		 * @return True if all suites successful, else false 
 		 */
-		bool logEnd(os::smart_ptr<std::exception> except = NULL);
+		bool logEnd(os::errorPointer except = NULL);
 
 		/** @brief Number of suites in the set
 		 * @return test::libraryTests::suiteList.size()
@@ -264,11 +264,11 @@ namespace test
 		 * Each library should manage its own errors,
 		 * but it is possible that this function
 		 * will throw an error of type
-		 * os::smart_ptr<std::exception>.
+		 * os::errorPointer.
 		 *
 		 * @return True if all the tests were successful, else, false
 		 */
-		bool runTests() throw(os::smart_ptr<std::exception>);
+		bool runTests() throw(os::errorPointer);
 		/** @brief Number of libraries in the set
 		 * @return test::masterTestHolder::libraryList.size()
 		 */
