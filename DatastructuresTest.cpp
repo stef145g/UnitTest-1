@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/15/2016
+ * @date   6/17/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -925,6 +925,177 @@ using namespace test;
     void customTest(std::string className, pointerVector<dummyInt>& ds){vectorPointerTest<pointerVector<dummyInt> >(className,ds);}
     void customTest(std::string className, rawPointerVectorThreadSafe<dummyInt>& ds){vectorPointerTest<rawPointerVectorThreadSafe<dummyInt> >(className,ds);}
     void customTest(std::string className, rawPointerVector<dummyInt>& ds){vectorPointerTest<rawPointerVector<dummyInt> >(className,ds);}
+
+    //Stack object test
+    template<class datastruct>
+    void stackObjectTest(std::string className,datastruct& ds)
+    {
+    	std::string locString = "DatastructuresTest.cpp, stackObjectTest<"+className+">()";
+    	ds.insert(dummyInt(3));
+    	ds.insert(dummyInt(2));
+    	ds.insert(dummyInt(1));
+
+    	if(ds.top()!=dummyInt(1))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=dummyInt(2))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=dummyInt(3))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    	ds.pop();
+
+    	bool threw=false;
+    	try
+    	{ds.pop();}
+    	catch(...){threw=true;}
+    	if(!threw)
+    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+
+    	for(int i=0;i<200;++i)
+    		ds.insert(dummyInt(i));
+    	if(ds.size()!=200)
+    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    	for(int i=199;i>=0;--i)
+    	{
+    		if(ds.top()!=dummyInt(i))
+    			throw os::errorPointer(new generalTestException("Mass access failed",locString),shared_type);
+    		ds.pop();
+    	}
+    	if(ds.size()!=0)
+    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    }
+    //Stack pointer test
+    template<class datastruct>
+    void stackPointerTest(std::string className,datastruct& ds)
+    {
+    	std::string locString = "DatastructuresTest.cpp, stackPointerTest<"+className+">()";
+    	os::smart_ptr<dummyInt> pt1(new dummyInt(1),os::shared_type);
+    	os::smart_ptr<dummyInt> pt2(new dummyInt(2),os::shared_type);
+    	os::smart_ptr<dummyInt> pt3(new dummyInt(3),os::shared_type);
+    	ds.insert(pt3);
+    	ds.insert(pt2);
+    	ds.insert(pt1);
+
+    	if(ds.top()!=pt1)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=pt2)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=pt3)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    	ds.pop();
+
+    	bool threw=false;
+    	try
+    	{ds.pop();}
+    	catch(...){threw=true;}
+    	if(!threw)
+    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+
+    	for(int i=0;i<200;++i)
+    		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
+    	if(ds.size()!=200)
+    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    	for(int i=199;i>=0;--i)
+    		ds.pop();
+    	if(ds.size()!=0)
+    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    }
+
+    void customTest(std::string className, objectLinkedStackThreadSafe<dummyInt>& ds){stackObjectTest<objectLinkedStackThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, objectLinkedStack<dummyInt>& ds){stackObjectTest<objectLinkedStack<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerLinkedStackThreadSafe<dummyInt>& ds){stackPointerTest<pointerLinkedStackThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerLinkedStack<dummyInt>& ds){stackPointerTest<pointerLinkedStack<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerLinkedStackThreadSafe<dummyInt>& ds){stackPointerTest<rawPointerLinkedStackThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerLinkedStack<dummyInt>& ds){stackPointerTest<rawPointerLinkedStack<dummyInt> >(className,ds);}
+
+    //Queue object test
+    template<class datastruct>
+    void queueObjectTest(std::string className,datastruct& ds)
+    {
+    	std::string locString = "DatastructuresTest.cpp, stackObjectTest<"+className+">()";
+    	ds.insert(dummyInt(3));
+    	ds.insert(dummyInt(2));
+    	ds.insert(dummyInt(1));
+
+    	if(ds.top()!=dummyInt(3))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=dummyInt(2))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=dummyInt(1))
+    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    	ds.pop();
+
+    	bool threw=false;
+    	try
+    	{ds.pop();}
+    	catch(...){threw=true;}
+    	if(!threw)
+    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+
+    	for(int i=0;i<200;++i)
+    		ds.insert(dummyInt(i));
+    	if(ds.size()!=200)
+    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    	for(int i=0;i<200;++i)
+    	{
+    		if(ds.top()!=dummyInt(i))
+    			throw os::errorPointer(new generalTestException("Mass access failed",locString),shared_type);
+    		ds.pop();
+    	}
+    	if(ds.size()!=0)
+    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    }
+    //Queue pointer test
+    template<class datastruct>
+    void queuePointerTest(std::string className,datastruct& ds)
+    {
+    	std::string locString = "DatastructuresTest.cpp, stackPointerTest<"+className+">()";
+    	os::smart_ptr<dummyInt> pt1(new dummyInt(1),os::shared_type);
+    	os::smart_ptr<dummyInt> pt2(new dummyInt(2),os::shared_type);
+    	os::smart_ptr<dummyInt> pt3(new dummyInt(3),os::shared_type);
+    	ds.insert(pt3);
+    	ds.insert(pt2);
+    	ds.insert(pt1);
+
+    	if(ds.top()!=pt3)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=pt2)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    	ds.pop();
+    	if(ds.top()!=pt1)
+    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    	ds.pop();
+
+    	bool threw=false;
+    	try
+    	{ds.pop();}
+    	catch(...){threw=true;}
+    	if(!threw)
+    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+
+    	for(int i=0;i<200;++i)
+    		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
+    	if(ds.size()!=200)
+    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    	for(int i=199;i>=0;--i)
+    		ds.pop();
+    	if(ds.size()!=0)
+    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    }
+
+    void customTest(std::string className, objectLinkedQueueThreadSafe<dummyInt>& ds){queueObjectTest<objectLinkedQueueThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, objectLinkedQueue<dummyInt>& ds){queueObjectTest<objectLinkedQueue<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerLinkedQueueThreadSafe<dummyInt>& ds){queuePointerTest<pointerLinkedQueueThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, pointerLinkedQueue<dummyInt>& ds){queuePointerTest<pointerLinkedQueue<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerLinkedQueueThreadSafe<dummyInt>& ds){queuePointerTest<rawPointerLinkedQueueThreadSafe<dummyInt> >(className,ds);}
+    void customTest(std::string className, rawPointerLinkedQueue<dummyInt>& ds){queuePointerTest<rawPointerLinkedQueue<dummyInt> >(className,ds);}
+
 
 	template<class datastruct>
 	void customADSTest(std::string className)
@@ -2824,6 +2995,21 @@ using namespace test;
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerAVLTree<dummyInt> >("rawPointerAVLTree",true),shared_type));
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerAVLTreeThreadSafe<dummyInt> >("rawPointerAVLTreeThreadSafe",true),shared_type));
         
+        pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectLinkedStackThreadSafe<dummyInt> >("objectLinkedStackThreadSafe",false),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectLinkedStack<dummyInt> >("objectLinkedStack",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerLinkedStack<dummyInt> >("pointerLinkedStack",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerLinkedStackThreadSafe<dummyInt> >("pointerLinkedStackThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerLinkedStack<dummyInt> >("rawPointerLinkedStack",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerLinkedStackThreadSafe<dummyInt> >("rawPointerLinkedStackThreadSafe",false),shared_type));
+        
+        pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectLinkedQueueThreadSafe<dummyInt> >("objectLinkedQueueThreadSafe",false),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectLinkedQueue<dummyInt> >("objectLinkedQueue",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerLinkedQueue<dummyInt> >("pointerLinkedQueue",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerLinkedQueueThreadSafe<dummyInt> >("pointerLinkedQueueThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerLinkedQueue<dummyInt> >("rawPointerLinkedQueue",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerLinkedQueueThreadSafe<dummyInt> >("rawPointerLinkedQueueThreadSafe",false),shared_type));
+        
+
         //Matrix Test Suite
         trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
             trc->pushTest("Array Access",&matrixArrayAccessTest);
