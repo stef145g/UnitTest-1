@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.cpp
  * @author Jonathan Bedard
- * @date   5/14/2016
+ * @date   6/25/2016
  * @brief  Unit Test logging and global functions
  * @bug No known bugs.
  *
@@ -29,6 +29,16 @@
 using namespace std;
 using namespace os;
 using namespace test;
+
+
+	void test::throwGeneralTestException(const std::string& description,const std::string& location)
+	{throw os::errorPointer(new generalTestException(description,location),os::shared_type);}
+
+	void test::throwUnknownException(const std::string& location)
+	{throw os::errorPointer(new unknownException(location),os::shared_type);}
+
+	void test::throwNullFunctionException(const std::string& location)
+	{throw os::errorPointer(new nullFunctionException(location),os::shared_type);}
 
 //Global Status Functions----------------------------------------------------------
 

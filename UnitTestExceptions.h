@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExceptions.h
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   6/25/2016
  * @brief  Common exceptions thrown by unit tests
  * @bug No known bugs.
  *
@@ -56,7 +56,7 @@ namespace test
 		 * @param [in] err Error string
 		 * @param [in] loc Location string
 		 */
-		generalTestException(std::string err, std::string loc)
+		generalTestException(const std::string& err, const std::string& loc)
 		{
 			location = loc;
 			_error = err;
@@ -105,7 +105,7 @@ namespace test
 		 *
 		 * @param [in] loc Location string
 		 */
-		unknownException(std::string loc):
+		unknownException(const std::string& loc):
 			generalTestException("Unregistered exception type occurred",loc)
 		{}
 		/** @brief Virtual destructor
@@ -134,7 +134,7 @@ namespace test
 		 *
 		 * @param [in] loc Location string
 		 */
-		nullFunctionException(std::string loc):
+		nullFunctionException(const std::string& loc):
 			generalTestException("NULL Function pointer received",loc)
 		{}
 		/** @brief Virtual destructor
@@ -147,6 +147,24 @@ namespace test
 		virtual ~nullFunctionException() throw(){}
 	};
 
+	/** @brief Creates and throws a test exception
+	 * @param [in] description Error description
+	 * @param [in] location Source of the error, file and function
+	 * @return void
+	 */
+	void throwGeneralTestException(const std::string& description,const std::string& location);
+
+	/** @brief Creates and throws an unknown exception
+	 * @param [in] location Source of the error, file and function
+	 * @return void
+	 */
+	void throwUnknownException(const std::string& location);
+
+	/** @brief Creates and throws a null function exception
+	 * @param [in] location Source of the error, file and function
+	 * @return void
+	 */
+	void throwNullFunctionException(const std::string& location);
 	
 }
 
