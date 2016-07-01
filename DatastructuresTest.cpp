@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   6/22/2016
+ * @date   7/1/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1475,6 +1475,7 @@ using namespace test;
 
 		cnt=0;
 		it=ds.last();
+
 		while(it && cnt<3)
 		{
 			--it;
@@ -3038,6 +3039,14 @@ using namespace test;
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerBoundedQueue<dummyInt> >("rawPointerBoundedQueue",false),shared_type));
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerBoundedQueueThreadSafe<dummyInt> >("rawPointerBoundedQueueThreadSafe",false),shared_type));
         
+        pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectHashThreadSafe<dummyInt> >("objectHashThreadSafe",false),shared_type));
+		pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectHash<dummyInt> >("objectHash",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerHashThreadSafe<dummyInt> >("pointerHashThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerHash<dummyInt> >("pointerHash",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerHashThreadSafe<dummyInt> >("rawPointerHashThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerHash<dummyInt> >("rawPointerHash",false),shared_type));
+        
+
         //Matrix Test Suite
         trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
             trc->pushTest("Array Access",&matrixArrayAccessTest);
