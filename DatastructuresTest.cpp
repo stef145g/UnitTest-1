@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/1/2016
+ * @date   7/2/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1337,7 +1337,7 @@ using namespace test;
 
 		if(!fnd || *fnd!=dummyInt(2))
 			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
-		fnd=ds.search(dummyInt(0));
+		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(0),os::shared_type));
 		if(fnd)
 			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
 		fnd=ds.search(d1);
