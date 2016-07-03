@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.cpp
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   7/3/2016
  * @brief  Library tests, masterTestHolder singleton implementations
  * @bug No known bugs.
  *
@@ -31,8 +31,7 @@ using namespace test;
 #define LIB_DIV   "\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 	//Constructor
-	libraryTests::libraryTests(std::string ln):
-		suiteList(sorted_set)
+	libraryTests::libraryTests(std::string ln)
 	{
 		libName = ln;
 		suitesCompleted=0;
@@ -47,22 +46,22 @@ using namespace test;
 		//Suite loop
 		try
 		{
-			for(auto it = suiteList.getFirst();it;it=it->getNext())
+			for(auto it = suiteList.first();it;++it)
 			{
 				os::errorPointer grabbed_exception;
-				it->getData()->logBegin();
-				it->getData()->onSetup();
+				it->logBegin();
+				it->onSetup();
 				try
 				{
-					it->getData()->runTests();
+					it->runTests();
 					suitesRun++;
 				}
 				catch (os::errorPointer e1){grabbed_exception = e1;}
 				catch (exception& e2){grabbed_exception = os::errorPointer(&e2);}
 				catch (...){grabbed_exception = os::errorPointer(new test::unknownException("masterTestHolder.cpp, libraryTests::runTests()"),shared_type);}
 				
-				it->getData()->onTeardown();
-				if(it->getData()->logEnd(grabbed_exception))
+				it->onTeardown();
+				if(it->logEnd(grabbed_exception))
 					suitesCompleted++;
 			}
 		}
@@ -106,28 +105,35 @@ using namespace test;
 		if(state) return false;
 		return true;
 	}
+	libraryTests::operator size_t() const
+    {
+        size_t ret=0;
+        for(size_t i=0;i<libName.size();++i)
+            ret^=((size_t)libName[i])<<8*(i%sizeof(size_t));
+        return ret;
+    }
 
 /*================================================================
 	masterTestHolder
 ================================================================*/
 
-	static os::smart_ptr<masterTestHolder> self=NULL;
 	//Constructor (private!)
-	masterTestHolder::masterTestHolder():
-		libraryList(sorted_set)
+	masterTestHolder::masterTestHolder()
 	{
 		libsCompleted = 0;
 		libsRun = 0;
 	}
 	//Return the singleton instance
-	os::smart_ptr<masterTestHolder> masterTestHolder::singleton()
+	masterTestHolder& masterTestHolder::singleton()
 	{
-		if(self==NULL)
+		static masterTestHolder sing;
+		static bool flag=false;
+		if(!flag)
 		{
-			self = os::smart_ptr<masterTestHolder>(new masterTestHolder(),shared_type);
-			self->pushLibrary(os::smart_ptr<libraryTests>(new DatastructuresLibraryTest(),os::shared_type));
-		};
-		return self;
+			sing.pushLibrary(os::smart_ptr<libraryTests>(new DatastructuresLibraryTest(),os::shared_type));
+			flag=true;
+		}
+		return sing;
 	}
 	//Runs all tests
 	bool masterTestHolder::runTests() throw(os::errorPointer)
@@ -138,22 +144,22 @@ using namespace test;
 		//Main Loop
 		try
 		{
-			for(auto it = libraryList.getFirst();it;it=it->getNext())
+			for(auto it = libraryList.first();it;++it)
 			{
 				os::errorPointer grabbed_exception;
-				it->getData()->logBegin();
-				it->getData()->onSetup();
+				it->logBegin();
+				it->onSetup();
 				try
 				{
-					it->getData()->runTests();
+					it->runTests();
 					libsRun++;
 				}
 				catch (os::errorPointer e1){grabbed_exception = e1;}
 				catch (exception& e2){grabbed_exception = os::errorPointer(&e2);}
 				catch (...){grabbed_exception = os::errorPointer(new test::unknownException("masterTestHolder.cpp, masterTestHolder::runTests()"),shared_type);}
 
-				it->getData()->onTeardown();
-				if(it->getData()->logEnd(grabbed_exception))
+				it->onTeardown();
+				if(it->logEnd(grabbed_exception))
 					libsCompleted++;
 			}
 		}

@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExe/UnitTestMain.cpp
  * @author Jonathan Bedard
- * @date   5/14/2016
+ * @date   7/3/2016
  * @brief  UnitTest entry point
  * @bug No known bugs.
  *
@@ -36,7 +36,7 @@ int main(int argc,char** argv)
 
 	try
 	{
-		masterTestHolder::singleton()->runTests();
+		masterTestHolder::singleton().runTests();
 
 	}
 	//Exception Catching

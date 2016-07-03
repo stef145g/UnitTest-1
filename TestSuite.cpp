@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.cpp
  * @Author Jonathan Bedard
- * @date   6/3/2016
+ * @date   7/3/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -43,16 +43,16 @@ using namespace test;
 		//Test loop
 		try
 		{
-			for(auto it = testList.getFirst();it;it=it->getNext())
+			for(auto it = testList.first();it;++it)
 			{
 				os::errorPointer grabbed_exception;
-				it->getData()->logBegin();
+				it->logBegin();
                 testsRun++;
                 
                 //Setup
                 try
                 {
-                    it->getData()->setupTest();
+                    it->setupTest();
                 }
                 catch (os::errorPointer e1){grabbed_exception = e1;}
 				catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
@@ -65,7 +65,7 @@ using namespace test;
                     //Run Test
                     try
                     {
-                        it->getData()->test();
+                        it->test();
                     }
                     catch (os::errorPointer e1){grabbed_exception = e1;}
 					catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
@@ -77,7 +77,7 @@ using namespace test;
                     {
                         try
                         {
-                            it->getData()->teardownTest();
+                            it->teardownTest();
                         }
                         catch (os::errorPointer e1){grabbed_exception = e1;}
 						catch (os::descriptiveException& de){grabbed_exception = os::errorPointer(new os::descriptiveException(de),os::shared_type);}
@@ -88,13 +88,13 @@ using namespace test;
                     {
                         try
                         {
-                            it->getData()->teardownTest();
+                            it->teardownTest();
                         }
                         catch (...){}
                     }
                 }
 
-				if(it->getData()->logEnd(grabbed_exception))
+				if(it->logEnd(grabbed_exception))
 					testsCompleted++;
 			}
 		}
@@ -140,6 +140,13 @@ using namespace test;
 		if(state) return false;
 		return true;
 	}
+	testSuite::operator size_t() const
+    {
+        size_t ret=0;
+        for(size_t i=0;i<suiteName.size();++i)
+            ret^=((size_t)suiteName[i])<<8*(i%sizeof(size_t));
+        return ret;
+    }
 
 #endif
 

@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.h
  * @Author Jonathan Bedard
- * @date   5/31/2016
+ * @date   7/3/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -40,7 +40,7 @@ namespace test
 	 * to allow it to be inserted into
 	 * abstract data-structures.
 	 */
-	class singleTest: public os::ptrComp
+	class singleTest
 	{
 		/** @brief Name of unit test
 		 */
@@ -112,6 +112,12 @@ namespace test
 		 * @return True if except is NULL
 		 */
 		bool logEnd(os::errorPointer except = NULL);
+
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS singleTest
+		POINTER_COMPARE
+		POINTER_HASH_CAST
+		COMPARE_OPERATORS
 	};
 	/** @brief Single unit test from function
 	 *
@@ -150,6 +156,11 @@ namespace test
 		 * @return void
 		 */
 		void test() throw(os::errorPointer);
+
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS singleFunctionTest
+		POINTER_COMPARE
+		COMPARE_OPERATORS
 	};
 }
 

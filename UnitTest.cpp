@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.cpp
  * @author Jonathan Bedard
- * @date   6/25/2016
+ * @date   7/3/2016
  * @brief  Unit Test logging and global functions
  * @bug No known bugs.
  *
@@ -66,9 +66,9 @@ using namespace test;
 		testout<<endl<<DIV_BLOCK<<endl;
 		testout<<"\tERROR"<<endl;
 		testout<<"\tResults:"<<endl;
-		testout<<"\t\t"<<masterTestHolder::singleton()->getNumRun()<<" libraries"<<endl;
-		testout<<"\t\tof "<<masterTestHolder::singleton()->getNumLibs()<<" tested"<<endl;
-		testout<<"\t\twith "<<masterTestHolder::singleton()->getNumSuccess()<<" successful"<<endl<<endl;
+		testout<<"\t\t"<<masterTestHolder::singleton().getNumRun()<<" libraries"<<endl;
+		testout<<"\t\tof "<<masterTestHolder::singleton().getNumLibs()<<" tested"<<endl;
+		testout<<"\t\twith "<<masterTestHolder::singleton().getNumSuccess()<<" successful"<<endl<<endl;
 
 		testout<<"\tFailure in Test Battery!"<<endl;
 		testout<<"\t"<<except->what()<<endl;
@@ -81,9 +81,9 @@ using namespace test;
 		testout<<endl<<DIV_BLOCK<<endl;
 		testout<<"\tTest Battery Completed"<<endl;
 		testout<<"\tResults:"<<endl;
-		testout<<"\t\t"<<masterTestHolder::singleton()->getNumRun()<<" libraries"<<endl;
-		testout<<"\t\tof "<<masterTestHolder::singleton()->getNumLibs()<<" tested"<<endl;
-		testout<<"\t\twith "<<masterTestHolder::singleton()->getNumSuccess()<<" successful"<<endl;
+		testout<<"\t\t"<<masterTestHolder::singleton().getNumRun()<<" libraries"<<endl;
+		testout<<"\t\tof "<<masterTestHolder::singleton().getNumLibs()<<" tested"<<endl;
+		testout<<"\t\twith "<<masterTestHolder::singleton().getNumSuccess()<<" successful"<<endl;
 		testout<<DIV_BLOCK<<endl;
 		endTest();
 	}

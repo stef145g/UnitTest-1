@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.h
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   7/3/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -29,7 +29,7 @@ namespace test
 		std::string suiteName;
 		/** @brief Set of tests
 		 */
-		os::smartSet<singleTest> testList;
+		os::pointerUnsortedList<singleTest> testList;
 
 		/** @brief Number of tests successfully completed
 		 */
@@ -133,7 +133,7 @@ namespace test
 		 * @param [in] tst Test to be removed from the set
 		 * @return void
 		 */
-		void removeTest(os::smart_ptr<singleTest> tst){testList.findDelete(tst);}
+		void removeTest(os::smart_ptr<singleTest> tst){testList.remove(tst);}
 		/** @brief Add test to the set
 		 *
 		 * Adds a test::testFunction to the set of
@@ -146,66 +146,18 @@ namespace test
 		 */
 		virtual void pushTest(std::string str,testFunction tst){pushTest(os::smart_ptr<singleTest>(new singleFunctionTest(str,tst),os::shared_type));}
 
-		/** @brief Equality comparison
-		 *
-		 * Compares two test::testSuite based on the suite
-		 * name.  If the two names are equal, the suites are
-		 * equal.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName==lt.suiteName
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS testSuite
+		/** @brief Compares two library test suites
+		 * @param [in] cmp Element to compare
+		 * @return 0 if equal, 1 if greater than, -1 if less than
 		 */
-		bool operator==(const testSuite& lt) const {return suiteName==lt.suiteName;}
-		/** @brief Not-equals comparison
-		 *
-		 * Compares two test::testSuite based on the library
-		 * name.  If the two names are not-equal, the suites are
-		 * not-equal.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName!=lt.suiteName
+		inline int compare(const testSuite& cmp) const {return suiteName.compare(cmp.suiteName);}
+		/** @brief size_t cast for the library
+		 * @return size_t hash of the library
 		 */
-		bool operator!=(const testSuite& lt) const {return suiteName!=lt.suiteName;}
-		/** @brief Greater-than comparison
-		 *
-		 * Compares two test::testSuite based on the library
-		 * name.  If the name of this object is greater than
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName>lt.suiteName
-		 */
-		bool operator>(const testSuite& lt) const {return suiteName>lt.suiteName;}
-		/** @brief Less-than comparison
-		 *
-		 * Compares two test::testSuite based on the library
-		 * name.  If the name of this object is less than
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName<lt.suiteName
-		 */
-		bool operator<(const testSuite& lt) const {return suiteName<lt.suiteName;}
-		/** @brief Greater-than or equal to comparison
-		 *
-		 * Compares two test::testSuite based on the library
-		 * name.  If the name of this object is greater than or equal to
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName>=lt.suiteName
-		 */
-		bool operator>=(const testSuite& lt) const {return suiteName>=lt.suiteName;}
-		/** @brief Less-than or equal to comparison
-		 *
-		 * Compares two test::testSuite based on the library
-		 * name.  If the name of this object is less than or equal to
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::testSuite to be compared against
-		 * @return this->suiteName<=lt.suiteName
-		 */
-		bool operator<=(const testSuite& lt) const {return suiteName<=lt.suiteName;}
+		operator size_t() const;
+		COMPARE_OPERATORS
 	};
 }
 

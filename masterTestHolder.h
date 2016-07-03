@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.h
  * @Author Jonathan Bedard
- * @date   5/14/2016
+ * @date   7/3/2016
  * @brief  Library tests, masterTestHolder singleton
  * @bug No known bugs.
  *
@@ -42,7 +42,7 @@ namespace test
 		std::string libName;
 		/** @brief Set of test suites
 		 */
-		os::smartSet<testSuite> suiteList;
+		os::pointerAVLTree<testSuite> suiteList;
 		/** @brief Number of suites successfully completed
 		 */
 		int suitesCompleted;
@@ -148,68 +148,20 @@ namespace test
 		 * @param [in] suite Test suite to be removed from the set
 		 * @return void
 		 */
-		void removeSuite(os::smart_ptr<testSuite> suite){suiteList.findDelete(suite);}
+		void removeSuite(os::smart_ptr<testSuite> suite){suiteList.remove(suite);}
 
-		/** @brief Equality comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the two names are equal, the library tests are
-		 * equal.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName==lt.libName
+		#undef CURRENT_CLASS
+		#define CURRENT_CLASS libraryTests
+		/** @brief Compares two library test suites
+		 * @param [in] cmp Element to compare
+		 * @return 0 if equal, 1 if greater than, -1 if less than
 		 */
-		bool operator==(const libraryTests& lt) const {return libName==lt.libName;}
-		/** @brief Not-equals comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the two names are not-equal, the library tests are
-		 * not-equal.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName!=lt.libName
+		inline int compare(const libraryTests& cmp) const {return libName.compare(cmp.libName);}
+		/** @brief size_t cast for the library
+		 * @return size_t hash of the library
 		 */
-		bool operator!=(const libraryTests& lt) const {return libName!=lt.libName;}
-		/** @brief Greater-than comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the name of this object is greater than
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName>lt.libName
-		 */
-		bool operator>(const libraryTests& lt) const {return libName>lt.libName;}
-		/** @brief Less-than comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the name of this object is less than
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName<lt.libName
-		 */
-		bool operator<(const libraryTests& lt) const {return libName<lt.libName;}
-		/** @brief Greater-than or equal to comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the name of this object is greater than or equal to
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName>=lt.libName
-		 */
-		bool operator>=(const libraryTests& lt) const {return libName>=lt.libName;}
-		/** @brief Less-than or equal to comparison
-		 *
-		 * Compares two test::libraryTest based on the library
-		 * name.  If the name of this object is less than or equal to
-		 * the name of the reference object, return true.
-		 *
-		 * @param [in] lt Reference to test::libraryTest to be compared against
-		 * @return this->libName<=lt.libName
-		 */
-		bool operator<=(const libraryTests& lt) const {return libName<=lt.libName;}
+		operator size_t() const;
+		COMPARE_OPERATORS
 	};
 	/** @brief Unit Test singleton
 	 *
@@ -223,7 +175,7 @@ namespace test
 	private:
 		/** @brief Set of library tests
 		 */
-		os::smartSet<libraryTests> libraryList;
+		os::pointerAVLTree<libraryTests> libraryList;
 		/** @brief Number of libraries successfully completed
 		 */
 		int libsCompleted;
@@ -257,7 +209,7 @@ namespace test
 		 *
 		 * @return Singleton reference to test::masterTestHolder
 		 */
-		static os::smart_ptr<masterTestHolder> singleton();
+		static masterTestHolder& singleton();
 		/** @brief Runs all of the library tests
 		 *
 		 * Runs all library tests bound to this class.
@@ -298,7 +250,7 @@ namespace test
 		 * @param [in] lib Library test to be removed from the set
 		 * @return void
 		 */
-		void removeLibrary(os::smart_ptr<libraryTests> lib){libraryList.findDelete(lib);}
+		void removeLibrary(os::smart_ptr<libraryTests> lib){libraryList.remove(lib);}
 	};
 }
 
