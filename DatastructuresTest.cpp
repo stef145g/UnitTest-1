@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/2/2016
+ * @date   7/4/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1316,9 +1316,9 @@ using namespace test;
 
 		if(!fnd || *fnd!=dummyInt(2))
 			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
-		fnd=ds.search(dummyInt(0));
+		fnd=ds.search(dummyInt(4));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Unexpectantly found 4",locString),shared_type);
 		fnd=ds.search(dummyInt(1));
 		if(!fnd || *fnd!=dummyInt(1))
 			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
@@ -1337,9 +1337,9 @@ using namespace test;
 
 		if(!fnd || *fnd!=dummyInt(2))
 			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
-		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(0),os::shared_type));
+		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(4),os::shared_type));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Unexpectantly found 4",locString),shared_type);
 		fnd=ds.search(d1);
 		if(!fnd || *fnd!=dummyInt(1))
 			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
