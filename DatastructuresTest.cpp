@@ -1316,9 +1316,9 @@ using namespace test;
 
 		if(!fnd || *fnd!=dummyInt(2))
 			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
-		fnd=ds.search(dummyInt(4));
+		fnd=ds.search(dummyInt(0));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 4",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
 		fnd=ds.search(dummyInt(1));
 		if(!fnd || *fnd!=dummyInt(1))
 			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
@@ -1337,9 +1337,9 @@ using namespace test;
 
 		if(!fnd || *fnd!=dummyInt(2))
 			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
-		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(4),os::shared_type));
+		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(0),os::shared_type));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 4",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
 		fnd=ds.search(d1);
 		if(!fnd || *fnd!=dummyInt(1))
 			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
@@ -1721,13 +1721,27 @@ using namespace test;
 			it2=it1;
 			++it1;
 		}
+
+		for(size_t i=0;i<10;++i)
+		{
+			if(ds.find(dat[i]))
+			{
+				size_t sz=ds.size();
+				if(!ds.remove(dat[i]))
+                    throw os::errorPointer(new generalTestException("Remove call failed",locString),shared_type);
+                if(ds.find(dat[i]))
+                    throw os::errorPointer(new generalTestException("Found removed object",locString),shared_type);
+				if(ds.size()==sz)
+					throw os::errorPointer(new generalTestException("Failed to remove an object",locString),shared_type);
+			}
+		}
 	}
 	template<class datastruct>
 	void randomSortedPointerTest(std::string className)
 	{
 		std::string locString = "DatastructuresTest.cpp, randomSortedPointerTest<"+className+">()";
 		datastruct ds;
-		dummyInt dat[100];
+		os::smart_ptr<dummyInt> dat[100];
 		srand(time(NULL));
 
 		for(size_t i=0;i<100;++i)
@@ -1739,11 +1753,11 @@ using namespace test;
 				if(dat[cnt]==temp) tfnd=true;
 			}
 			if(tfnd) --i;
-			else dat[i]=temp;
+			else dat[i]=os::smart_ptr<dummyInt>(new dummyInt(temp),os::shared_type);
 		}
 
 		for(size_t i=0;i<100;++i)
-			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(dat[i]),os::shared_type));
+			ds.insert(dat[i]);
 
 		os::iterator<dummyInt> it1=ds.first();
 		os::iterator<dummyInt> it2;
@@ -1753,6 +1767,20 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Datastructure unsorted",locString),shared_type);
 			it2=it1;
 			++it1;
+		}
+
+		for(size_t i=0;i<10;++i)
+		{
+			if(ds.find(dat[i]))
+			{
+				size_t sz=ds.size();
+                if(!ds.remove(dat[i]))
+                    throw os::errorPointer(new generalTestException("Remove call failed",locString),shared_type);
+                if(ds.find(dat[i]))
+                    throw os::errorPointer(new generalTestException("Found removed object",locString),shared_type);
+                if(ds.size()==sz)
+                    throw os::errorPointer(new generalTestException("Failed to remove an object",locString),shared_type);
+			}
 		}
 	}
 	template<class datastruct>
