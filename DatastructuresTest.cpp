@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/4/2016
+ * @date   7/7/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -57,17 +57,17 @@ using namespace test;
 
 		//Reference count should be 1
 		if(*(temp1.getRefCount())!=1)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 1",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 1",locString),shared_type);
 
 		//Reference count should be 2
 		temp2 = temp1;
 		if(*(temp1.getRefCount())!=2)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp1.getRefCount()))+" expected 2",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 2",locString),shared_type);
 
 		//Reference count should be 1
 		temp1=NULL;
 		if(*(temp2.getRefCount())!=1)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned int)*(temp2.getRefCount()))+" expected 1",locString),shared_type);
+			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp2.getRefCount()))+" expected 1",locString),shared_type);
 
 		//NULL pointer should have NULL ref count
 		if(temp1.getRefCount()!=NULL)
@@ -244,7 +244,7 @@ using namespace test;
 		if(!(master==master))
 			throw os::errorPointer(new generalTestException("== with self returned unexpected value",locString),shared_type);
 
-		srand (time(NULL));
+		srand((unsigned)time(NULL));
 
 		//Preform 20 iterations to test
 		for(int i=0;i<20;++i)
@@ -260,29 +260,29 @@ using namespace test;
 			bool v = (unsigned long)master.get()==cur_comp;
 			bool rv = cur_comp==(unsigned long)master.get();
 			if(v!=(master==cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr == long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master==ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master==comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp==master))
-				throw os::errorPointer(new generalTestException("long == smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp==master))
-				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			
 			//General != test
 			v = (unsigned long)master.get()!=cur_comp;
 			rv = cur_comp!=(unsigned long)master.get();
 			if(v!=(master!=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr != long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master!=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master!=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp!=master))
-				throw os::errorPointer(new generalTestException("long != smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp!=master))
-				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 
 			//General < test
 			v = (unsigned long)master.get()<cur_comp;
@@ -290,57 +290,57 @@ using namespace test;
             //cout<<v<<endl;
             //cout<<(master<cur_comp)<<endl;
 			if(v!=(master<cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr < long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master<ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master<comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<master))
-				throw os::errorPointer(new generalTestException("long < smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<master))
-				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 
 			//General > test
 			v = (unsigned long)master.get()>cur_comp;
 			rv = cur_comp>(unsigned long)master.get();
 			if(v!=(master>cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr > long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master>ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master>comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>master))
-				throw os::errorPointer(new generalTestException("long > smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>master))
-				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 
 			//General <= test
 			v = (unsigned long)master.get()<=cur_comp;
 			rv = cur_comp<=(unsigned long)master.get();
 			if(v!=(master<=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr <= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master<=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master<=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp<=master))
-				throw os::errorPointer(new generalTestException("long <= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp<=master))
-				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 
 			//General >= test
 			v = (unsigned long)master.get()>=cur_comp;
 			rv = cur_comp>=(unsigned long)master.get();
 			if(v!=(master>=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr >= long failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master>=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(v!=(master>=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(cur_comp>=master))
-				throw os::errorPointer(new generalTestException("long >= smart_ptr failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("long >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 			if(rv!=(ptr_comp>=master))
-				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned int)cur_comp),locString),shared_type);
+				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
 		}
 	}
 	void comparisonTest_null() {comparisonTest(null_type);}
@@ -1611,7 +1611,7 @@ using namespace test;
 		dummyInt dat[100];
 		bool found[100];
 		memset(found,0,100*sizeof(bool));
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
 
 		for(size_t i=0;i<100;++i)
 		{
@@ -1654,7 +1654,7 @@ using namespace test;
 		dummyInt dat[100];
 		bool found[100];
 		memset(found,0,100*sizeof(bool));
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
 
 		for(size_t i=0;i<100;++i)
 		{
@@ -1695,7 +1695,7 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, randomSortedNodeTest<"+className+">()";
 		datastruct ds;
 		dummyInt dat[100];
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
 
 		for(size_t i=0;i<100;++i)
 		{
@@ -1742,7 +1742,7 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, randomSortedPointerTest<"+className+">()";
 		datastruct ds;
 		os::smart_ptr<dummyInt> dat[100];
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
 
 		for(size_t i=0;i<100;++i)
 		{
@@ -1750,7 +1750,7 @@ using namespace test;
 			bool tfnd=false;
 			for(size_t cnt=0;cnt+1<i && !tfnd;++cnt)
 			{
-				if(dat[cnt]==temp) tfnd=true;
+				if(*dat[cnt]==temp) tfnd=true;
 			}
 			if(tfnd) --i;
 			else dat[i]=os::smart_ptr<dummyInt>(new dummyInt(temp),os::shared_type);
@@ -1909,7 +1909,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, basicRandomAccessObjectTest<"+className+">()";
         datastruct ds;
-		 srand(time(NULL));
+		 srand((unsigned)time(NULL));
         bool thrown=false;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
@@ -1937,7 +1937,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, basicRandomAccessPointerTest<"+className+">()";
         datastruct ds;
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         bool thrown=false;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
@@ -1965,7 +1965,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, iteratorRandomAccessObjectTest<"+className+">()";
         datastruct ds;
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
         bool thrown=false;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
@@ -1997,7 +1997,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, iteratorRandomAccessPointerTest<"+className+">()";
         datastruct ds;
-		srand(time(NULL));
+		srand((unsigned)time(NULL));
         bool thrown=false;
         try{ds[0];}
         catch(descriptiveException){thrown = true;}
@@ -2137,7 +2137,7 @@ using namespace test;
         if(mat1.height()!=4 || mat2.height()!=4 || mat3.height()!=4) throw os::errorPointer(new generalTestException("Matrix height failure",locString),shared_type);
         
         //Random init
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int x=0;x<4;x++)
         {
             for(int y=0;y<4;y++)
@@ -2181,7 +2181,7 @@ using namespace test;
         int compArray[16];
         
         //Random init
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int x=0;x<4;x++)
         {
             for(int y=0;y<4;y++)
@@ -2299,7 +2299,7 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedConstructionTest()";
         
         //Preform this test 10 times
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i=0;i<10;++i)
         {
             matrix<int> mast1(10,10);
@@ -2347,7 +2347,7 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedEqualityTest()";
         
         //Preform this test 10 times
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i=0;i<10;++i)
         {
             matrix<int> mast1(10,10);
@@ -2400,7 +2400,7 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedAdditionTest()";
         
         //Preform this test 10 times
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
@@ -2439,7 +2439,7 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedSubtractionTest()";
         
         //Preform this test 10 times
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
@@ -2470,7 +2470,7 @@ using namespace test;
         std::string locString = "DatastructuresTest.cpp, matrixAdvancedDotProductTest()";
         
         //Preform this test 10 times
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i=0;i<10;++i)
         {
             matrix<int> smat1(10,10);
@@ -2573,15 +2573,15 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
 		}
 	}
     void vector3dEqualityTest() 
@@ -2605,15 +2605,15 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned int)i),locString),shared_type);
+			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
 		}
 	}
 	//Addition
@@ -2895,7 +2895,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, quicksortArrayTest()";
         int array[100];
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i1=0;i1<15;++i1)
         {
             for(int i2=0;i2<100;++i2)
@@ -2905,7 +2905,7 @@ using namespace test;
             {
                 if(array[i2]>array[i2+1])
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString),shared_type);
                 }
             }
         }
@@ -2915,7 +2915,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, reverseQuicksortArrayTest()";
         int array[100];
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i1=0;i1<15;++i1)
         {
             for(int i2=0;i2<100;++i2)
@@ -2925,7 +2925,7 @@ using namespace test;
             {
                 if(array[i2]<array[i2+1])
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)array[i2])+" vs "+std::to_string((long long unsigned int)array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString),shared_type);
                 }
             }
         }
@@ -2935,7 +2935,7 @@ using namespace test;
     {
         std::string locString = "DatastructuresTest.cpp, pointerQuicksortTest()";
         os::smart_ptr<os::smart_ptr<int> > _array(new os::smart_ptr<int>[100],os::shared_type_array);
-        srand(time(NULL));
+        srand((unsigned)time(NULL));
         for(int i1=0;i1<15;++i1)
         {
             for(int i2=0;i2<100;++i2)
@@ -2945,7 +2945,7 @@ using namespace test;
             {
                 if(*(_array[i2])>*(_array[i2+1]))
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned int)i2)+" "+std::to_string((long long unsigned int)*_array[i2])+" vs "+std::to_string((long long unsigned int)*_array[i2+1]),locString),shared_type);
+                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)*_array[i2])+" vs "+std::to_string((long long unsigned)*_array[i2+1]),locString),shared_type);
                 }
             }
         }
