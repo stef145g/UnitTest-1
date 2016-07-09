@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.h
  * @author Jonathan Bedard
- * @date   7/3/2016
+ * @date   7/9/2016
  * @brief  Unit Test header file
  * @bug No known bugs.
  *
@@ -14,7 +14,7 @@
 #ifndef UNIT_TEST_H
 #define UNIT_TEST_H
 
-#include "Datastructures.h"
+#include "Datastructures/Datastructures.h"
 #include "UnitTestLog.h"
 #include "masterTestHolder.h"
 #include "UnitTestExceptions.h"

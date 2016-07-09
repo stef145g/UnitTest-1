@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.h
  * @Author Jonathan Bedard
- * @date   7/3/2016
+ * @date   7/9/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -14,7 +14,7 @@
 #ifndef TEST_SUITE_H
 #define TEST_SUITE_H
 
-#include "Datastructures.h"
+#include "Datastructures/Datastructures.h"
 #include "UnitTestExceptions.h"
 #include "UnitTestLog.h"
 #include "singleTest.h"

@@ -1,7 +1,7 @@
 /**
  * @file   osLogger.h
  * @Author Jonathan Bedard
- * @date   2/4/2016
+ * @date   7/8/2016
  * @brief  Logging for test namespace
  * @bug No known bugs.
  *
@@ -13,7 +13,7 @@
 #ifndef UNIT_TEST_LOG_H
 #define UNIT_TEST_LOG_H
 
-#include "Datastructures.h"
+#include "Datastructures/Datastructures.h"
 #include <iostream>
 
 namespace test

@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.h
  * @Author Jonathan Bedard
- * @date   7/3/2016
+ * @date   7/9/2016
  * @brief  Library tests, masterTestHolder singleton
  * @bug No known bugs.
  *
@@ -15,7 +15,7 @@
 #ifndef MASTER_TEST_HOLDER_H
 #define MASTER_TEST_HOLDER_H
 
-#include "Datastructures.h"
+#include "Datastructures/Datastructures.h"
 #include "UnitTestLog.h"
 #include "TestSuite.h"
 #include <iostream>

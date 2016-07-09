@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.h
  * @author Jonathan Bedard
- * @date   2/4/2016
+ * @date   7/9/2016
  * @brief  Datastructures library test
  * @bug No known bugs.
  *
@@ -15,7 +15,7 @@
 #ifndef DATASTRUCTURES_TEST_H
 #define DATASTRUCTURES_TEST_H
 
-#include "Datastructures.h"
+#include "Datastructures/Datastructures.h"
 #include "UnitTest.h"
 
 namespace test
