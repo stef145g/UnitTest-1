@@ -1,5 +1,5 @@
 /**
- * @file   osLogger.h
+ * @file   UnitTestLog.h
  * @Author Jonathan Bedard
  * @date   7/8/2016
  * @brief  Logging for test namespace

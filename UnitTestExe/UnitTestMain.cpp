@@ -1,7 +1,7 @@
 /**
  * @file   UnitTestExe/UnitTestMain.cpp
  * @author Jonathan Bedard
- * @date   7/3/2016
+ * @date   7/9/2016
  * @brief  UnitTest entry point
  * @bug No known bugs.
  *
@@ -18,8 +18,7 @@
 #define UNIT_TEST_CPP
 
 #include <iostream>
-#include "UnitTest.h"
-#include "DatastructuresTest.h"
+#include "UnitTest/UnitTest.h"
 
 using namespace std;
 using namespace os;

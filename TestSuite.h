@@ -15,13 +15,19 @@
 #define TEST_SUITE_H
 
 #include "Datastructures/Datastructures.h"
-#include "UnitTestExceptions.h"
+#include "Exceptions/Exceptions.h"
 #include "UnitTestLog.h"
 #include "singleTest.h"
+#include "singleFunctionTest.h"
 
 namespace test
 {
-	//Datastructures Library Test
+	/** @brief Test suite
+	 *
+	 * Defines a named test suite
+	 * which has a selection of
+	 * tests to run.
+	 */
 	class testSuite
 	{
 		/** @brief Name of test suite

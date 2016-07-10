@@ -17,8 +17,8 @@
 #include "Datastructures/Datastructures.h"
 #include "UnitTestLog.h"
 #include "masterTestHolder.h"
-#include "UnitTestExceptions.h"
-#include "TestSuite.h"
+#include "Exceptions/Exceptions.h"
+#include "testSuite.h"
 #include <iostream>
 #include <exception>
 

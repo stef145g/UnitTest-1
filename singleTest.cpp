@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.cpp
  * @Author Jonathan Bedard
- * @date   5/31/2016
+ * @date   7/9/2016
  * @brief  Single test class implementation
  * @bug No known bugs.
  *
@@ -49,24 +49,6 @@ using namespace test;
 		else
 			return true;
 	}
-
-/*================================================================
-	singleFunctionTest
-================================================================*/
-
-	//Single function test constructor
-	singleFunctionTest::singleFunctionTest(std::string tn, testFunction f):
-		singleTest(tn)
-	{
-		func = f;
-	}
-	//Run test
-	void singleFunctionTest::test() throw(os::errorPointer)
-	{
-		if(func==NULL) throw os::errorPointer(new nullFunctionException("singleTest.cpp, 55"),shared_type);
-		else func();
-	}
-
 #endif
 
 ///@endcond

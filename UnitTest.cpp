@@ -28,17 +28,7 @@
 
 using namespace std;
 using namespace os;
-using namespace test;
-
-
-	void test::throwGeneralTestException(const std::string& description,const std::string& location)
-	{throw os::errorPointer(new generalTestException(description,location),os::shared_type);}
-
-	void test::throwUnknownException(const std::string& location)
-	{throw os::errorPointer(new unknownException(location),os::shared_type);}
-
-	void test::throwNullFunctionException(const std::string& location)
-	{throw os::errorPointer(new nullFunctionException(location),os::shared_type);}
+using namespace test;	
 
 //Global Status Functions----------------------------------------------------------
 

@@ -1,18 +1,18 @@
 /**
- * @file   UnitTestExceptions.h
+ * @file   Exceptions/generalTestException.h
  * @Author Jonathan Bedard
- * @date   6/25/2016
- * @brief  Common exceptions thrown by unit tests
+ * @date   7/9/2016
+ * @brief  General unit test exception
  * @bug No known bugs.
  *
- * This file contains a number of common
- * test exceptions used by unit tests.
- * All of these classes extend std::exception.
+ * This file defines an exception designed
+ * to be generally used for errors in
+ * any unit test.
  *
  */
 
-#ifndef UNIT_TEST_EXCEPTIONS_H
-#define UNIT_TEST_EXCEPTIONS_H
+#ifndef GENERAL_TEST_EXCEPTIONS_H
+#define GENERAL_TEST_EXCEPTIONS_H
 
 #include "Datastructures//Datastructures.h"
 #include <exception>
@@ -46,6 +46,13 @@ namespace test
 		 */
 		std::string total_error;
 	public:
+		/** @brief Creates and throws a test exception
+		 * @param [in] description Error description
+		 * @param [in] location Source of the error, file and function
+		 * @return void
+		 */
+		static void throwException(const std::string& description,const std::string& location);
+	
 		/** @brief Construct exception with error and location
 		 *
 		 * Constructs the exception with an error string and
@@ -78,7 +85,7 @@ namespace test
 		 *
 		 * @return character pointer to the complete description
 		 */
-		virtual const char* what() const throw(){return total_error.c_str();}
+		const char* what() const throw() final{return total_error.c_str();}
 		/** @brief Location description
 		 * @return test::generalTestException::location
 		 */
@@ -88,83 +95,13 @@ namespace test
 		 */
 		const std::string& getString() const {return _error;}
 	};
-	/** @brief Unknown exception class
-	 *
-	 * This class defines the common exception
-	 * case where the precise nature of the exception
-	 * is unknown.
-	 */
-	class unknownException: public generalTestException
-	{
-	public:
-		/** @brief Construct exception with location
-		 *
-		 * Constructs a test::generalTestException with
-		 * the provided location and the static string
-		 * for an unknown exception.
-		 *
-		 * @param [in] loc Location string
-		 */
-		unknownException(const std::string& loc):
-			generalTestException("Unregistered exception type occurred",loc)
-		{}
-		/** @brief Virtual destructor
-		 *
-		 * Destructor must be virtual, if an object
-		 * of this type is deleted, the destructor
-		 * of the type which inherits this class should
-		 * be called.
-		 */
-		 virtual ~unknownException() throw(){}
-	};
-	/** @brief NULL function exception class
-	 *
-	 * This class defines the common exception
-	 * case where a NULL function pointer is
-	 * received.
-	 */
-	class nullFunctionException: public generalTestException
-	{
-	public:
-		/** @brief Construct exception with location
-		 *
-		 * Constructs a test::generalTestException with
-		 * the provided location and the static string
-		 * for a NULL function exception.
-		 *
-		 * @param [in] loc Location string
-		 */
-		nullFunctionException(const std::string& loc):
-			generalTestException("NULL Function pointer received",loc)
-		{}
-		/** @brief Virtual destructor
-		 *
-		 * Destructor must be virtual, if an object
-		 * of this type is deleted, the destructor
-		 * of the type which inherits this class should
-		 * be called.
-		 */
-		virtual ~nullFunctionException() throw(){}
-	};
-
+	
 	/** @brief Creates and throws a test exception
 	 * @param [in] description Error description
 	 * @param [in] location Source of the error, file and function
 	 * @return void
 	 */
 	void throwGeneralTestException(const std::string& description,const std::string& location);
-
-	/** @brief Creates and throws an unknown exception
-	 * @param [in] location Source of the error, file and function
-	 * @return void
-	 */
-	void throwUnknownException(const std::string& location);
-
-	/** @brief Creates and throws a null function exception
-	 * @param [in] location Source of the error, file and function
-	 * @return void
-	 */
-	void throwNullFunctionException(const std::string& location);
 	
 }
 
