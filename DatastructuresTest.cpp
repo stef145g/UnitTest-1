@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/7/2016
+ * @date   7/12/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -470,9 +470,9 @@ using namespace test;
 		{
 			hashTable.setSize(0);
 			throw -1;
-		} catch(std::exception e)
-		{}
-		catch(descriptiveException de)
+		}
+		catch(descriptiveException de){}
+		catch(...)
 		{throw os::errorPointer(new generalTestException("Failed to throw error when setting illegal size",locString),shared_type);}
 
 		hashTable.insert(2);
@@ -636,9 +636,9 @@ using namespace test;
 		try
 		{
 			--thrcnt;
-		} catch(std::exception e)
-		{}
-		catch(descriptiveException de)
+		}
+		catch(descriptiveException de) {}
+		catch(...)
 		{throw os::errorPointer(new generalTestException("Failed to throw error when illegally decrementing",locString),shared_type);}
 	}
 	void basicMultiLockTest()
@@ -861,7 +861,7 @@ using namespace test;
     void vectorObjectTest(std::string className,datastruct& ds)
     {
         std::string locString = "DatastructuresTest.cpp, vectorObjectTest<"+className+">()";
-        for(size_t i=0;i<100;++i)
+        for(int i=0;i<100;++i)
             ds.insert(100-i);
         
         bool sorted=true;
@@ -892,7 +892,7 @@ using namespace test;
         dummyInt rawArr[100];
         for(size_t i=100;i>0;--i)
         {
-            rawArr[i-1]=i-1;
+            rawArr[i-1]=(int)i-1;
             arr[100-i]=os::smart_ptr<dummyInt>(rawArr+(i-1));
         }
         for(size_t i=0;i<100;++i)
@@ -1916,7 +1916,7 @@ using namespace test;
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
-        for(size_t i=0;i<100;++i)
+        for(int i=0;i<100;++i)
             ds.insert(i);
         dummyInt d;
 
@@ -1944,7 +1944,7 @@ using namespace test;
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
     
-        for(size_t i=0;i<100;++i)
+        for(int i=0;i<100;++i)
             ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
         os::smart_ptr<dummyInt> d;
     
@@ -1972,7 +1972,7 @@ using namespace test;
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
-        for(size_t i=0;i<100;++i)
+        for(int i=0;i<100;++i)
             ds.insert(i);
         dummyInt d;
         
@@ -2004,7 +2004,7 @@ using namespace test;
         if(!thrown)
             throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
         
-        for(size_t i=0;i<100;++i)
+        for(int i=0;i<100;++i)
 			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
         os::smart_ptr<dummyInt> d;
         
@@ -2647,13 +2647,13 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
-		if(5.1>raw.length()>4.9)
+		if(5.1<raw.length() || raw.length()<4.9)
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		++raw;
-		if(6.1>raw.length()>5.9)
+		if(6.1<raw.length() || raw.length()<5.9)
 			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
 		++raw;
-		if(7.1>raw.length()>6.9)
+		if(7.1<raw.length() || raw.length()<6.9)
 			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
 	}
     void vector3dAdditionTest() 
@@ -2727,13 +2727,13 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Simple decrement (2) failed",locString),shared_type);
 		
 		raw=vector2d_d(3,4);
-		if(5.1>raw.length()>4.9)
+		if(5.1<raw.length() || raw.length()<4.9)
 			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
 		--raw;
-		if(4.1>raw.length()>3.9)
+		if(4.1<raw.length() || raw.length()<3.9)
 			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
 		--raw;
-		if(3.1>raw.length()>2.9)
+		if(3.1<raw.length() || raw.length()<2.9)
 			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
 	}
     void vector3dSubtractionTest() 

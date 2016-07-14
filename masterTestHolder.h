@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   7/12/2016
  * @brief  masterTestHolder singleton
  * @bug No known bugs.
  *
@@ -39,10 +39,10 @@ namespace test
 		os::pointerAVLTree<libraryTests> libraryList;
 		/** @brief Number of libraries successfully completed
 		 */
-		int libsCompleted;
+		size_t libsCompleted;
 		/** @brief Number of libraries attempted to run
 		 */
-		int libsRun;
+		size_t libsRun;
 
 		/** @brief Private constructor
 		 *
@@ -85,15 +85,15 @@ namespace test
 		/** @brief Number of libraries in the set
 		 * @return test::masterTestHolder::libraryList.size()
 		 */
-		int getNumLibs() const {return libraryList.size();}
+		size_t getNumLibs() const {return libraryList.size();}
 		/** @brief Number of libraries successfully completed
 		 * @return test::masterTestHolder::libsCompleted
 		 */
-		int getNumSuccess() const {return libsCompleted;}
+		size_t getNumSuccess() const {return libsCompleted;}
 		/** @brief Number of libraries attempted to run
 		 * @return test::masterTestHolder::libsRun
 		 */
-		int getNumRun() const {return libsRun;}
+		size_t getNumRun() const {return libsRun;}
 		/** @brief Add library to the set
 		 *
 		 * Adds a test::libraryTests to the set of

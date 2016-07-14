@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   7/12/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -39,10 +39,10 @@ namespace test
 
 		/** @brief Number of tests successfully completed
 		 */
-		int testsCompleted;
+		size_t testsCompleted;
 		/** @brief Number of tests attempted to run
 		 */
-		int testsRun;
+		size_t testsRun;
 	public:
 		/** @brief Test suite constructor
 		 *
@@ -112,15 +112,15 @@ namespace test
 		/** @brief Number of tests in the set
 		 * @return test::testSuite::testList.size()
 		 */
-		int getNumTests() const {return testList.size();}
+		inline size_t getNumTests() const {return testList.size();}
 		/** @brief Number of tests successfully completed
 		 * @return test::testSuite::testsCompleted
 		 */
-		int getNumSuccess() const {return testsCompleted;}
+		inline size_t getNumSuccess() const {return testsCompleted;}
 		/** @brief Number of tests attempted to run
 		 * @return test::testSuite::testsRun
 		 */
-		int getNumRun() const {return testsRun;}
+		inline size_t getNumRun() const {return testsRun;}
 
 		/** @brief Add test to the set
 		 *

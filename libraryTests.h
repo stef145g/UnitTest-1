@@ -1,7 +1,7 @@
 /**
  * @file   libraryTests.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   7/12/2016
  * @brief  Library tests class
  * @bug No known bugs.
  *
@@ -44,10 +44,10 @@ namespace test
 		os::pointerAVLTree<testSuite> suiteList;
 		/** @brief Number of suites successfully completed
 		 */
-		int suitesCompleted;
+		size_t suitesCompleted;
 		/** @brief Number of suites attempted to run
 		 */
-		int suitesRun;
+		size_t suitesRun;
 
 	public:
 		/** @brief Library test constructor
@@ -120,15 +120,15 @@ namespace test
 		/** @brief Number of suites in the set
 		 * @return test::libraryTests::suiteList.size()
 		 */
-		int getNumSuites() const {return suiteList.size();}
+		size_t getNumSuites() const {return suiteList.size();}
 		/** @brief Number of suites successfully completed
 		 * @return test::libraryTests::suitesCompleted
 		 */
-		int getNumSuccess() const {return suitesCompleted;}
+		size_t getNumSuccess() const {return suitesCompleted;}
 		/** @brief Number of suites attempted to run
 		 * @return test::libraryTests::suitesRun
 		 */
-		int getNumRun() const {return suitesRun;}
+		size_t getNumRun() const {return suitesRun;}
 
 		/** @brief Add suite to the set
 		 *
