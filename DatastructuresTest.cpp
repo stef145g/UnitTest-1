@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/12/2016
+ * @date   7/18/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1689,6 +1689,94 @@ using namespace test;
 				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
 		}
 	}
+	
+	template<class datastruct>
+	void autoIteratorNodeTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomIteratorNodeTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		bool found[100];
+		memset(found,0,100*sizeof(bool));
+		srand((unsigned)time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(dat[i]);
+		
+		for(auto it : ds)
+		{
+			bool fnd=false;
+			for(size_t i=0;i<100 && !fnd;++i)
+			{
+				if(dat[i]==it)
+				{
+					fnd=true;
+					found[i]=true;
+				}
+			}
+		}
+		for(size_t i=0;i<100;i++)
+		{
+			if(!found[i])
+				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+		}
+	}
+	template<class datastruct>
+	void autoIteratorPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, randomIteratorPointerTest<"+className+">()";
+		datastruct ds;
+		dummyInt dat[100];
+		bool found[100];
+		memset(found,0,100*sizeof(bool));
+		srand((unsigned)time(NULL));
+
+		for(size_t i=0;i<100;++i)
+		{
+			dummyInt temp=rand()%1000;
+			bool tfnd=false;
+			for(size_t cnt=0;cnt<i && !tfnd;++cnt)
+			{
+				if(dat[cnt]==temp) tfnd=true;
+			}
+			if(tfnd) --i;
+			else dat[i]=temp;
+		}
+
+		for(size_t i=0;i<100;++i)
+			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(dat[i]),os::shared_type));
+		
+		for(auto it : ds)
+		{
+			bool fnd=false;
+			for(size_t i=0;i<100 && !fnd;++i)
+			{
+				if(dat[i]==it)
+				{
+					fnd=true;
+					found[i]=true;
+				}
+			}
+		}
+		for(size_t i=0;i<100;i++)
+		{
+			if(!found[i])
+				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+		}
+	}
+	
 	template<class datastruct>
 	void randomSortedNodeTest(std::string className)
 	{
@@ -2067,6 +2155,7 @@ using namespace test;
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorNodeTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorNodeTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Auto Iteration",className,&autoIteratorNodeTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Whole Insertion",className,&wholeInsertionNodeTest<datastruct>),shared_type));
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedNodeTest<datastruct>),shared_type));
 			}
@@ -2101,6 +2190,7 @@ using namespace test;
 			{
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorPointerTest<datastruct>),shared_type));
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Auto Iteration",className,&autoIteratorPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Whole Insertion",className,&wholeInsertionPointerTest<datastruct>),shared_type));
 				if(sorted) pushTest(smart_ptr<singleTest>(new datastructureTest("Sorted",className,&randomSortedPointerTest<datastruct>),shared_type));
 			}

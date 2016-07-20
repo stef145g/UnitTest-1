@@ -1,7 +1,7 @@
 /**
  * @file   Exceptions/unknownException.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   7/17/2016
  * @brief  Unknown test exception
  * @bug No known bugs.
  *
@@ -44,12 +44,10 @@ namespace test
 		unknownException(const std::string& loc):
 			generalTestException("Unregistered exception type occurred",loc)
 		{}
-		/** @brief Virtual destructor
+		/** @brief Final destructor
 		 *
-		 * Destructor must be virtual, if an object
-		 * of this type is deleted, the destructor
-		 * of the type which inherits this class should
-		 * be called.
+		 * This class cannot be inherited from,
+		 * so the the destructor cannot be extended.
 		 */
 		 ~unknownException() throw() final{}
 	};

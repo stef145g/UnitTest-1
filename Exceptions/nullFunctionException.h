@@ -1,7 +1,7 @@
 /**
  * @file   Exception/generalTestException.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   7/17/2016
  * @brief  Null function exception definition
  * @bug No known bugs.
  *
@@ -42,12 +42,10 @@ namespace test
 		nullFunctionException(const std::string& loc):
 			generalTestException("NULL Function pointer received",loc)
 		{}
-		/** @brief Virtual destructor
+		/** @brief Final destructor
 		 *
-		 * Destructor must be virtual, if an object
-		 * of this type is deleted, the destructor
-		 * of the type which inherits this class should
-		 * be called.
+		 * This class cannot be inherited from,
+		 * so the the destructor cannot be extended.
 		 */
 		~nullFunctionException() throw() final{}
 	};
