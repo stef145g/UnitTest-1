@@ -1,7 +1,7 @@
 /**
  * @file   DatastructuresTest.cpp
  * @author Jonathan Bedard
- * @date   7/18/2016
+ * @date   8/6/2016
  * @brief  Datastructures library test implementation
  * @bug No known bugs.
  *
@@ -1345,6 +1345,60 @@ using namespace test;
 			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
 	}
 
+	//Copy test
+	template<class datastruct>
+	void copyStructTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, copyStructTest<"+className+">()";
+
+		datastruct ds1;
+		for(int i=0;i<100;++i)
+			ds1.insert(rand()%1000);
+
+		datastruct ds2(ds1);
+
+		auto it1=ds1.first();
+		auto it2=ds2.first();
+
+		while(it1 || it2)
+		{
+			if(!it1) 
+				throwGeneralTestException("Primary datastructure smaller than copy",locString);
+			if(!it2) 
+				throwGeneralTestException("Primary datastructure larger than copy",locString);
+			if(*it1 != *it2)
+				throwGeneralTestException("Primary and copied datastructure do not match",locString);
+			++it1;
+			++it2;
+		}
+	}
+	template<class datastruct>
+	void copyStructPointerTest(std::string className)
+	{
+		std::string locString = "DatastructuresTest.cpp, copyStructPointerTest<"+className+">()";
+
+		datastruct ds1;
+		for(int i=0;i<100;++i)
+			ds1.insert(smart_ptr<dummyInt>(new dummyInt(rand()%1000),shared_type));
+
+		datastruct ds2(ds1);
+
+		auto it1=ds1.first();
+		auto it2=ds2.first();
+
+		while(it1 || it2)
+		{
+			if(!it1) 
+				throwGeneralTestException("Primary datastructure smaller than copy",locString);
+			if(!it2) 
+				throwGeneralTestException("Primary datastructure larger than copy",locString);
+			if(*it1 != *it2)
+				throwGeneralTestException("Primary and copied datastructure do not match",locString);
+			++it1;
+			++it2;
+		}
+	}
+
 	//Iteration tests
 	template<class datastruct>
 	void noIteratorNodeTest(std::string className)
@@ -2153,6 +2207,7 @@ using namespace test;
 			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Copy",className,&copyStructTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorNodeTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorNodeTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Auto Iteration",className,&autoIteratorNodeTest<datastruct>),shared_type));
@@ -2188,6 +2243,7 @@ using namespace test;
 			//Iterable tests
 			if(datastruct::ITERABLE)
 			{
+				pushTest(smart_ptr<singleTest>(new datastructureTest("Copy",className,&copyStructPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Basic Iteration",className,&basicIteratorPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Random Iteration",className,&randomIteratorPointerTest<datastruct>),shared_type));
 				pushTest(smart_ptr<singleTest>(new datastructureTest("Auto Iteration",className,&autoIteratorPointerTest<datastruct>),shared_type));
