@@ -39,13 +39,13 @@ using namespace test;
 		if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throwGeneralTestException("Cannot run this function with this type",locString+"null_type");
 
 		smart_ptr<int> temp1,temp2;
 
 		//NULL pointer should have NULL ref count
 		if(temp1.getRefCount()!=NULL)
-			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throwGeneralTestException("Non-NULL reference count",locString);
 
 		if(typ==shared_type_array) temp1 = smart_ptr<int>(new int[5],shared_type_array);
 		else if(typ==shared_type_dynamic_delete) temp1 = smart_ptr<int>(new int(1),&c_deletion);
@@ -53,34 +53,34 @@ using namespace test;
 
 		//Should have a reference count
 		if(temp1.getRefCount()==NULL)
-			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
+			throwGeneralTestException("NULL reference count",locString);
 
 		//Reference count should be 1
 		if(*(temp1.getRefCount())!=1)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 1",locString),shared_type);
+			throwGeneralTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 1",locString);
 
 		//Reference count should be 2
 		temp2 = temp1;
 		if(*(temp1.getRefCount())!=2)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 2",locString),shared_type);
+			throwGeneralTestException("Reference count is "+to_string((long long unsigned)*(temp1.getRefCount()))+" expected 2",locString);
 
 		//Reference count should be 1
 		temp1=NULL;
 		if(*(temp2.getRefCount())!=1)
-			throw os::errorPointer(new generalTestException("Reference count is "+to_string((long long unsigned)*(temp2.getRefCount()))+" expected 1",locString),shared_type);
+			throwGeneralTestException("Reference count is "+to_string((long long unsigned)*(temp2.getRefCount()))+" expected 1",locString);
 
 		//NULL pointer should have NULL ref count
 		if(temp1.getRefCount()!=NULL)
-			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throwGeneralTestException("Non-NULL reference count",locString);
 
 		//Should have a reference count
 		if(temp2.getRefCount()==NULL)
-			throw os::errorPointer(new generalTestException("NULL reference count",locString),shared_type);
+			throwGeneralTestException("NULL reference count",locString);
 
 		//NULL pointer should have NULL ref count
 		temp2=NULL;
 		if(temp2.getRefCount()!=NULL)
-			throw os::errorPointer(new generalTestException("Non-NULL reference count",locString),shared_type);
+			throwGeneralTestException("Non-NULL reference count",locString);
 	}
 	void refCountTest_shared(){refCountTest(shared_type);}
 	void refCountTest_array(){refCountTest(shared_type_array);}
@@ -93,21 +93,21 @@ using namespace test;
 		else if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throwGeneralTestException("Cannot run this function with this type",locString+"null_type");
 		
 		smart_ptr<int> temp1;
 
 		//Ensure it is NULL
 		if(temp1.get()!=NULL)
-			throw os::errorPointer(new generalTestException("Expected initial NULL",locString),shared_type);
+			throwGeneralTestException("Expected initial NULL",locString);
 
 		//Other methods of detecting NULL
 		if(temp1)
-			throw os::errorPointer(new generalTestException("NULL comparison failed (cast int)",locString),shared_type);
+			throwGeneralTestException("NULL comparison failed (cast int)",locString);
 		if(temp1!=NULL)
-			throw os::errorPointer(new generalTestException("NULL comparison failed (comp null)",locString),shared_type);
+			throwGeneralTestException("NULL comparison failed (comp null)",locString);
 		if(temp1.constGet()!=NULL)
-			throw os::errorPointer(new generalTestException("NULL comparison failed (constGet)",locString),shared_type);
+			throwGeneralTestException("NULL comparison failed (constGet)",locString);
 
 		//Attempt different methods of NULL casting
 		int raw_val=1;
@@ -129,15 +129,15 @@ using namespace test;
 
 			//Ensure it isn't NULL
 			if(temp1.get()==NULL)
-				throw os::errorPointer(new generalTestException("Expected instantiaze not NULL ("+cast_type+")",locString),shared_type);
+				throwGeneralTestException("Expected instantiaze not NULL ("+cast_type+")",locString);
 
 			//Other methods of detecting not NULL
 			if(!temp1)
-				throw os::errorPointer(new generalTestException("NULL comparison failed (cast int, "+cast_type,locString+")"),shared_type);
+				throwGeneralTestException("NULL comparison failed (cast int, "+cast_type,locString+")");
 			if(temp1==NULL)
-				throw os::errorPointer(new generalTestException("NULL comparison failed (comp null, "+cast_type,locString+")"),shared_type);
+				throwGeneralTestException("NULL comparison failed (comp null, "+cast_type,locString+")");
 			if(temp1.constGet()==NULL)
-				throw os::errorPointer(new generalTestException("NULL comparison failed (constGet, "+cast_type,locString+")"),shared_type);
+				throwGeneralTestException("NULL comparison failed (constGet, "+cast_type,locString+")");
 
 			//Set NULL (3 ways)
 			if(i==0) temp1=smart_ptr<int>();
@@ -146,15 +146,15 @@ using namespace test;
 
 			//Ensure it is NULL
 			if(temp1.get()!=NULL)
-				throw os::errorPointer(new generalTestException("Expected NULL, "+cast_type,locString),shared_type);
+				throwGeneralTestException("Expected NULL, "+cast_type,locString);
 
 			//Other methods of detecting NULL
 			if(temp1)
-				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(cast int)",locString),shared_type);
+				throwGeneralTestException("NULL comparison failed, "+cast_type+"(cast int)",locString);
 			if(temp1!=NULL)
-				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(comp null)",locString),shared_type);
+				throwGeneralTestException("NULL comparison failed, "+cast_type+"(comp null)",locString);
 			if(temp1.constGet()!=NULL)
-				throw os::errorPointer(new generalTestException("NULL comparison failed, "+cast_type+"(constGet)",locString),shared_type);
+				throwGeneralTestException("NULL comparison failed, "+cast_type+"(constGet)",locString);
 			}
 	}
 	void compareNULL_raw() {compareNULL_type(raw_type);}
@@ -180,41 +180,41 @@ using namespace test;
 
 		//Compare type with declared type
 		if(master.getType()!=typ)
-			throw os::errorPointer(new generalTestException("Type bound improperly",locString),shared_type);
+			throwGeneralTestException("Type bound improperly",locString);
 
 		//Check if temp1 is NULL
 		if(temp1)
-			throw os::errorPointer(new generalTestException("Expected initial NULL",locString),shared_type);
+			throwGeneralTestException("Expected initial NULL",locString);
 
 		//Set temp1 and master
 		temp1=master;
 
 		//Compare types
 		if(master.getType()!=temp1.getType())
-			throw os::errorPointer(new generalTestException("Equalitity type mis-match (=)",locString),shared_type);
+			throwGeneralTestException("Equalitity type mis-match (=)",locString);
 		if(master.getRefCount()!=temp1.getRefCount())
-			throw os::errorPointer(new generalTestException("Equalitity ref-count mis-match (=)",locString),shared_type);
+			throwGeneralTestException("Equalitity ref-count mis-match (=)",locString);
 		if(master.getFunc()!=temp1.getFunc())
-			throw os::errorPointer(new generalTestException("Equalitity delete function mis-match (=)",locString),shared_type);
+			throwGeneralTestException("Equalitity delete function mis-match (=)",locString);
 		if(master.get()!=temp1.get())
-			throw os::errorPointer(new generalTestException("Equalitity pointer mis-match (=)",locString),shared_type);
+			throwGeneralTestException("Equalitity pointer mis-match (=)",locString);
 		if(master!=temp1)
-			throw os::errorPointer(new generalTestException("Equalitity compare mis-match (=)",locString),shared_type);
+			throwGeneralTestException("Equalitity compare mis-match (=)",locString);
 
 		//Set temp1 and master
 		temp1=smart_ptr<int>(master);
 
 		//Compare types
 		if(master.getType()!=temp1.getType())
-			throw os::errorPointer(new generalTestException("Equalitity type mis-match (copy)",locString),shared_type);
+			throwGeneralTestException("Equalitity type mis-match (copy)",locString);
 		if(master.getRefCount()!=temp1.getRefCount())
-			throw os::errorPointer(new generalTestException("Equalitity ref-count mis-match (copy)",locString),shared_type);
+			throwGeneralTestException("Equalitity ref-count mis-match (copy)",locString);
 		if(master.getFunc()!=temp1.getFunc())
-			throw os::errorPointer(new generalTestException("Equalitity delete function mis-match (copy)",locString),shared_type);
+			throwGeneralTestException("Equalitity delete function mis-match (copy)",locString);
 		if(master.get()!=temp1.get())
-			throw os::errorPointer(new generalTestException("Equalitity pointer mis-match (copy)",locString),shared_type);
+			throwGeneralTestException("Equalitity pointer mis-match (copy)",locString);
 		if(master!=temp1)
-			throw os::errorPointer(new generalTestException("Equalitity compare mis-match (copy)",locString),shared_type);
+			throwGeneralTestException("Equalitity compare mis-match (copy)",locString);
 	}
 	void copyConstructor_null() {copyConstructor(null_type);}
 	void copyConstructor_raw() {copyConstructor(raw_type);}
@@ -240,9 +240,9 @@ using namespace test;
 
 		//Test with self first
 		if(master!=master)
-			throw os::errorPointer(new generalTestException("!= with self returned unexpected value",locString),shared_type);
+			throwGeneralTestException("!= with self returned unexpected value",locString);
 		if(!(master==master))
-			throw os::errorPointer(new generalTestException("== with self returned unexpected value",locString),shared_type);
+			throwGeneralTestException("== with self returned unexpected value",locString);
 
 		srand((unsigned)time(NULL));
 
@@ -260,29 +260,29 @@ using namespace test;
 			bool v = (unsigned long)master.get()==cur_comp;
 			bool rv = cur_comp==(unsigned long)master.get();
 			if(v!=(master==cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr == long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr == long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master==ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master==comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp==master))
-				throw os::errorPointer(new generalTestException("long == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long == smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp==master))
-				throw os::errorPointer(new generalTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr == void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			
 			//General != test
 			v = (unsigned long)master.get()!=cur_comp;
 			rv = cur_comp!=(unsigned long)master.get();
 			if(v!=(master!=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr != long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr != long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master!=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master!=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp!=master))
-				throw os::errorPointer(new generalTestException("long != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long != smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp!=master))
-				throw os::errorPointer(new generalTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr != void* failed: "+to_string((long long unsigned)cur_comp),locString);
 
 			//General < test
 			v = (unsigned long)master.get()<cur_comp;
@@ -290,57 +290,57 @@ using namespace test;
             //cout<<v<<endl;
             //cout<<(master<cur_comp)<<endl;
 			if(v!=(master<cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr < long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr < long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master<ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master<comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp<master))
-				throw os::errorPointer(new generalTestException("long < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long < smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp<master))
-				throw os::errorPointer(new generalTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr < void* failed: "+to_string((long long unsigned)cur_comp),locString);
 
 			//General > test
 			v = (unsigned long)master.get()>cur_comp;
 			rv = cur_comp>(unsigned long)master.get();
 			if(v!=(master>cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr > long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr > long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master>ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master>comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp>master))
-				throw os::errorPointer(new generalTestException("long > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long > smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp>master))
-				throw os::errorPointer(new generalTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr > void* failed: "+to_string((long long unsigned)cur_comp),locString);
 
 			//General <= test
 			v = (unsigned long)master.get()<=cur_comp;
 			rv = cur_comp<=(unsigned long)master.get();
 			if(v!=(master<=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr <= long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr <= long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master<=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master<=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp<=master))
-				throw os::errorPointer(new generalTestException("long <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long <= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp<=master))
-				throw os::errorPointer(new generalTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr <= void* failed: "+to_string((long long unsigned)cur_comp),locString);
 
 			//General >= test
 			v = (unsigned long)master.get()>=cur_comp;
 			rv = cur_comp>=(unsigned long)master.get();
 			if(v!=(master>=cur_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr >= long failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr >= long failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master>=ptr_comp))
-				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(v!=(master>=comp_ptr))
-				throw os::errorPointer(new generalTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(cur_comp>=master))
-				throw os::errorPointer(new generalTestException("long >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("long >= smart_ptr failed: "+to_string((long long unsigned)cur_comp),locString);
 			if(rv!=(ptr_comp>=master))
-				throw os::errorPointer(new generalTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString),shared_type);
+				throwGeneralTestException("smart_ptr >= void* failed: "+to_string((long long unsigned)cur_comp),locString);
 		}
 	}
 	void comparisonTest_null() {comparisonTest(null_type);}
@@ -356,7 +356,7 @@ using namespace test;
 		else if(typ==shared_type) locString+="shared_type";
 		else if(typ==shared_type_array) locString+="shared_type_array";
 		else if(typ==shared_type_dynamic_delete) locString+="shared_type_dynamic_delete";
-		else throw os::errorPointer(new generalTestException("Cannot run this function with this type",locString+"null_type"),shared_type);
+		else throwGeneralTestException("Cannot run this function with this type",locString+"null_type");
 
 		smart_ptr<string> ptr;
 		string obj;
@@ -367,7 +367,7 @@ using namespace test;
 		else ptr = smart_ptr<string>(new string(""),shared_type);
 
 		if(!ptr)
-			throw os::errorPointer(new generalTestException("Pointer unexpected NULL",locString),shared_type);
+			throwGeneralTestException("Pointer unexpected NULL",locString);
 
 		for(int i = 0;i<3;++i)
 		{
@@ -389,14 +389,14 @@ using namespace test;
 			}
 
 			if(*ptr.get()!="test")
-				throw os::errorPointer(new generalTestException("Error at raw deref"+lInfo,locString),shared_type);
+				throwGeneralTestException("Error at raw deref"+lInfo,locString);
 			if(*ptr!="test")
-				throw os::errorPointer(new generalTestException("Error at operator deref"+lInfo,locString),shared_type);
+				throwGeneralTestException("Error at operator deref"+lInfo,locString);
 			if(ptr[0]!="test")
-				throw os::errorPointer(new generalTestException("Error at array deref"+lInfo,locString),shared_type);
+				throwGeneralTestException("Error at array deref"+lInfo,locString);
 
 			if(ptr->substr(0,2)!="te")
-				throw os::errorPointer(new generalTestException("Error at -> operator"+lInfo,locString),shared_type);
+				throwGeneralTestException("Error at -> operator"+lInfo,locString);
 		}
 	}
 	void derefTest_raw() {derefTest(raw_type);}
@@ -415,13 +415,13 @@ using namespace test;
 
 		//Basic insertion
 		if(hashTable.exists(4))
-			throw os::errorPointer(new generalTestException("Integer inserted unexpectedly",locString),shared_type);
+			throwGeneralTestException("Integer inserted unexpectedly",locString);
 		hashTable.insert(4);
 		if(!hashTable.exists(4))
-			throw os::errorPointer(new generalTestException("Integer failed to insert",locString),shared_type);
+			throwGeneralTestException("Integer failed to insert",locString);
 		hashTable.remove(4);
 		if(hashTable.exists(4))
-			throw os::errorPointer(new generalTestException("Integer failed to remove",locString),shared_type);
+			throwGeneralTestException("Integer failed to remove",locString);
 	}
 	void emptyHashTest() 
 	{
@@ -430,15 +430,15 @@ using namespace test;
 
 		//Insert
 		if(hashTable.exists(4)||hashTable.exists(8))
-			throw os::errorPointer(new generalTestException("Integer inserted unexpectedly",locString),shared_type);
+			throwGeneralTestException("Integer inserted unexpectedly",locString);
 		hashTable.insert(4);
 		hashTable.insert(8);
 		if(!hashTable.exists(4)||!hashTable.exists(8))
-			throw os::errorPointer(new generalTestException("Integer failed to insert",locString),shared_type);
+			throwGeneralTestException("Integer failed to insert",locString);
 
 		hashTable.empty();
 		if(hashTable.exists(4)||hashTable.exists(8))
-			throw os::errorPointer(new generalTestException("Empty failed",locString),shared_type);
+			throwGeneralTestException("Empty failed",locString);
 	}
 	void conflictHashTest() 
 	{
@@ -449,18 +449,18 @@ using namespace test;
 		hashTable.insert(2);
 		hashTable.insert(22);
 		if(!hashTable.exists(2))
-			throw os::errorPointer(new generalTestException("Initial insertion failed",locString),shared_type);
+			throwGeneralTestException("Initial insertion failed",locString);
 		if(!hashTable.exists(22))
-			throw os::errorPointer(new generalTestException("Secondary insertion failed",locString),shared_type);
+			throwGeneralTestException("Secondary insertion failed",locString);
 
 		hashTable.remove(2);
 		if(hashTable.exists(2))
-			throw os::errorPointer(new generalTestException("Initial deletion failed",locString),shared_type);
+			throwGeneralTestException("Initial deletion failed",locString);
 		if(!hashTable.exists(22))
-			throw os::errorPointer(new generalTestException("Secondary find after deletion failed",locString),shared_type);
+			throwGeneralTestException("Secondary find after deletion failed",locString);
 		hashTable.remove(22);
 		if(hashTable.exists(22))
-			throw os::errorPointer(new generalTestException("Secondary deletion failed",locString),shared_type);
+			throwGeneralTestException("Secondary deletion failed",locString);
 	}
 	void resizeHashTest() 
 	{
@@ -473,7 +473,7 @@ using namespace test;
 		}
 		catch(descriptiveException de){}
 		catch(...)
-		{throw os::errorPointer(new generalTestException("Failed to throw error when setting illegal size",locString),shared_type);}
+		{throwGeneralTestException("Failed to throw error when setting illegal size",locString);}
 
 		hashTable.insert(2);
 		hashTable.insert(12);
@@ -482,19 +482,19 @@ using namespace test;
 		hashTable.setSize(10);
 
 		if(hashTable.size()!=10)
-			throw os::errorPointer(new generalTestException("Failed to set size",locString),shared_type);
+			throwGeneralTestException("Failed to set size",locString);
 
 		if(!hashTable.exists(2))
-			throw os::errorPointer(new generalTestException("Basic insertion failed",locString),shared_type);
+			throwGeneralTestException("Basic insertion failed",locString);
 		if(!hashTable.exists(22))
-			throw os::errorPointer(new generalTestException("Overlap insertsion failed",locString),shared_type);
+			throwGeneralTestException("Overlap insertsion failed",locString);
 		hashTable.remove(12);
 		if(hashTable.exists(12))
-			throw os::errorPointer(new generalTestException("Remove failed",locString),shared_type);
+			throwGeneralTestException("Remove failed",locString);
 		if(!hashTable.exists(2))
-			throw os::errorPointer(new generalTestException("Basic find failed after remove",locString),shared_type);
+			throwGeneralTestException("Basic find failed after remove",locString);
 		if(!hashTable.exists(22))
-			throw os::errorPointer(new generalTestException("Overlap find failed after remove",locString),shared_type);
+			throwGeneralTestException("Overlap find failed after remove",locString);
 	}
 	void rawAccessTest()
 	{
@@ -507,16 +507,16 @@ using namespace test;
 		hashTable.insert(14);
 
 		if(hashTable.atPosition(3))
-			throw os::errorPointer(new generalTestException("Position 3 has no data, should disallow access",locString),shared_type);
+			throwGeneralTestException("Position 3 has no data, should disallow access",locString);
 		if(!hashTable.atPosition(4))
-			throw os::errorPointer(new generalTestException("Position 4 should have data",locString),shared_type);
+			throwGeneralTestException("Position 4 should have data",locString);
 
 		if(hashTable[4]!=4)
-			throw os::errorPointer(new generalTestException("Expected 4 in position 4",locString),shared_type);
+			throwGeneralTestException("Expected 4 in position 4",locString);
 		if(hashTable[5]!=5)
-			throw os::errorPointer(new generalTestException("Expected 5 in position 5",locString),shared_type);
+			throwGeneralTestException("Expected 5 in position 5",locString);
 		if(hashTable[6]!=14)
-			throw os::errorPointer(new generalTestException("Expected 14 in position 6",locString),shared_type);
+			throwGeneralTestException("Expected 14 in position 6",locString);
 	}
 
 /*================================================================
@@ -537,16 +537,16 @@ using namespace test;
 
 		//Single thread case
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, never locked",locString),shared_type);
+			throwGeneralTestException("Expected lock to be unlocked, never locked",locString);
 		if(!lck.attemptLock())
-			throw os::errorPointer(new generalTestException("Expected lock to succeed",locString),shared_type);
+			throwGeneralTestException("Expected lock to succeed",locString);
 		if(lck.attemptLock())
-			throw os::errorPointer(new generalTestException("Expected lock to fail",locString),shared_type);
+			throwGeneralTestException("Expected lock to fail",locString);
 		if(!lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be locked",locString),shared_type);
+			throwGeneralTestException("Expected lock to be locked",locString);
 		lck.unlock();
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, finished locking",locString),shared_type);
+			throwGeneralTestException("Expected lock to be unlocked, finished locking",locString);
 
 		//Multiple thread case
 		std::thread thr(multithreadLock,&lck);
@@ -554,10 +554,10 @@ using namespace test;
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread case",locString);
 			lck.lock();
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread finished case",locString);
 			lck.unlock();
 		} catch(os::errorPointer erp)
 		{
@@ -566,7 +566,7 @@ using namespace test;
 		}
 		catch(descriptiveException de){
 			thr.join();
-			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+			throwGeneralTestException("Lock threw unexpected error",locString);
 		}
 		thr.join();
 	}
@@ -577,19 +577,19 @@ using namespace test;
 
 		//Single thread case
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, never locked",locString),shared_type);
+			throwGeneralTestException("Expected lock to be unlocked, never locked",locString);
 		if(!lck.attemptLock())
-			throw os::errorPointer(new generalTestException("Expected lock to succeed",locString),shared_type);
+			throwGeneralTestException("Expected lock to succeed",locString);
 		if(!lck.attemptLock())
-			throw os::errorPointer(new generalTestException("Expected lock to succeed again",locString),shared_type);
+			throwGeneralTestException("Expected lock to succeed again",locString);
 		if(!lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be locked",locString),shared_type);
+			throwGeneralTestException("Expected lock to be locked",locString);
 		lck.unlock();
 		if(!lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be locked, single unlock case",locString),shared_type);
+			throwGeneralTestException("Expected lock to be locked, single unlock case",locString);
 		lck.unlock();
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Expected lock to be unlocked, finished locking",locString),shared_type);
+			throwGeneralTestException("Expected lock to be unlocked, finished locking",locString);
 
 		//Multiple thread case
 		std::thread thr(multithreadLock,&lck);
@@ -597,10 +597,10 @@ using namespace test;
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread case",locString);
 			lck.lock();
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread finished case",locString);
 			lck.unlock();
 		} catch(os::errorPointer erp)
 		{
@@ -609,7 +609,7 @@ using namespace test;
 		}
 		catch(descriptiveException de){
 			thr.join();
-			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+			throwGeneralTestException("Lock threw unexpected error",locString);
 		}
 		thr.join();
 	}
@@ -620,18 +620,18 @@ using namespace test;
 		os::threadCounter thrcnt2(thrcnt);
 
 		if(thrcnt!=thrcnt2)
-			throw os::errorPointer(new generalTestException("Thread comparisons do not match",locString),shared_type);
+			throwGeneralTestException("Thread comparisons do not match",locString);
 		if((size_t) thrcnt!=(size_t) thrcnt2)
-			throw os::errorPointer(new generalTestException("Thread hashes do not match",locString),shared_type);
+			throwGeneralTestException("Thread hashes do not match",locString);
 
 		if(thrcnt.count()!=0)
-			throw os::errorPointer(new generalTestException("Thread initialized with the wrong count",locString),shared_type);
+			throwGeneralTestException("Thread initialized with the wrong count",locString);
 		++thrcnt;
 		if(thrcnt.count()!=1)
-			throw os::errorPointer(new generalTestException("Thread failed to increment",locString),shared_type);
+			throwGeneralTestException("Thread failed to increment",locString);
 		--thrcnt;
 		if(thrcnt.count()!=0)
-			throw os::errorPointer(new generalTestException("Thread failed to decrement",locString),shared_type);
+			throwGeneralTestException("Thread failed to decrement",locString);
 
 		try
 		{
@@ -639,7 +639,7 @@ using namespace test;
 		}
 		catch(descriptiveException de) {}
 		catch(...)
-		{throw os::errorPointer(new generalTestException("Failed to throw error when illegally decrementing",locString),shared_type);}
+		{throwGeneralTestException("Failed to throw error when illegally decrementing",locString);}
 	}
 	void basicMultiLockTest()
 	{
@@ -649,33 +649,33 @@ using namespace test;
 		//Locking
 		lck.lock();
 		if(!lck.locked())
-			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
+			throwGeneralTestException("Lock failed",locString);
 		if(lck.try_lock())
-			throw os::errorPointer(new generalTestException("Double-lock unexpectantly succeeded",locString),shared_type);
+			throwGeneralTestException("Double-lock unexpectantly succeeded",locString);
 		lck.unlock();
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+			throwGeneralTestException("Lock failed to unlock",locString);
 
 		//Increment
 		++lck;
 		if(lck.numReaders()!=1)
-			throw os::errorPointer(new generalTestException("Number of readers failed (1st time)",locString),shared_type);
+			throwGeneralTestException("Number of readers failed (1st time)",locString);
 		if(lck.counter()!=1)
-			throw os::errorPointer(new generalTestException("Number of counters failed (1st time)",locString),shared_type);
+			throwGeneralTestException("Number of counters failed (1st time)",locString);
 		if(!lck.try_increment())
-			throw os::errorPointer(new generalTestException("Double increment fialed",locString),shared_type);
+			throwGeneralTestException("Double increment fialed",locString);
 		if(lck.numReaders()!=2)
-			throw os::errorPointer(new generalTestException("Number of readers failed (2nd time)",locString),shared_type);
+			throwGeneralTestException("Number of readers failed (2nd time)",locString);
 		if(lck.counter()!=2)
-			throw os::errorPointer(new generalTestException("Number of counters failed (2nd time)",locString),shared_type);
+			throwGeneralTestException("Number of counters failed (2nd time)",locString);
 		if(lck.try_lock())
-			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
+			throwGeneralTestException("Lock succeeded after read increment",locString);
 		--lck;
 		--lck;
 		if(lck.numReaders()!=0)
-			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
+			throwGeneralTestException("Failed on last reader query",locString);
 		if(lck.counter()!=0)
-			throw os::errorPointer(new generalTestException("Failed on last counter query",locString),shared_type);
+			throwGeneralTestException("Failed on last counter query",locString);
 
 		//Multiple thread case (first)
 		std::thread thr(multithreadLock,&lck);
@@ -683,10 +683,10 @@ using namespace test;
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread case",locString);
 			lck.lock();
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread finished case",locString);
 			lck.unlock();
 		} catch(os::errorPointer erp)
 		{
@@ -695,7 +695,7 @@ using namespace test;
 		}
 		catch(descriptiveException de){
 			thr.join();
-			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+			throwGeneralTestException("Lock threw unexpected error",locString);
 		}
 		thr.join();
 	}
@@ -707,35 +707,35 @@ using namespace test;
 		//Locking
 		lck.lock();
 		if(!lck.locked())
-			throw os::errorPointer(new generalTestException("Lock failed",locString),shared_type);
+			throwGeneralTestException("Lock failed",locString);
 		if(!lck.try_lock())
-			throw os::errorPointer(new generalTestException("Double-lock failed",locString),shared_type);
+			throwGeneralTestException("Double-lock failed",locString);
 		lck.unlock();
 		lck.unlock();
 		if(lck.locked())
-			throw os::errorPointer(new generalTestException("Lock failed to unlock",locString),shared_type);
+			throwGeneralTestException("Lock failed to unlock",locString);
 
 		//Increment
 		lck++;
 		if(lck.numReaders()!=1)
-			throw os::errorPointer(new generalTestException("Number of readers failed (1st time)",locString),shared_type);
+			throwGeneralTestException("Number of readers failed (1st time)",locString);
 		if(lck.counter()!=1)
-			throw os::errorPointer(new generalTestException("Number of counters failed (1st time)",locString),shared_type);
+			throwGeneralTestException("Number of counters failed (1st time)",locString);
 		if(!lck.try_increment())
-			throw os::errorPointer(new generalTestException("Double increment fialed",locString),shared_type);
+			throwGeneralTestException("Double increment fialed",locString);
 		if(lck.numReaders()!=1)
-			throw os::errorPointer(new generalTestException("Number of readers failed (2nd time)",locString),shared_type);
+			throwGeneralTestException("Number of readers failed (2nd time)",locString);
 		if(lck.counter()!=2)
-			throw os::errorPointer(new generalTestException("Number of counters failed (2nd time)",locString),shared_type);
+			throwGeneralTestException("Number of counters failed (2nd time)",locString);
 		if(!lck.try_lock())
-			throw os::errorPointer(new generalTestException("Lock succeeded after read increment",locString),shared_type);
+			throwGeneralTestException("Lock succeeded after read increment",locString);
 		lck.unlock();
 		--lck;
 		--lck;
 		if(lck.numReaders()!=0)
-			throw os::errorPointer(new generalTestException("Failed on last reader query",locString),shared_type);
+			throwGeneralTestException("Failed on last reader query",locString);
 		if(lck.counter()!=0)
-			throw os::errorPointer(new generalTestException("Failed on last counter query",locString),shared_type);
+			throwGeneralTestException("Failed on last counter query",locString);
 
 		//Multiple thread case (first)
 		std::thread thr(multithreadLock,&lck);
@@ -743,10 +743,10 @@ using namespace test;
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(250));
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread case",locString);
 			lck.lock();
 			if(!lck.locked())
-				throw os::errorPointer(new generalTestException("Expected lock to be locked, thread finished case",locString),shared_type);
+				throwGeneralTestException("Expected lock to be locked, thread finished case",locString);
 			lck.unlock();
 		} catch(os::errorPointer erp)
 		{
@@ -755,7 +755,7 @@ using namespace test;
 		}
 		catch(descriptiveException de){
 			thr.join();
-			throw os::errorPointer(new generalTestException("Lock threw unexpected error",locString),shared_type);
+			throwGeneralTestException("Lock threw unexpected error",locString);
 		}
 		thr.join();
 	}
@@ -793,13 +793,13 @@ using namespace test;
 		os::objectNode<int> nd1(1);
 		os::objectNode<int> nd2(3);
 		if(!nd1 || !nd2)
-			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+			throwGeneralTestException("Validity check failure",locString);
 		if(nd1>=nd2)
-			throw os::errorPointer(new generalTestException("Node 2 should be greater than node 1",locString),shared_type);
+			throwGeneralTestException("Node 2 should be greater than node 1",locString);
 		if((size_t)nd1 != 1)
-			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 1",locString);
 		if((size_t)nd2 != 3)
-			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 2",locString);
 	}
 	void pointerNodeTest()
 	{
@@ -807,9 +807,9 @@ using namespace test;
 		os::pointerNode<dummyInt> nd1;
 		os::pointerNode<dummyInt> nd2;
 		if(nd1 || nd2)
-			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+			throwGeneralTestException("Validity check failure",locString);
 		if(nd1!=nd2)
-			throw os::errorPointer(new generalTestException("Nodes should be equal",locString),shared_type);
+			throwGeneralTestException("Nodes should be equal",locString);
 
 		dummyInt arr[2];
 		arr[0].data=3;
@@ -818,11 +818,11 @@ using namespace test;
 		nd1=os::pointerNode<dummyInt>(arr);
 		nd2=os::pointerNode<dummyInt>(arr+1);
 		if(nd1<=nd2)
-			throw os::errorPointer(new generalTestException("Node 1 should be greater than node 2",locString),shared_type);
+			throwGeneralTestException("Node 1 should be greater than node 2",locString);
 		if((size_t)nd1 != 3)
-			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 1",locString);
 		if((size_t)nd2 != 1)
-			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 2",locString);
 	}
 	void rawPointerNodeTest()
 	{
@@ -830,9 +830,9 @@ using namespace test;
 		os::rawPointerNode<int> nd1;
 		os::rawPointerNode<int> nd2;
 		if(nd1 || nd2)
-			throw os::errorPointer(new generalTestException("Validity check failure",locString),shared_type);
+			throwGeneralTestException("Validity check failure",locString);
 		if(nd1!=nd2)
-			throw os::errorPointer(new generalTestException("Nodes should be equal",locString),shared_type);
+			throwGeneralTestException("Nodes should be equal",locString);
 
 		int arr[2];
 		arr[0]=3;
@@ -841,11 +841,11 @@ using namespace test;
 		nd2=os::rawPointerNode<int>(arr+1);
 
 		if(nd1>=nd2)
-			throw os::errorPointer(new generalTestException("Node 2 should be greater than node 1",locString),shared_type);
+			throwGeneralTestException("Node 2 should be greater than node 1",locString);
 		if((size_t)nd1 != (size_t)arr)
-			throw os::errorPointer(new generalTestException("Size cast failure: node 1",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 1",locString);
 		if((size_t)nd2 != (size_t)(arr+1))
-			throw os::errorPointer(new generalTestException("Size cast failure: node 2",locString),shared_type);
+			throwGeneralTestException("Size cast failure: node 2",locString);
 	}
 
 /*================================================================
@@ -871,7 +871,7 @@ using namespace test;
                 sorted=false;
         }
         if(sorted)
-            throw os::errorPointer(new generalTestException("Unexpectantly sorted",locString),shared_type);
+            throwGeneralTestException("Unexpectantly sorted",locString);
         
         ds.sort();
         sorted=true;
@@ -881,7 +881,7 @@ using namespace test;
                 sorted=false;
         }
         if(!sorted)
-            throw os::errorPointer(new generalTestException("Unsorted vector error",locString),shared_type);
+            throwGeneralTestException("Unsorted vector error",locString);
     }
     //Vector pointer test
     template<class datastruct>
@@ -905,7 +905,7 @@ using namespace test;
                 sorted=false;
         }
         if(sorted)
-            throw os::errorPointer(new generalTestException("Unexpectantly sorted",locString),shared_type);
+            throwGeneralTestException("Unexpectantly sorted",locString);
         
         ds.sort();
         sorted=true;
@@ -915,7 +915,7 @@ using namespace test;
                 sorted=false;
         }
         if(!sorted)
-            throw os::errorPointer(new generalTestException("Unsorted vector error",locString),shared_type);
+            throwGeneralTestException("Unsorted vector error",locString);
         
     }
     //Vector tests
@@ -936,13 +936,13 @@ using namespace test;
     	ds.insert(dummyInt(1));
 
     	if(ds.top()!=dummyInt(1))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (1)",locString);
     	ds.pop();
     	if(ds.top()!=dummyInt(2))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (2)",locString);
     	ds.pop();
     	if(ds.top()!=dummyInt(3))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (3)",locString);
     	ds.pop();
 
     	bool threw=false;
@@ -950,20 +950,20 @@ using namespace test;
     	{ds.pop();}
     	catch(...){threw=true;}
     	if(!threw)
-    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+    		throwGeneralTestException("Expected exception",locString);
 
     	for(int i=0;i<100;++i)
     		ds.insert(dummyInt(i));
     	if(ds.size()!=100)
-    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    		throwGeneralTestException("Mass insertion failed",locString);
     	for(int i=99;i>=0;--i)
     	{
     		if(ds.top()!=dummyInt(i))
-    			throw os::errorPointer(new generalTestException("Mass access failed",locString),shared_type);
+    			throwGeneralTestException("Mass access failed",locString);
     		ds.pop();
     	}
     	if(ds.size()!=0)
-    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    		throwGeneralTestException("Mass removal failed",locString);
     }
     //Stack pointer test
     template<class datastruct>
@@ -978,13 +978,13 @@ using namespace test;
     	ds.insert(pt1);
 
     	if(ds.top()!=pt1)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (1)",locString);
     	ds.pop();
     	if(ds.top()!=pt2)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (2)",locString);
     	ds.pop();
     	if(ds.top()!=pt3)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (3)",locString);
     	ds.pop();
 
     	bool threw=false;
@@ -992,16 +992,16 @@ using namespace test;
     	{ds.pop();}
     	catch(...){threw=true;}
     	if(!threw)
-    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+    		throwGeneralTestException("Expected exception",locString);
 
     	for(int i=0;i<100;++i)
     		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
     	if(ds.size()!=100)
-    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    		throwGeneralTestException("Mass insertion failed",locString);
     	for(int i=99;i>=0;--i)
     		ds.pop();
     	if(ds.size()!=0)
-    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    		throwGeneralTestException("Mass removal failed",locString);
     }
 
     void customTest(std::string className, objectLinkedStackThreadSafe<dummyInt>& ds){stackObjectTest<objectLinkedStackThreadSafe<dummyInt> >(className,ds);}
@@ -1028,13 +1028,13 @@ using namespace test;
     	ds.insert(dummyInt(1));
 
     	if(ds.top()!=dummyInt(3))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (3)",locString);
     	ds.pop();
     	if(ds.top()!=dummyInt(2))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (2)",locString);
     	ds.pop();
     	if(ds.top()!=dummyInt(1))
-    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (1)",locString);
     	ds.pop();
 
     	bool threw=false;
@@ -1042,20 +1042,20 @@ using namespace test;
     	{ds.pop();}
     	catch(...){threw=true;}
     	if(!threw)
-    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+    		throwGeneralTestException("Expected exception",locString);
 
     	for(int i=0;i<100;++i)
     		ds.insert(dummyInt(i));
     	if(ds.size()!=100)
-    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    		throwGeneralTestException("Mass insertion failed",locString);
     	for(int i=0;i<100;++i)
     	{
     		if(ds.top()!=dummyInt(i))
-    			throw os::errorPointer(new generalTestException("Mass access failed",locString),shared_type);
+    			throwGeneralTestException("Mass access failed",locString);
     		ds.pop();
     	}
     	if(ds.size()!=0)
-    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    		throwGeneralTestException("Mass removal failed",locString);
     }
     //Queue pointer test
     template<class datastruct>
@@ -1070,13 +1070,13 @@ using namespace test;
     	ds.insert(pt1);
 
     	if(ds.top()!=pt3)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (3)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (3)",locString);
     	ds.pop();
     	if(ds.top()!=pt2)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (2)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (2)",locString);
     	ds.pop();
     	if(ds.top()!=pt1)
-    		throw os::errorPointer(new generalTestException("Top value unexpected (1)",locString),shared_type);
+    		throwGeneralTestException("Top value unexpected (1)",locString);
     	ds.pop();
 
     	bool threw=false;
@@ -1084,16 +1084,16 @@ using namespace test;
     	{ds.pop();}
     	catch(...){threw=true;}
     	if(!threw)
-    		throw os::errorPointer(new generalTestException("Expected exception",locString),shared_type);
+    		throwGeneralTestException("Expected exception",locString);
 
     	for(int i=0;i<100;++i)
     		ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
     	if(ds.size()!=100)
-    		throw os::errorPointer(new generalTestException("Mass insertion failed",locString),shared_type);
+    		throwGeneralTestException("Mass insertion failed",locString);
     	for(int i=99;i>=0;--i)
     		ds.pop();
     	if(ds.size()!=0)
-    		throw os::errorPointer(new generalTestException("Mass removal failed",locString),shared_type);
+    		throwGeneralTestException("Mass removal failed",locString);
     }
 
     void customTest(std::string className, objectLinkedQueueThreadSafe<dummyInt>& ds){queueObjectTest<objectLinkedQueueThreadSafe<dummyInt> >(className,ds);}
@@ -1128,19 +1128,19 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleInsertionNodeTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		if(!ds.insert(4))
-			throw os::errorPointer(new generalTestException("Cannot insert element",locString),shared_type);
+			throwGeneralTestException("Cannot insert element",locString);
 		if(!ds.find(4))
-			throw os::errorPointer(new generalTestException("Cannot find inserted element",locString),shared_type);
+			throwGeneralTestException("Cannot find inserted element",locString);
 
 		if(ds.find(5))
-			throw os::errorPointer(new generalTestException("Found element which was not inserted",locString),shared_type);
+			throwGeneralTestException("Found element which was not inserted",locString);
 		if(!ds.insert(5))
-			throw os::errorPointer(new generalTestException("Cannot insert element (2)",locString),shared_type);
+			throwGeneralTestException("Cannot insert element (2)",locString);
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 	}
 	template<class datastruct>
 	void singleInsertionPointerTest(std::string className)
@@ -1148,20 +1148,20 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleInsertionPointerTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
 		if(!ds.insert(ptr))
-			throw os::errorPointer(new generalTestException("Cannot insert element",locString),shared_type);
+			throwGeneralTestException("Cannot insert element",locString);
 		if(!ds.find(ptr))
-			throw os::errorPointer(new generalTestException("Cannot find inserted element",locString),shared_type);
+			throwGeneralTestException("Cannot find inserted element",locString);
 
 		if(ds.find(os::smart_ptr<dummyInt>(new dummyInt(5),shared_type)))
-			throw os::errorPointer(new generalTestException("Found element which was not inserted",locString),shared_type);
+			throwGeneralTestException("Found element which was not inserted",locString);
 		if(!ds.insert(os::smart_ptr<dummyInt>(new dummyInt(5),shared_type)))
-			throw os::errorPointer(new generalTestException("Cannot insert element (2)",locString),shared_type);
+			throwGeneralTestException("Cannot insert element (2)",locString);
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 	}
 
 	template<class datastruct>
@@ -1170,24 +1170,24 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleDeletionNodeTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		ds.insert(4);
 		ds.insert(5);
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 		if(!ds.remove(4))
-			throw os::errorPointer(new generalTestException("Failure to remove",locString),shared_type);
+			throwGeneralTestException("Failure to remove",locString);
 		if(ds.find(4))
-			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+			throwGeneralTestException("Found removed element",locString);
 		if(ds.size()!=1)
-			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+			throwGeneralTestException("Expected size to be 1",locString);
 		if(ds.remove(6))
-			throw os::errorPointer(new generalTestException("Move succeded with uninserted node",locString),shared_type);
+			throwGeneralTestException("Move succeded with uninserted node",locString);
 
 		os::iterator<dummyInt> fst=ds.first();
 		if(*fst!=dummyInt(5))
-			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+			throwGeneralTestException("Unexpected value of initial node",locString);
 	}
 	template<class datastruct>
 	void singleDeletionPointerTest(std::string className)
@@ -1195,26 +1195,26 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleDeletionPointerTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
 
 		ds.insert(ptr);
 		ds.insert(smart_ptr<dummyInt>(new dummyInt(5),shared_type));
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 		if(!ds.remove(ptr))
-			throw os::errorPointer(new generalTestException("Failure to remove",locString),shared_type);
+			throwGeneralTestException("Failure to remove",locString);
 		if(ds.find(ptr))
-			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+			throwGeneralTestException("Found removed element",locString);
 		if(ds.size()!=1)
-			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+			throwGeneralTestException("Expected size to be 1",locString);
 		if(ds.remove(smart_ptr<dummyInt>(new dummyInt(6),shared_type)))
-			throw os::errorPointer(new generalTestException("Move succeded with uninserted node",locString),shared_type);
+			throwGeneralTestException("Move succeded with uninserted node",locString);
 
 		os::iterator<dummyInt> fst=ds.first();
 		if(*fst!=dummyInt(5))
-			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+			throwGeneralTestException("Unexpected value of initial node",locString);
 	}
 	template<class datastruct>
 	void iteratorDeletionNodeTest(std::string className)
@@ -1222,22 +1222,22 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleDeletionNodeTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		ds.insert(4);
 		ds.insert(5);
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 		os::iterator<dummyInt> fst=ds.search(dummyInt(4));
 		fst.remove();
 		if(ds.find(4))
-			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+			throwGeneralTestException("Found removed element",locString);
 		if(ds.size()!=1)
-			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+			throwGeneralTestException("Expected size to be 1",locString);
 
 		fst=ds.first();
 		if(*fst!=dummyInt(5))
-			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+			throwGeneralTestException("Unexpected value of initial node",locString);
 	}
 	template<class datastruct>
 	void iteratorDeletionPointerTest(std::string className)
@@ -1245,25 +1245,25 @@ using namespace test;
 		std::string locString = "DatastructuresTest.cpp, singleDeletionPointerTest<"+className+">()";
 		datastruct ds;
 		if(ds.size()!=0)
-			throw os::errorPointer(new generalTestException("Expected size to be 0",locString),shared_type);
+			throwGeneralTestException("Expected size to be 0",locString);
 
 		os::smart_ptr<dummyInt> ptr(new dummyInt(4),shared_type);
 
 		ds.insert(ptr);
 		ds.insert(smart_ptr<dummyInt>(new dummyInt(5),shared_type));
 		if(ds.size()!=2)
-			throw os::errorPointer(new generalTestException("Expected size to be 2",locString),shared_type);
+			throwGeneralTestException("Expected size to be 2",locString);
 		
 		os::iterator<dummyInt> fst=ds.search(ptr);
 		fst.remove();
 		if(ds.find(ptr))
-			throw os::errorPointer(new generalTestException("Found removed element",locString),shared_type);
+			throwGeneralTestException("Found removed element",locString);
 		if(ds.size()!=1)
-			throw os::errorPointer(new generalTestException("Expected size to be 1",locString),shared_type);
+			throwGeneralTestException("Expected size to be 1",locString);
 
 		fst=ds.first();
 		if(*fst!=dummyInt(5))
-			throw os::errorPointer(new generalTestException("Unexpected value of initial node",locString),shared_type);
+			throwGeneralTestException("Unexpected value of initial node",locString);
 	}
 
 	template<class datastruct>
@@ -1278,14 +1278,14 @@ using namespace test;
 		os::iterator<dummyInt> lst=ds.last();
 
 		if(!fst)
-			throw os::errorPointer(new generalTestException("No first node defined",locString),shared_type);
+			throwGeneralTestException("No first node defined",locString);
 		if(!lst)
-			throw os::errorPointer(new generalTestException("No last node defined",locString),shared_type);
+			throwGeneralTestException("No last node defined",locString);
 		if(fst==lst)
-			throw os::errorPointer(new generalTestException("First and last illegally match",locString),shared_type);
+			throwGeneralTestException("First and last illegally match",locString);
 		os::iterator<dummyInt> fst1=ds.first();
 		if(fst!=fst1)
-			throw os::errorPointer(new generalTestException("New and old first do not match",locString),shared_type);
+			throwGeneralTestException("New and old first do not match",locString);
 	}
 	template<class datastruct>
 	void simpleIteratorPointerTest(std::string className)
@@ -1299,9 +1299,9 @@ using namespace test;
 		os::iterator<dummyInt> lst=ds.last();
 
 		if(!fst)
-			throw os::errorPointer(new generalTestException("No first node defined",locString),shared_type);
+			throwGeneralTestException("No first node defined",locString);
 		if(!lst)
-			throw os::errorPointer(new generalTestException("No last node defined",locString),shared_type);
+			throwGeneralTestException("No last node defined",locString);
 	}
 
 	template<class datastruct>
@@ -1315,13 +1315,13 @@ using namespace test;
 		os::iterator<dummyInt> fnd=ds.search(dummyInt(2));
 
 		if(!fnd || *fnd!=dummyInt(2))
-			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
+			throwGeneralTestException("Could not find 2",locString);
 		fnd=ds.search(dummyInt(0));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+			throwGeneralTestException("Unexpectantly found 0",locString);
 		fnd=ds.search(dummyInt(1));
 		if(!fnd || *fnd!=dummyInt(1))
-			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
+			throwGeneralTestException("Could not find 1",locString);
 	}
 	template<class datastruct>
 	void searchPointerTest(std::string className)
@@ -1336,13 +1336,13 @@ using namespace test;
 		os::iterator<dummyInt> fnd=ds.search(d2);
 
 		if(!fnd || *fnd!=dummyInt(2))
-			throw os::errorPointer(new generalTestException("Could not find 2",locString),shared_type);
+			throwGeneralTestException("Could not find 2",locString);
 		fnd=ds.search(smart_ptr<dummyInt>(new dummyInt(0),os::shared_type));
 		if(fnd)
-			throw os::errorPointer(new generalTestException("Unexpectantly found 0",locString),shared_type);
+			throwGeneralTestException("Unexpectantly found 0",locString);
 		fnd=ds.search(d1);
 		if(!fnd || *fnd!=dummyInt(1))
-			throw os::errorPointer(new generalTestException("Could not find 1",locString),shared_type);
+			throwGeneralTestException("Could not find 1",locString);
 	}
 
 	//Copy test
@@ -1416,28 +1416,28 @@ using namespace test;
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (++it)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (++it)",locString);
 
 		except=false;
 		try{it++;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it++)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it++)",locString);
 
 		except=false;
 		try{it+=1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+=1)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it+=1)",locString);
 
 		except=false;
 		try{it=it+1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+1)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it+1)",locString);
 	}
 	template<class datastruct>
 	void noIteratorPointerTest(std::string className)
@@ -1455,28 +1455,28 @@ using namespace test;
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (++it)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (++it)",locString);
 
 		except=false;
 		try{it++;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it++)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it++)",locString);
 
 		except=false;
 		try{it+=1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+=1)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it+=1)",locString);
 
 		except=false;
 		try{it=it+1;}
 		catch(std::exception e)
 		{except=true;}
 		if(!except)
-			throw os::errorPointer(new generalTestException("Unexpected iteration success (it+1)",locString),shared_type);
+			throwGeneralTestException("Unexpected iteration success (it+1)",locString);
 	}
 	template<class datastruct>
 	void basicIteratorNodeTest(std::string className)
@@ -1495,7 +1495,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("++it iteration failed",locString),shared_type);
+			throwGeneralTestException("++it iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1505,7 +1505,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("it++ iteration failed",locString),shared_type);
+			throwGeneralTestException("it++ iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1515,7 +1515,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("+= iteration failed",locString),shared_type);
+			throwGeneralTestException("+= iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1525,7 +1525,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("+ iteration failed",locString),shared_type);
+			throwGeneralTestException("+ iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1536,7 +1536,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("--it iteration failed",locString),shared_type);
+			throwGeneralTestException("--it iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1546,7 +1546,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("it-- iteration failed",locString),shared_type);
+			throwGeneralTestException("it-- iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1556,7 +1556,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("-= iteration failed",locString),shared_type);
+			throwGeneralTestException("-= iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1566,7 +1566,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("- iteration failed",locString),shared_type);
+			throwGeneralTestException("- iteration failed",locString);
 	}
 	template<class datastruct>
 	void basicIteratorPointerTest(std::string className)
@@ -1585,7 +1585,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("++it iteration failed",locString),shared_type);
+			throwGeneralTestException("++it iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1595,7 +1595,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("it++ iteration failed",locString),shared_type);
+			throwGeneralTestException("it++ iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1605,7 +1605,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("+= iteration failed",locString),shared_type);
+			throwGeneralTestException("+= iteration failed",locString);
 
 		cnt=0;
 		it=ds.first();
@@ -1615,7 +1615,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("+ iteration failed",locString),shared_type);
+			throwGeneralTestException("+ iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1625,7 +1625,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("--it iteration failed",locString),shared_type);
+			throwGeneralTestException("--it iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1635,7 +1635,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("it-- iteration failed",locString),shared_type);
+			throwGeneralTestException("it-- iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1645,7 +1645,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("-= iteration failed",locString),shared_type);
+			throwGeneralTestException("-= iteration failed",locString);
 
 		cnt=0;
 		it=ds.last();
@@ -1655,7 +1655,7 @@ using namespace test;
 			++cnt;
 		}
 		if(it || cnt<3)
-			throw os::errorPointer(new generalTestException("- iteration failed",locString),shared_type);
+			throwGeneralTestException("- iteration failed",locString);
 	}
 	template<class datastruct>
 	void randomIteratorNodeTest(std::string className)
@@ -1697,7 +1697,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+				throwGeneralTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString);
 		}
 	}
 	template<class datastruct>
@@ -1740,7 +1740,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+				throwGeneralTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString);
 		}
 	}
 	
@@ -1784,7 +1784,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+				throwGeneralTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString);
 		}
 	}
 	template<class datastruct>
@@ -1827,7 +1827,7 @@ using namespace test;
 		for(size_t i=0;i<100;i++)
 		{
 			if(!found[i])
-				throw os::errorPointer(new generalTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString),shared_type);
+				throwGeneralTestException("Inserted element "+std::to_string(dat[i])+" @ "+std::to_string(i)+" not found",locString);
 		}
 	}
 	
@@ -1859,7 +1859,7 @@ using namespace test;
 		while(it1)
 		{
 			if(it2 && it2>it1)
-				throw os::errorPointer(new generalTestException("Datastructure unsorted",locString),shared_type);
+				throwGeneralTestException("Datastructure unsorted",locString);
 			it2=it1;
 			++it1;
 		}
@@ -1870,11 +1870,11 @@ using namespace test;
 			{
 				size_t sz=ds.size();
 				if(!ds.remove(dat[i]))
-                    throw os::errorPointer(new generalTestException("Remove call failed",locString),shared_type);
+                    throwGeneralTestException("Remove call failed",locString);
                 if(ds.find(dat[i]))
-                    throw os::errorPointer(new generalTestException("Found removed object",locString),shared_type);
+                    throwGeneralTestException("Found removed object",locString);
 				if(ds.size()==sz)
-					throw os::errorPointer(new generalTestException("Failed to remove an object",locString),shared_type);
+					throwGeneralTestException("Failed to remove an object",locString);
 			}
 		}
 	}
@@ -1906,7 +1906,7 @@ using namespace test;
 		while(it1)
 		{
 			if(it2 && it2>it1)
-				throw os::errorPointer(new generalTestException("Datastructure unsorted",locString),shared_type);
+				throwGeneralTestException("Datastructure unsorted",locString);
 			it2=it1;
 			++it1;
 		}
@@ -1917,11 +1917,11 @@ using namespace test;
 			{
 				size_t sz=ds.size();
                 if(!ds.remove(dat[i]))
-                    throw os::errorPointer(new generalTestException("Remove call failed",locString),shared_type);
+                    throwGeneralTestException("Remove call failed",locString);
                 if(ds.find(dat[i]))
-                    throw os::errorPointer(new generalTestException("Found removed object",locString),shared_type);
+                    throwGeneralTestException("Found removed object",locString);
                 if(ds.size()==sz)
-                    throw os::errorPointer(new generalTestException("Failed to remove an object",locString),shared_type);
+                    throwGeneralTestException("Failed to remove an object",locString);
 			}
 		}
 	}
@@ -1941,10 +1941,10 @@ using namespace test;
 		ds2.insert(9);
 
 		if(ds1.find(3))
-			throw os::errorPointer(new generalTestException("Unexpectadly found 3",locString),shared_type);
+			throwGeneralTestException("Unexpectadly found 3",locString);
 		ds1.insertStructure(ds2);
 		if(!ds1.find(3))
-			throw os::errorPointer(new generalTestException("Could not find 3",locString),shared_type);
+			throwGeneralTestException("Could not find 3",locString);
 	}
 	template<class datastruct>
 	void wholeInsertionPointerTest(std::string className)
@@ -1963,10 +1963,10 @@ using namespace test;
 		ds2.insert(os::smart_ptr<dummyInt>(new dummyInt(9),os::shared_type));
 
 		if(ds1.find(i3))
-			throw os::errorPointer(new generalTestException("Unexpectadly found 3",locString),shared_type);
+			throwGeneralTestException("Unexpectadly found 3",locString);
 		ds1.insertStructure(ds2);
 		if(!ds1.find(i3))
-			throw os::errorPointer(new generalTestException("Could not find 3",locString),shared_type);
+			throwGeneralTestException("Could not find 3",locString);
 	}
 
 	//Random access tests
@@ -1981,7 +1981,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException de){thrown=true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected access to throw exception",locString);
         thrown=false;
         
         ds.insert(2);
@@ -1991,21 +1991,21 @@ using namespace test;
 		{
 			os::iterator<dummyInt> it=ds.first();
 			if(it+1!=++it)
-				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
+				throwGeneralTestException("Basic increment failed",locString);
 
 			try{it+=2;}
 			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
-				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
+				throwGeneralTestException("Expected double increment to fail",locString);
 
 			it=ds.last();
 			if(it-1!=--it)
-				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
+				throwGeneralTestException("Basic decrement failed",locString);
 
 			try{it-=2;}
 			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
-				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
+				throwGeneralTestException("Expected double decrement to fail",locString);
 		}
     }
     template<class datastruct>
@@ -2019,7 +2019,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException de){thrown=true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected access to throw exception",locString);
         thrown=false;
         
         ds.insert(os::smart_ptr<dummyInt>(new dummyInt(2),os::shared_type));
@@ -2029,21 +2029,21 @@ using namespace test;
 		{
 			os::iterator<dummyInt> it=ds.first();
 			if(it+1!=++it)
-				throw os::errorPointer(new generalTestException("Basic increment failed",locString),shared_type);
+				throwGeneralTestException("Basic increment failed",locString);
 
 			try{it+=2;}
 			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
-				throw os::errorPointer(new generalTestException("Expected double increment to fail",locString),shared_type);
+				throwGeneralTestException("Expected double increment to fail",locString);
 
 			it=ds.last();
 			if(it-1!=--it)
-				throw os::errorPointer(new generalTestException("Basic decrement failed",locString),shared_type);
+				throwGeneralTestException("Basic decrement failed",locString);
 
 			try{it-=2;}
 			catch(descriptiveException de){thrown=true;}
 			if(!thrown)
-				throw os::errorPointer(new generalTestException("Expected double decrement to fail",locString),shared_type);
+				throwGeneralTestException("Expected double decrement to fail",locString);
 		}
     }
     template<class datastruct>
@@ -2056,7 +2056,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected out of bounds access to throw exception",locString);
         
         for(int i=0;i<100;++i)
             ds.insert(i);
@@ -2067,11 +2067,11 @@ using namespace test;
             size_t r=rand()%98+1;
             d=ds[r];
             if(d!=ds[r])
-                throw os::errorPointer(new generalTestException("Random access failed",locString),shared_type);
+                throwGeneralTestException("Random access failed",locString);
             if(d==ds[r-1])
-                throw os::errorPointer(new generalTestException("- 1 random access failed",locString),shared_type);
+                throwGeneralTestException("- 1 random access failed",locString);
             if(d==ds[r+1])
-                throw os::errorPointer(new generalTestException("+ 1 random access failed",locString),shared_type);
+                throwGeneralTestException("+ 1 random access failed",locString);
         }
     }
     template<class datastruct>
@@ -2084,7 +2084,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected out of bounds access to throw exception",locString);
     
         for(int i=0;i<100;++i)
             ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
@@ -2095,11 +2095,11 @@ using namespace test;
             size_t r=rand()%98+1;
             d=ds[r];
             if(!d || !ds[r] || *d!=*ds[r])
-                throw os::errorPointer(new generalTestException("Random access failed",locString),shared_type);
+                throwGeneralTestException("Random access failed",locString);
             if(*d==*ds[r-1])
-                throw os::errorPointer(new generalTestException("- 1 random access failed",locString),shared_type);
+                throwGeneralTestException("- 1 random access failed",locString);
             if(*d==*ds[r+1])
-                throw os::errorPointer(new generalTestException("+ 1 random access failed",locString),shared_type);
+                throwGeneralTestException("+ 1 random access failed",locString);
         }
     }
 	template<class datastruct>
@@ -2112,7 +2112,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException de){thrown = true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected out of bounds access to throw exception",locString);
         
         for(int i=0;i<100;++i)
             ds.insert(i);
@@ -2124,15 +2124,15 @@ using namespace test;
             d=ds[r];
             os::iterator<dummyInt> it=ds.first();
 			if(*(it+r)!=d)
-				throw os::errorPointer(new generalTestException("Iterator increasing random-access failed",locString),shared_type);
+				throwGeneralTestException("Iterator increasing random-access failed",locString);
 			it=ds.last();
 			if(*(it-(99-r))!=d)
-				throw os::errorPointer(new generalTestException("Iterator decreasing random-access failed",locString),shared_type);
+				throwGeneralTestException("Iterator decreasing random-access failed",locString);
         }
 		if(ds.last()+2)
-			throw os::errorPointer(new generalTestException("Expected out of bounds (high)",locString),shared_type);
+			throwGeneralTestException("Expected out of bounds (high)",locString);
 		if(ds.first()-2)
-			throw os::errorPointer(new generalTestException("Expected out of bounds (low)",locString),shared_type);
+			throwGeneralTestException("Expected out of bounds (low)",locString);
     }
     template<class datastruct>
     void iteratorRandomAccessPointerTest(std::string className)
@@ -2144,7 +2144,7 @@ using namespace test;
         try{ds[0];}
         catch(descriptiveException){thrown = true;}
         if(!thrown)
-            throw os::errorPointer(new generalTestException("Expected out of bounds access to throw exception",locString),shared_type);
+            throwGeneralTestException("Expected out of bounds access to throw exception",locString);
         
         for(int i=0;i<100;++i)
 			ds.insert(os::smart_ptr<dummyInt>(new dummyInt(i),os::shared_type));
@@ -2156,15 +2156,15 @@ using namespace test;
             d=ds[r];
 			os::iterator<dummyInt> it=ds.first();
 			if(&(it+r)!=d)
-				throw os::errorPointer(new generalTestException("Iterator increasing random-access failed",locString),shared_type);
+				throwGeneralTestException("Iterator increasing random-access failed",locString);
 			it=ds.last();
 			if(&(it-(99-r))!=d)
-				throw os::errorPointer(new generalTestException("Iterator decreasing random-access failed",locString),shared_type);
+				throwGeneralTestException("Iterator decreasing random-access failed",locString);
         }
 		if(ds.last()+2)
-			throw os::errorPointer(new generalTestException("Expected out of bounds (high)",locString),shared_type);
+			throwGeneralTestException("Expected out of bounds (high)",locString);
 		if(ds.first()-2)
-			throw os::errorPointer(new generalTestException("Expected out of bounds (low)",locString),shared_type);
+			throwGeneralTestException("Expected out of bounds (low)",locString);
     }
 	
 	//Testing structure
@@ -2279,8 +2279,8 @@ using namespace test;
         int compArray[16];
         
         //Check size
-        if(mat1.width()!=4 || mat2.width()!=4 || mat3.width()!=4) throw os::errorPointer(new generalTestException("Matrix width failure",locString),shared_type);
-        if(mat1.height()!=4 || mat2.height()!=4 || mat3.height()!=4) throw os::errorPointer(new generalTestException("Matrix height failure",locString),shared_type);
+        if(mat1.width()!=4 || mat2.width()!=4 || mat3.width()!=4) throwGeneralTestException("Matrix width failure",locString);
+        if(mat1.height()!=4 || mat2.height()!=4 || mat3.height()!=4) throwGeneralTestException("Matrix height failure",locString);
         
         //Random init
         srand((unsigned)time(NULL));
@@ -2299,21 +2299,21 @@ using namespace test;
         for(int i = 0;i<16;++i)
         {
             if(compArray[i] != mat1.getArray()[i])
-                throw os::errorPointer(new generalTestException("Matrix init failed",locString),shared_type);
+                throwGeneralTestException("Matrix init failed",locString);
         }
         
         //Compare mat1 and mat2 (raw array)
         for(int i = 0;i<16;++i)
         {
             if(mat1.getArray()[i] != mat2.getArray()[i])
-            throw os::errorPointer(new generalTestException("Matrix direct compare failed",locString),shared_type);
+            throwGeneralTestException("Matrix direct compare failed",locString);
         }
         
         //Compare mat1 and mat3 (raw array)
         for(int i = 0;i<16;++i)
         {
             if(mat2.getArray()[i] != mat3.getArray()[i])
-            throw os::errorPointer(new generalTestException("Matrix copy compare failed",locString),shared_type);
+            throwGeneralTestException("Matrix copy compare failed",locString);
         }
     }
     //Equality test
@@ -2342,21 +2342,21 @@ using namespace test;
         
         //Compare mat1 and 2
         if(!(mat1==mat2))
-        throw os::errorPointer(new generalTestException("Equals failed (same init)",locString),shared_type);
+        throwGeneralTestException("Equals failed (same init)",locString);
         if(mat1!=mat2)
-        throw os::errorPointer(new generalTestException("Not equals failed (same init)",locString),shared_type);
+        throwGeneralTestException("Not equals failed (same init)",locString);
         
         //Compare mat2 and 4
         if(!(mat2==mat4))
-        throw os::errorPointer(new generalTestException("Equals failed (copy constructor)",locString),shared_type);
+        throwGeneralTestException("Equals failed (copy constructor)",locString);
         if(mat2!=mat4)
-        throw os::errorPointer(new generalTestException("Not equals failed (copy constructor)",locString),shared_type);
+        throwGeneralTestException("Not equals failed (copy constructor)",locString);
         
         //Compare mat1 and 3
         if(mat1==mat3)
-        throw os::errorPointer(new generalTestException("Equals failed (different mats)",locString),shared_type);
+        throwGeneralTestException("Equals failed (different mats)",locString);
         if(!(mat1!=mat3))
-        throw os::errorPointer(new generalTestException("Not equals failed (different mats)",locString),shared_type);
+        throwGeneralTestException("Not equals failed (different mats)",locString);
     }
     //Addition test
     void matrixAdditionTest()
@@ -2380,10 +2380,10 @@ using namespace test;
         
         out = mat1+mat2;
         if(out!=ans)
-        throw os::errorPointer(new generalTestException("Addition failed!",locString),shared_type);
+        throwGeneralTestException("Addition failed!",locString);
         out = mat2+mat1;
         if(out!=ans)
-        throw os::errorPointer(new generalTestException("Addition transitivity failed!",locString),shared_type);
+        throwGeneralTestException("Addition transitivity failed!",locString);
     }
     //Subtraction test
     static void matrixSubtractionTest()
@@ -2407,10 +2407,10 @@ using namespace test;
         
         out = mat2-mat1;
         if(out!=ans)
-        throw os::errorPointer(new generalTestException("Subtraction failed!",locString),shared_type);
+        throwGeneralTestException("Subtraction failed!",locString);
         out = mat1-mat2;
         if(out==ans)
-        throw os::errorPointer(new generalTestException("Subtraction not respecting order!",locString),shared_type);
+        throwGeneralTestException("Subtraction not respecting order!",locString);
     }
     //Dot product test
     void matrixDotProductTest()
@@ -2434,10 +2434,10 @@ using namespace test;
         
         out = mat1*mat2;
         if(out!=ans)
-        throw os::errorPointer(new generalTestException("Dot Product failed!",locString),shared_type);
+        throwGeneralTestException("Dot Product failed!",locString);
         out = mat2*mat1;
         if(out==ans)
-        throw os::errorPointer(new generalTestException("Dot Product not respecting order!",locString),shared_type);
+        throwGeneralTestException("Dot Product not respecting order!",locString);
     }
     //Advanced construction test
     void matrixAdvancedConstructionTest()
@@ -2471,19 +2471,19 @@ using namespace test;
             for(int i=0;i<100;++i)
             {
                 if(mast1.getArray()[i]!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix init failed (direct matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix init failed (direct matrix)",locString);
                 if(*(mast2.getArray()[i])!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix init failed (indirect matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix init failed (indirect matrix)",locString);
                 
                 if(cop1.getArray()[i]!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix standard equals failed (direct matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix standard equals failed (direct matrix)",locString);
                 if(*(cop2.getArray()[i])!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix standard equals failed (indirect matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix standard equals failed (indirect matrix)",locString);
                 
                 if(bridge1.getArray()[i]!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix bridge equals failed (direct matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix bridge equals failed (direct matrix)",locString);
                 if(*(bridge2.getArray()[i])!=compsrc[i])
-                    throw os::errorPointer(new generalTestException("Matrix bridge equals failed (indirect matrix)",locString),shared_type);
+                    throwGeneralTestException("Matrix bridge equals failed (indirect matrix)",locString);
             }
         }
     }
@@ -2516,28 +2516,28 @@ using namespace test;
             cop2=mast2;
             
             //Standard to standard
-            if(!(mast1==cop1)) throw os::errorPointer(new generalTestException("S-S equals failed",locString),shared_type);
-            if(!(cop1==mast1)) throw os::errorPointer(new generalTestException("Transitive S-S equals failed",locString),shared_type);
-            if(mast1!=cop1) throw os::errorPointer(new generalTestException("S-S not equals failed",locString),shared_type);
-            if(cop1!=mast1) throw os::errorPointer(new generalTestException("Transitive S-S not equals failed",locString),shared_type);
+            if(!(mast1==cop1)) throwGeneralTestException("S-S equals failed",locString);
+            if(!(cop1==mast1)) throwGeneralTestException("Transitive S-S equals failed",locString);
+            if(mast1!=cop1) throwGeneralTestException("S-S not equals failed",locString);
+            if(cop1!=mast1) throwGeneralTestException("Transitive S-S not equals failed",locString);
             
             //Indirect to indirect
-            if(!(mast2==cop2)) throw os::errorPointer(new generalTestException("I-I equals failed",locString),shared_type);
-            if(!(cop2==mast2)) throw os::errorPointer(new generalTestException("Transitive I-I equals failed",locString),shared_type);
-            if(mast2!=cop2) throw os::errorPointer(new generalTestException("I-I not equals failed",locString),shared_type);
-            if(cop2!=mast2) throw os::errorPointer(new generalTestException("Transitive I-I not equals failed",locString),shared_type);
+            if(!(mast2==cop2)) throwGeneralTestException("I-I equals failed",locString);
+            if(!(cop2==mast2)) throwGeneralTestException("Transitive I-I equals failed",locString);
+            if(mast2!=cop2) throwGeneralTestException("I-I not equals failed",locString);
+            if(cop2!=mast2) throwGeneralTestException("Transitive I-I not equals failed",locString);
             
             //Standard to indirect
-            if(!(mast1==cop2)) throw os::errorPointer(new generalTestException("S-I equals failed",locString),shared_type);
-            if(!(cop1==mast2)) throw os::errorPointer(new generalTestException("Transitive S-I equals failed",locString),shared_type);
-            if(mast1!=cop2) throw os::errorPointer(new generalTestException("S-I not equals failed",locString),shared_type);
-            if(cop1!=mast2) throw os::errorPointer(new generalTestException("Transitive S-I not equals failed",locString),shared_type);
+            if(!(mast1==cop2)) throwGeneralTestException("S-I equals failed",locString);
+            if(!(cop1==mast2)) throwGeneralTestException("Transitive S-I equals failed",locString);
+            if(mast1!=cop2) throwGeneralTestException("S-I not equals failed",locString);
+            if(cop1!=mast2) throwGeneralTestException("Transitive S-I not equals failed",locString);
             
             //Indirect to standard
-            if(!(mast2==cop1)) throw os::errorPointer(new generalTestException("I-S equals failed",locString),shared_type);
-            if(!(cop2==mast1)) throw os::errorPointer(new generalTestException("Transitive I-S equals failed",locString),shared_type);
-            if(mast2!=cop1) throw os::errorPointer(new generalTestException("I-S not equals failed",locString),shared_type);
-            if(cop2!=mast1) throw os::errorPointer(new generalTestException("Transitive I-S not equals failed",locString),shared_type);
+            if(!(mast2==cop1)) throwGeneralTestException("I-S equals failed",locString);
+            if(!(cop2==mast1)) throwGeneralTestException("Transitive I-S equals failed",locString);
+            if(mast2!=cop1) throwGeneralTestException("I-S not equals failed",locString);
+            if(cop2!=mast1) throwGeneralTestException("Transitive I-S not equals failed",locString);
         }
     }
     //Advanced addition test
@@ -2563,20 +2563,20 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1+imat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i1+i2 != s1+s2",locString),shared_type);
-            if(imat2+imat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i2+i1 != s2+s1",locString),shared_type);
-            if(imat1+smat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i1+s2 != s1+s2",locString),shared_type);
-            if(imat2+smat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i2+s1 != s2+s1",locString),shared_type);
-            if(smat1+imat2 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: s1+i2 != s1+s2",locString),shared_type);
-            if(smat2+imat1 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: s2+i1 != s2+s1",locString),shared_type);
+            if(imat1+imat2 != smat1+smat2) throwGeneralTestException("Addition failed: i1+i2 != s1+s2",locString);
+            if(imat2+imat1 != smat2+smat1) throwGeneralTestException("Addition failed: i2+i1 != s2+s1",locString);
+            if(imat1+smat2 != smat1+smat2) throwGeneralTestException("Addition failed: i1+s2 != s1+s2",locString);
+            if(imat2+smat1 != smat2+smat1) throwGeneralTestException("Addition failed: i2+s1 != s2+s1",locString);
+            if(smat1+imat2 != smat1+smat2) throwGeneralTestException("Addition failed: s1+i2 != s1+s2",locString);
+            if(smat2+imat1 != smat2+smat1) throwGeneralTestException("Addition failed: s2+i1 != s2+s1",locString);
             
             //Transitive tests
-            if(imat1+imat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i1+i2 != s2+s1",locString),shared_type);
-            if(imat2+imat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i2+i1 != s1+s2",locString),shared_type);
-            if(imat1+smat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: i1+s2 != s2+s1",locString),shared_type);
-            if(imat2+smat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: i2+s1 != s1+s2",locString),shared_type);
-            if(smat1+imat2 != smat2+smat1) throw os::errorPointer(new generalTestException("Addition failed: s1+i2 != s2+s1",locString),shared_type);
-            if(smat2+imat1 != smat1+smat2) throw os::errorPointer(new generalTestException("Addition failed: s2+i1 != s1+s2",locString),shared_type);
+            if(imat1+imat2 != smat2+smat1) throwGeneralTestException("Addition failed: i1+i2 != s2+s1",locString);
+            if(imat2+imat1 != smat1+smat2) throwGeneralTestException("Addition failed: i2+i1 != s1+s2",locString);
+            if(imat1+smat2 != smat2+smat1) throwGeneralTestException("Addition failed: i1+s2 != s2+s1",locString);
+            if(imat2+smat1 != smat1+smat2) throwGeneralTestException("Addition failed: i2+s1 != s1+s2",locString);
+            if(smat1+imat2 != smat2+smat1) throwGeneralTestException("Addition failed: s1+i2 != s2+s1",locString);
+            if(smat2+imat1 != smat1+smat2) throwGeneralTestException("Addition failed: s2+i1 != s1+s2",locString);
         }
     }
     //Advanced subtraction test
@@ -2602,12 +2602,12 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1-imat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: i1-i2 != s1-s2",locString),shared_type);
-            if(imat2-imat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: i2-i1 != s2-s1",locString),shared_type);
-            if(imat1-smat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: i1-s2 != s1-s2",locString),shared_type);
-            if(imat2-smat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: i2-s1 != s2-s1",locString),shared_type);
-            if(smat1-imat2 != smat1-smat2) throw os::errorPointer(new generalTestException("Subtraction failed: s1-i2 != s1-s2",locString),shared_type);
-            if(smat2-imat1 != smat2-smat1) throw os::errorPointer(new generalTestException("Subtraction failed: s2-i1 != s2-s1",locString),shared_type);
+            if(imat1-imat2 != smat1-smat2) throwGeneralTestException("Subtraction failed: i1-i2 != s1-s2",locString);
+            if(imat2-imat1 != smat2-smat1) throwGeneralTestException("Subtraction failed: i2-i1 != s2-s1",locString);
+            if(imat1-smat2 != smat1-smat2) throwGeneralTestException("Subtraction failed: i1-s2 != s1-s2",locString);
+            if(imat2-smat1 != smat2-smat1) throwGeneralTestException("Subtraction failed: i2-s1 != s2-s1",locString);
+            if(smat1-imat2 != smat1-smat2) throwGeneralTestException("Subtraction failed: s1-i2 != s1-s2",locString);
+            if(smat2-imat1 != smat2-smat1) throwGeneralTestException("Subtraction failed: s2-i1 != s2-s1",locString);
         }
     }
     //Advanced dot product test
@@ -2633,12 +2633,12 @@ using namespace test;
             indirectMatrix<int> imat2(smat2);
             
             //Compares
-            if(imat1*imat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: i1*i2 != s1*s2",locString),shared_type);
-            if(imat2*imat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: i2*i1 != s2*s1",locString),shared_type);
-            if(imat1*smat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: i1*s2 != s1*s2",locString),shared_type);
-            if(imat2*smat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: i2*s1 != s2*s1",locString),shared_type);
-            if(smat1*imat2 != smat1*smat2) throw os::errorPointer(new generalTestException("Dot Product failed: s1*i2 != s1*s2",locString),shared_type);
-            if(smat2*imat1 != smat2*smat1) throw os::errorPointer(new generalTestException("Dot Product failed: s2*i1 != s2*s1",locString),shared_type);
+            if(imat1*imat2 != smat1*smat2) throwGeneralTestException("Dot Product failed: i1*i2 != s1*s2",locString);
+            if(imat2*imat1 != smat2*smat1) throwGeneralTestException("Dot Product failed: i2*i1 != s2*s1",locString);
+            if(imat1*smat2 != smat1*smat2) throwGeneralTestException("Dot Product failed: i1*s2 != s1*s2",locString);
+            if(imat2*smat1 != smat2*smat1) throwGeneralTestException("Dot Product failed: i2*s1 != s2*s1",locString);
+            if(smat1*imat2 != smat1*smat2) throwGeneralTestException("Dot Product failed: s1*i2 != s1*s2",locString);
+            if(smat2*imat1 != smat2*smat1) throwGeneralTestException("Dot Product failed: s2*i1 != s2*s1",locString);
         }
     }
 
@@ -2654,20 +2654,20 @@ using namespace test;
 		
 		//Test default init values
 		if(v1.x!=0 || v1.y!=0)
-			throw os::errorPointer(new generalTestException("Vector default init failed",locString),shared_type);
+			throwGeneralTestException("Vector default init failed",locString);
 
 		//Tests the value init
 		vector2d_d v2(.5,1.5);
 		if(v2.x!=.5 || v2.y!=1.5)
-			throw os::errorPointer(new generalTestException("Vector init failed",locString),shared_type);
+			throwGeneralTestException("Vector init failed",locString);
 
 		//Tests the copy constructor
 		vector2d_d v3(v2);
 		if(v3.x!=.5 || v3.y!=1.5)
-			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
+			throwGeneralTestException("Vector copy init failed",locString);
 		v1=v3;
 		if(v1.x!=.5 || v1.y!=1.5)
-			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
+			throwGeneralTestException("Vector copy init failed",locString);
 	}
     void vector3dConstructorTest()
 	{
@@ -2676,26 +2676,26 @@ using namespace test;
 		
 		//Test default init values
 		if(v1.x!=0 || v1.y!=0 || v1.z!=0)
-			throw os::errorPointer(new generalTestException("Vector default init failed",locString),shared_type);
+			throwGeneralTestException("Vector default init failed",locString);
 
 		//Tests the value init
 		vector3d_d v2(.5,1.5,2.5);
 		if(v2.x!=.5 || v2.y!=1.5 || v2.z!=2.5)
-			throw os::errorPointer(new generalTestException("Vector init failed",locString),shared_type);
+			throwGeneralTestException("Vector init failed",locString);
 
 		//Tests the copy constructor
 		vector3d_d v3(v2);
 		if(v3.x!=.5 || v3.y!=1.5 || v3.z!=2.5)
-			throw os::errorPointer(new generalTestException("Vector copy init failed",locString),shared_type);
+			throwGeneralTestException("Vector copy init failed",locString);
 		v1=v3;
 		if(v1.x!=.5 || v1.y!=1.5 || v1.z!=2.5)
-			throw os::errorPointer(new generalTestException("Vector equals init failed",locString),shared_type);
+			throwGeneralTestException("Vector equals init failed",locString);
 
 		//Tests the 2d constructor
 		vector2d_d t(1,2);
 		vector3d_d v4(t);
 		if(v4.x!=1 || v4.y!=2 || v4.z !=0)
-			throw os::errorPointer(new generalTestException("Vector 2d init failed",locString),shared_type);
+			throwGeneralTestException("Vector 2d init failed",locString);
 	}
 	//Tests equality functions
     void vector2dEqualityTest() 
@@ -2719,15 +2719,15 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+				throwGeneralTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=0 && v1==v2) throwGeneralTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==0 && v1!=v2) throwGeneralTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v!=-1 && v1<v2) throwGeneralTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==1 && v1<=v2) throwGeneralTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v!=1 && v1>v2) throwGeneralTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==-1 && v1>=v2) throwGeneralTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString);
 		}
 	}
     void vector3dEqualityTest() 
@@ -2751,15 +2751,15 @@ using namespace test;
 			else if(v1.x==v2.x && v1.y==v2.y) v=0;
 
 			if(v!=v1.compare(v2))
-				throw os::errorPointer(new generalTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+				throwGeneralTestException("Compare failed.  Cycle: "+to_string((long long unsigned)i),locString);
 			
 			//Test all cases
-			if(v!=0 && v1==v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==0 && v1!=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v!=-1 && v1<v2) throw os::errorPointer(new generalTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==1 && v1<=v2) throw os::errorPointer(new generalTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v!=1 && v1>v2) throw os::errorPointer(new generalTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
-			if(v==-1 && v1>=v2) throw os::errorPointer(new generalTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString),shared_type);
+			if(v!=0 && v1==v2) throwGeneralTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==0 && v1!=v2) throwGeneralTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v!=-1 && v1<v2) throwGeneralTestException("< failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==1 && v1<=v2) throwGeneralTestException("<= failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v!=1 && v1>v2) throwGeneralTestException("> failed.  Cycle: "+to_string((long long unsigned)i),locString);
+			if(v==-1 && v1>=v2) throwGeneralTestException(">= failed.  Cycle: "+to_string((long long unsigned)i),locString);
 		}
 	}
 	//Addition
@@ -2773,34 +2773,34 @@ using namespace test;
 		vector2d_d ans(10,11);
 
 		if(v1.add(v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple addition failed",locString),shared_type);
+			throwGeneralTestException("Simple addition failed",locString);
 		if(v1+v2!=ans)
-			throw os::errorPointer(new generalTestException("Simple + failed",locString),shared_type);
+			throwGeneralTestException("Simple + failed",locString);
 		if(v2+v1!=ans)
-			throw os::errorPointer(new generalTestException("+ reverse failed",locString),shared_type);
+			throwGeneralTestException("+ reverse failed",locString);
 		if((v1+=v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple += failed",locString),shared_type);
+			throwGeneralTestException("Simple += failed",locString);
 		if(v1!=ans)
-			throw os::errorPointer(new generalTestException("+= after failed",locString),shared_type);
+			throwGeneralTestException("+= after failed",locString);
 
 		//Increment and decrement
 		vector2d_d raw(0,1);
 		++raw;
 		if(raw.x!=0 && raw.y!=2)
-			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
+			throwGeneralTestException("Simple increment failed",locString);
 		++raw;
 		if(raw.x!=0 && raw.y!=3)
-			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throwGeneralTestException("Simple increment (2) failed",locString);
 		
 		raw=vector2d_d(3,4);
 		if(5.1<raw.length() || raw.length()<4.9)
-			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
+			throwGeneralTestException("Length failed",locString);
 		++raw;
 		if(6.1<raw.length() || raw.length()<5.9)
-			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
+			throwGeneralTestException("Complex increment failed",locString);
 		++raw;
 		if(7.1<raw.length() || raw.length()<6.9)
-			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
+			throwGeneralTestException("Complex increment (2) failed",locString);
 	}
     void vector3dAdditionTest() 
 	{
@@ -2812,35 +2812,35 @@ using namespace test;
 		vector3d_d ans(10,11,5);
 
 		if(v1.add(v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple addition failed",locString),shared_type);
+			throwGeneralTestException("Simple addition failed",locString);
 		if(v1+v2!=ans)
-			throw os::errorPointer(new generalTestException("Simple + failed",locString),shared_type);
+			throwGeneralTestException("Simple + failed",locString);
 		if(v2+v1!=ans)
-			throw os::errorPointer(new generalTestException("+ reverse failed",locString),shared_type);
+			throwGeneralTestException("+ reverse failed",locString);
 		if((v1+=v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple += failed",locString),shared_type);
+			throwGeneralTestException("Simple += failed",locString);
 		if(v1!=ans)
-			throw os::errorPointer(new generalTestException("+= after failed",locString),shared_type);
+			throwGeneralTestException("+= after failed",locString);
 
 		//Increment and decrement
 		vector3d_d raw(0,1,0);
 		++raw;
 		if(raw.x!=0 || raw.y!=2 || raw.z!=0)
-			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
+			throwGeneralTestException("Simple increment failed",locString);
 		++raw;
 		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
-			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throwGeneralTestException("Simple increment (2) failed",locString);
 		
 		raw=vector3d_d(1,1,1);
 		if(raw.length()!=sqrt(3))
-			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
+			throwGeneralTestException("Length failed",locString);
 		++raw;
 
 		if(raw.length() < sqrt(3)+.9 || raw.length() > sqrt(3)+1.1)
-			throw os::errorPointer(new generalTestException("Complex increment failed",locString),shared_type);
+			throwGeneralTestException("Complex increment failed",locString);
 		++raw;
 		if(raw.length() < sqrt(3)+1.9 || raw.length() > sqrt(3)+2.1)
-			throw os::errorPointer(new generalTestException("Complex increment (2) failed",locString),shared_type);
+			throwGeneralTestException("Complex increment (2) failed",locString);
 	}
 	//Subtraction
     void vector2dSubtractionTest() 
@@ -2853,34 +2853,34 @@ using namespace test;
 		vector2d_d ans(-4,7);
 
 		if(v1.subtract(v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple subtract failed",locString),shared_type);
+			throwGeneralTestException("Simple subtract failed",locString);
 		if(v1-v2!=ans)
-			throw os::errorPointer(new generalTestException("Simple - failed",locString),shared_type);
+			throwGeneralTestException("Simple - failed",locString);
 		if((v2-v1) != (-ans))
-			throw os::errorPointer(new generalTestException("- reverse failed",locString),shared_type);
+			throwGeneralTestException("- reverse failed",locString);
 		if((v1-=v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple -= failed",locString),shared_type);
+			throwGeneralTestException("Simple -= failed",locString);
 		if(v1!=ans)
-			throw os::errorPointer(new generalTestException("-= after failed",locString),shared_type);
+			throwGeneralTestException("-= after failed",locString);
 
 		//Increment and decrement
 		vector2d_d raw(0,5);
 		--raw;
 		if(raw.x!=0 && raw.y!=4)
-			throw os::errorPointer(new generalTestException("Simple decrement failed",locString),shared_type);
+			throwGeneralTestException("Simple decrement failed",locString);
 		--raw;
 		if(raw.x!=0 && raw.y!=3)
-			throw os::errorPointer(new generalTestException("Simple decrement (2) failed",locString),shared_type);
+			throwGeneralTestException("Simple decrement (2) failed",locString);
 		
 		raw=vector2d_d(3,4);
 		if(5.1<raw.length() || raw.length()<4.9)
-			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
+			throwGeneralTestException("Length failed",locString);
 		--raw;
 		if(4.1<raw.length() || raw.length()<3.9)
-			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
+			throwGeneralTestException("Complex decrement failed",locString);
 		--raw;
 		if(3.1<raw.length() || raw.length()<2.9)
-			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+			throwGeneralTestException("Complex decrement (2) failed",locString);
 	}
     void vector3dSubtractionTest() 
 	{
@@ -2892,35 +2892,35 @@ using namespace test;
 		vector3d_d ans(-4,7,3);
 
 		if(v1.subtract(v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple subtraction failed",locString),shared_type);
+			throwGeneralTestException("Simple subtraction failed",locString);
 		if(v1-v2!=ans)
-			throw os::errorPointer(new generalTestException("Simple - failed",locString),shared_type);
+			throwGeneralTestException("Simple - failed",locString);
 		if((v2-v1)!=(-ans))
-			throw os::errorPointer(new generalTestException("- reverse failed",locString),shared_type);
+			throwGeneralTestException("- reverse failed",locString);
 		if((v1-=v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple -= failed",locString),shared_type);
+			throwGeneralTestException("Simple -= failed",locString);
 		if(v1!=ans)
-			throw os::errorPointer(new generalTestException("-= after failed",locString),shared_type);
+			throwGeneralTestException("-= after failed",locString);
 
 		//Increment and decrement
 		vector3d_d raw(0,5,0);
 		--raw;
 		if(raw.x!=0 || raw.y!=4 || raw.z!=0)
-			throw os::errorPointer(new generalTestException("Simple increment failed",locString),shared_type);
+			throwGeneralTestException("Simple increment failed",locString);
 		--raw;
 		if(raw.x!=0 || raw.y!=3 || raw.z!=0)
-			throw os::errorPointer(new generalTestException("Simple increment (2) failed",locString),shared_type);
+			throwGeneralTestException("Simple increment (2) failed",locString);
 		
 		raw=vector3d_d(4,4,4);
 		if(raw.length()!=sqrt(3*16))
-			throw os::errorPointer(new generalTestException("Length failed",locString),shared_type);
+			throwGeneralTestException("Length failed",locString);
 		--raw;
 
 		if(raw.length() > sqrt(3*16)-.9 || raw.length() < sqrt(3*16)-1.1)
-			throw os::errorPointer(new generalTestException("Complex decrement failed",locString),shared_type);
+			throwGeneralTestException("Complex decrement failed",locString);
 		--raw;
 		if(raw.length() > sqrt(3*16)-1.9 || raw.length() < sqrt(3*16)-2.1)
-			throw os::errorPointer(new generalTestException("Complex decrement (2) failed",locString),shared_type);
+			throwGeneralTestException("Complex decrement (2) failed",locString);
 	}
 	//Dot product
     void vector2dDotProductTest() 
@@ -2930,11 +2930,11 @@ using namespace test;
 		vector2d_d v2(-3,10);
 
 		if(v1.dotProduct(v2)!=68)
-			throw os::errorPointer(new generalTestException("Initial dot-product failed!",locString),shared_type);
+			throwGeneralTestException("Initial dot-product failed!",locString);
 		v1(0,1);
 		v2(1,0);
 		if(v1.dotProduct(v2)!=0)
-			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
+			throwGeneralTestException("Dot-product zero failed!",locString);
 	}
     void vector3dDotProductTest() 
 	{
@@ -2943,11 +2943,11 @@ using namespace test;
 		vector3d_d v2(-3,10,-4);
 
 		if(v1.dotProduct(v2)!=56)
-			throw os::errorPointer(new generalTestException("Initial dot-product failed!",locString),shared_type);
+			throwGeneralTestException("Initial dot-product failed!",locString);
 		v1(0,1,0);
 		v2(0,0,1);
 		if(v1.dotProduct(v2)!=0)
-			throw os::errorPointer(new generalTestException("Dot-product zero failed!",locString),shared_type);
+			throwGeneralTestException("Dot-product zero failed!",locString);
 	}
 	//Cross product
     void vector3dCrossProductTest() 
@@ -2958,15 +2958,15 @@ using namespace test;
 		vector3d_d ans(-4,-16,27);
 
 		if(v1.crossProduct(v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple cross-product failed",locString),shared_type);
+			throwGeneralTestException("Simple cross-product failed",locString);
 		if(v1*v2!=ans)
-			throw os::errorPointer(new generalTestException("Simple * failed",locString),shared_type);
+			throwGeneralTestException("Simple * failed",locString);
 		if((v2*v1)!=(-ans))
-			throw os::errorPointer(new generalTestException("* reverse failed",locString),shared_type);
+			throwGeneralTestException("* reverse failed",locString);
 		if((v1*=v2)!=ans)
-			throw os::errorPointer(new generalTestException("Simple *= failed",locString),shared_type);
+			throwGeneralTestException("Simple *= failed",locString);
 		if(v1!=ans)
-			throw os::errorPointer(new generalTestException("*= after failed",locString),shared_type);
+			throwGeneralTestException("*= after failed",locString);
 
 	}
 
@@ -2980,25 +2980,25 @@ using namespace test;
         vector2d_d ans=v1.rotate(rotate);
         vector2d_d comp=v1;
         if(ans!=comp)
-            throw os::errorPointer(new generalTestException("No rotation failed",locString),shared_type);
+            throwGeneralTestException("No rotation failed",locString);
         
         rotate(0,1);
         comp(-5,4);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::errorPointer(new generalTestException("90 degree rotation failed",locString),shared_type);
+            throwGeneralTestException("90 degree rotation failed",locString);
         
         rotate(-1,0);
         comp(-4,-5);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::errorPointer(new generalTestException("180 degree rotation failed",locString),shared_type);
+            throwGeneralTestException("180 degree rotation failed",locString);
 
         rotate(0,-1);
         comp(5,-4);
         ans=v1.rotate(rotate);
         if(ans!=comp)
-            throw os::errorPointer(new generalTestException("270 degree rotation failed",locString),shared_type);
+            throwGeneralTestException("270 degree rotation failed",locString);
 
         v1(4,4);
         rotate(1,1);
@@ -3006,7 +3006,7 @@ using namespace test;
         ans=v1.rotate(rotate);
         if(!(ans.y>5.6 && ans.y<5.7 &&
            ans.x>-.1 && ans.x<.1))
-            throw os::errorPointer(new generalTestException("45 degree rotation failed",locString),shared_type);
+            throwGeneralTestException("45 degree rotation failed",locString);
         
         v1(4,4);
         rotate(1,-1);
@@ -3014,7 +3014,7 @@ using namespace test;
         ans=v1.rotate(rotate);
         if(!(ans.x>5.6 && ans.x<5.7 &&
              ans.y>-.1 && ans.y<.1))
-            throw os::errorPointer(new generalTestException("45 degree rotation failed",locString),shared_type);
+            throwGeneralTestException("45 degree rotation failed",locString);
     }
 
 /*================================================================
@@ -3051,7 +3051,7 @@ using namespace test;
             {
                 if(array[i2]>array[i2+1])
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString),shared_type);
+                    throwGeneralTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString);
                 }
             }
         }
@@ -3071,7 +3071,7 @@ using namespace test;
             {
                 if(array[i2]<array[i2+1])
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString),shared_type);
+                    throwGeneralTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)array[i2])+" vs "+std::to_string((long long unsigned)array[i2+1]),locString);
                 }
             }
         }
@@ -3091,7 +3091,7 @@ using namespace test;
             {
                 if(*(_array[i2])>*(_array[i2+1]))
                 {
-                    throw os::errorPointer(new generalTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)*_array[i2])+" vs "+std::to_string((long long unsigned)*_array[i2+1]),locString),shared_type);
+                    throwGeneralTestException("Quicksort failed at "+std::to_string((long long unsigned)i2)+" "+std::to_string((long long unsigned)*_array[i2])+" vs "+std::to_string((long long unsigned)*_array[i2+1]),locString);
                 }
             }
         }
