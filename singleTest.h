@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.h
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   8/13/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -17,7 +17,7 @@
 
 #include "Datastructures/Datastructures.h"
 #include "Exceptions/Exceptions.h"
-#include "UnitTestLog.h"
+#include "unitTestLog.h"
 
 namespace test
 {

@@ -1,7 +1,7 @@
 /**
  * @file   libraryTests.cpp
  * @Author Jonathan Bedard
- * @date   7/3/2016
+ * @date   8/12/2016
  * @brief  Library tests implementations
  * @bug No known bugs.
  *
@@ -103,13 +103,6 @@ using namespace test;
 		if(state) return false;
 		return true;
 	}
-	libraryTests::operator size_t() const
-    {
-        size_t ret=0;
-        for(size_t i=0;i<libName.size();++i)
-            ret^=((size_t)libName[i])<<8*(i%sizeof(size_t));
-        return ret;
-    }
 	
 
 #endif

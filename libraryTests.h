@@ -1,7 +1,7 @@
 /**
  * @file   libraryTests.h
  * @Author Jonathan Bedard
- * @date   7/12/2016
+ * @date   8/13/2016
  * @brief  Library tests class
  * @bug No known bugs.
  *
@@ -15,7 +15,7 @@
 #define LIBRARY_TESTS_H
 
 #include "Datastructures/Datastructures.h"
-#include "UnitTestLog.h"
+#include "unitTestLog.h"
 #include "TestSuite.h"
 #include <iostream>
 #include <string>
@@ -159,7 +159,7 @@ namespace test
 		/** @brief size_t cast for the library
 		 * @return size_t hash of the library
 		 */
-		operator size_t() const;
+		inline operator size_t() const {return os::hashData(libName.c_str(),libName.length());}
 		COMPARE_OPERATORS
 	};
 }

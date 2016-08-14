@@ -1,7 +1,7 @@
 /**
  * @file   masterTestHolder.cpp
  * @Author Jonathan Bedard
- * @date   7/9/2016
+ * @date   8/13/2016
  * @brief  masterTestHolder singleton implementations
  * @bug No known bugs.
  *
@@ -18,7 +18,7 @@
 
 #include "masterTestHolder.h"
 
-#include "UnitTest.h"
+#include "unitTest.h"
 #include "DatastructuresTest.h"
 
 using namespace std;

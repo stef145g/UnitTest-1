@@ -1,7 +1,7 @@
 /**
- * @file   UnitTestLog.h
+ * @file   unitTestLog.h
  * @Author Jonathan Bedard
- * @date   7/8/2016
+ * @date   8/12/2016
  * @brief  Logging for test namespace
  * @bug No known bugs.
  *

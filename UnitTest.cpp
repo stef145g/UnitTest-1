@@ -1,7 +1,7 @@
 /**
  * @file   UnitTest.cpp
  * @author Jonathan Bedard
- * @date   7/3/2016
+ * @date   8/13/2016
  * @brief  Unit Test logging and global functions
  * @bug No known bugs.
  *
@@ -16,7 +16,7 @@
 #define UNIT_TEST_CPP
 
 #include <iostream>
-#include "UnitTest.h"
+#include "unitTest.h"
 
 	//Log conversion functions
 	std::ostream& test::testout_func() {return *testout_ptr;}

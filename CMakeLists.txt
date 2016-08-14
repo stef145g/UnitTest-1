@@ -16,8 +16,8 @@ INCLUDE(${CUR_SRC}/Exceptions/CMakeLists.txt)
 
 SET( SRC_H
 	${SRC_H}
-	${CUR_SRC}/UnitTest.h
-	${CUR_SRC}/UnitTestLog.h
+	${CUR_SRC}/unitTest.h
+	${CUR_SRC}/unitTestLog.h
 	
 	${CUR_SRC}/masterTestHolder.h
 	${CUR_SRC}/libraryTests.h
@@ -31,7 +31,7 @@ SET( SRC_H
 
 SET( SRC_CPP
 	${SRC_CPP}
-	${CUR_SRC}/UnitTest.cpp
+	${CUR_SRC}/unitTest.cpp
 	
 	${CUR_SRC}/masterTestHolder.cpp
 	${CUR_SRC}/libraryTests.cpp

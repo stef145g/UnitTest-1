@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.cpp
  * @Author Jonathan Bedard
- * @date   8/2/2016
+ * @date   8/13/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -16,7 +16,7 @@
 #ifndef TEST_SUITE_CPP
 #define TEST_SUITE_CPP
 
-#include "UnitTest.h"
+#include "unitTest.h"
 
 using namespace os;
 using namespace std;
@@ -140,13 +140,6 @@ using namespace test;
 		if(state) return false;
 		return true;
 	}
-	testSuite::operator size_t() const
-    {
-        size_t ret=0;
-        for(size_t i=0;i<suiteName.size();++i)
-            ret^=((size_t)suiteName[i])<<8*(i%sizeof(size_t));
-        return ret;
-    }
 
 #endif
 
