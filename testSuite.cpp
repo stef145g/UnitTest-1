@@ -1,7 +1,7 @@
 /**
  * @file   testSuite.cpp
  * @Author Jonathan Bedard
- * @date   8/13/2016
+ * @date   8/14/2016
  * @brief  Single test class
  * @bug No known bugs.
  *
@@ -16,7 +16,7 @@
 #ifndef TEST_SUITE_CPP
 #define TEST_SUITE_CPP
 
-#include "unitTest.h"
+#include "UnitTest.h"
 
 using namespace os;
 using namespace std;

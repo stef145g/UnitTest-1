@@ -1,7 +1,7 @@
 /**
  * @file   singleTest.cpp
  * @Author Jonathan Bedard
- * @date   8/13/2016
+ * @date   8/14/2016
  * @brief  Single test class implementation
  * @bug No known bugs.
  *
@@ -15,7 +15,7 @@
 #ifndef SINGLE_TEST_CPP
 #define SINGLE_TEST_CPP
 
-#include "unitTest.h"
+#include "UnitTest.h"
 
 using namespace os;
 using namespace std;

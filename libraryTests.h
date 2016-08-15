@@ -1,7 +1,7 @@
 /**
  * @file   libraryTests.h
  * @Author Jonathan Bedard
- * @date   8/13/2016
+ * @date   8/14/2016
  * @brief  Library tests class
  * @bug No known bugs.
  *
@@ -16,7 +16,7 @@
 
 #include "Datastructures/Datastructures.h"
 #include "unitTestLog.h"
-#include "TestSuite.h"
+#include "testSuite.h"
 #include <iostream>
 #include <string>
 
