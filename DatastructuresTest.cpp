@@ -3220,6 +3220,13 @@ using namespace test;
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerHashThreadSafe<dummyInt> >("rawPointerHashThreadSafe",false),shared_type));
         pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerHash<dummyInt> >("rawPointerHash",false),shared_type));
         
+        pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectSetThreadSafe<dummyInt> >("objectSetThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructureNodeSuite<objectSet<dummyInt> >("objectSet",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerSetThreadSafe<dummyInt> >("pointerSetThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<pointerSet<dummyInt> >("pointerSet",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSetThreadSafe<dummyInt> >("rawPointerSetThreadSafe",false),shared_type));
+        pushSuite(smart_ptr<testSuite>(new datastructurePointerSuite<rawPointerSet<dummyInt> >("rawPointerSet",false),shared_type));
+        
 
         //Matrix Test Suite
         trc = smart_ptr<testSuite>(new testSuite("matrix"),shared_type);
