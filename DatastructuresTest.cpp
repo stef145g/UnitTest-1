@@ -1990,7 +1990,8 @@ using namespace test;
 		if(datastruct::ITERABLE)
 		{
 			os::iterator<dummyInt> it=ds.first();
-			if(it+1!=++it)
+			os::iterator<dummyInt> tem=it+1;
+			if(tem!=++it)
 				throwGeneralTestException("Basic increment failed",locString);
 
 			try{it+=2;}
@@ -1999,7 +2000,8 @@ using namespace test;
 				throwGeneralTestException("Expected double increment to fail",locString);
 
 			it=ds.last();
-			if(it-1!=--it)
+			tem=it-1;
+			if(tem!=--it)
 				throwGeneralTestException("Basic decrement failed",locString);
 
 			try{it-=2;}
@@ -2028,7 +2030,8 @@ using namespace test;
 		if(datastruct::ITERABLE)
 		{
 			os::iterator<dummyInt> it=ds.first();
-			if(it+1!=++it)
+			os::iterator<dummyInt> tem=it+1;
+			if(tem!=++it)
 				throwGeneralTestException("Basic increment failed",locString);
 
 			try{it+=2;}
@@ -2037,7 +2040,8 @@ using namespace test;
 				throwGeneralTestException("Expected double increment to fail",locString);
 
 			it=ds.last();
-			if(it-1!=--it)
+			tem=it-1;
+			if(tem!=--it)
 				throwGeneralTestException("Basic decrement failed",locString);
 
 			try{it-=2;}
